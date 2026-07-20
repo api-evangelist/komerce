@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/komerce-payment-openapi.yml, openapi/komerce-qrisly-openapi.yml, openapi/komerce-shipping-cost-openapi.yml,
+  openapi/komerce-shipping-delivery-openapi.yml
+docs:
+- https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+- https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+- https://rajaongkir.com/docs/payment-api/getting-started/authentication
+- https://rajaongkir.com/docs/qrisly/getting-started/authentication
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+  note: >-
+    Every Komerce surface uses a header API key and nothing else — no OAuth 2.0, OIDC, basic,
+    bearer or mTLS. Crucially the keys are per-product and NOT interchangeable: the docs warn
+    explicitly against using a key issued for one service against another. Keys are issued and
+    rotated from the Collaborator dashboard under Developer -> Settings -> Api Key. Sandbox and
+    production require separate keys, and a sandbox key will not work in production without
+    administrator approval. HTTPS is required.
+  issuance: https://collaborator.komerce.id/registration
+  dashboard: https://collaborator.komerce.id
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: Payment API key from the Collaborator dashboard — the same key used for Komerce
+    Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
+  sources:
+  - openapi/komerce-payment-openapi.yml
+  - openapi/komerce-shipping-delivery-openapi.yml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: QRISLY API key generated from the RajaOngkir Collaborator dashboard (Developer
+    -> API Settings -> Generate New API Key).
+  sources:
+  - openapi/komerce-qrisly-openapi.yml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: key
+  description: Shipping Cost API key from the Collaborator dashboard (Developer -> Settings
+    -> Api Key).
+  sources:
+  - openapi/komerce-shipping-cost-openapi.yml
