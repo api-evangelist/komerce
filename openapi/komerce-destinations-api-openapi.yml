@@ -1,0 +1,272 @@
+openapi: 3.0.3
+info:
+  title: Komerce Payment Service Cost Destinations API
+  version: v1
+  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+
+    create a payment transaction, check payment status, cancel a Virtual Account payment,
+
+    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+
+    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+
+    '
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+servers:
+- url: https://api.collaborator.komerce.id/user
+  description: Production environment
+- url: https://api-sandbox.collaborator.komerce.id/user
+  description: Sandbox environment
+security:
+- ApiKeyAuth: []
+tags:
+- name: Destinations
+  description: Destination and administrative-region lookup
+paths:
+  /destination/domestic-destination:
+    get:
+      operationId: searchDomesticDestination
+      tags:
+      - Destinations
+      summary: Search domestic destination
+      description: Search Indonesian destinations by city, district, subdistrict or zip code. Returns the destination id used by the cost endpoints.
+      parameters:
+      - name: search
+        in: query
+        required: true
+        description: Search keyword — city, district, subdistrict name, or postal code.
+        schema:
+          type: string
+        example: jakarta
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of rows returned by the query.
+        schema:
+          type: integer
+        example: 5
+      - name: offset
+        in: query
+        required: false
+        description: Row offset, used with limit to page results.
+        schema:
+          type: integer
+        example: 0
+      responses:
+        '200':
+          description: Matching domestic destinations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomesticDestinationList'
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta'
+  /destination/international-destination:
+    get:
+      operationId: searchInternationalDestination
+      tags:
+      - Destinations
+      summary: Search international destination
+      description: Search worldwide destinations and return the destination id used by the international cost endpoint.
+      parameters:
+      - name: search
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Matching international destinations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternationalDestinationList'
+        '401':
+          description: Missing or invalid API key
+  /destination/province:
+    get:
+      operationId: listProvinces
+      tags:
+      - Destinations
+      summary: List provinces
+      description: Retrieve the list of Indonesian provinces for form-based (cascading) destination selection.
+      responses:
+        '200':
+          description: Province list
+        '401':
+          description: Missing or invalid API key
+  /destination/city/{province_id}:
+    get:
+      operationId: listCities
+      tags:
+      - Destinations
+      summary: List cities in a province
+      parameters:
+      - name: province_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: City list
+        '401':
+          description: Missing or invalid API key
+  /destination/district/{city_id}:
+    get:
+      operationId: listDistricts
+      tags:
+      - Destinations
+      summary: List districts in a city
+      parameters:
+      - name: city_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: District list
+        '401':
+          description: Missing or invalid API key
+  /destination/sub-district/{district_id}:
+    get:
+      operationId: listSubdistricts
+      tags:
+      - Destinations
+      summary: List subdistricts in a district
+      parameters:
+      - name: district_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Subdistrict list
+        '401':
+          description: Missing or invalid API key
+  /tariff/api/v1/destination/search:
+    get:
+      operationId: searchDeliveryDestination
+      tags:
+      - Destinations
+      summary: Search destination
+      description: Search cities, districts, subdistricts and postal codes and return the region id used as shipper_destination_id / receiver_destination_id.
+      parameters:
+      - name: keyword
+        in: query
+        required: true
+        description: Subdistrict name or zip code to search for.
+        schema:
+          type: string
+        example: '53131'
+      responses:
+        '200':
+          description: Matching destinations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DestinationList'
+        '401':
+          description: Missing or invalid API key
+components:
+  schemas:
+    InternationalDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            type: object
+    Destination:
+      type: object
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        subdistrict_name:
+          type: string
+        district_name:
+          type: string
+        city_name:
+          type: string
+        zip_code:
+          type: string
+    DomesticDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomesticDestination'
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+    DestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
+    DomesticDestination:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Destination id used as origin/destination in cost calculation.
+        label:
+          type: string
+          description: Full formatted delivery location.
+        province_name:
+          type: string
+        city_name:
+          type: string
+        district_name:
+          type: string
+        subdistrict_name:
+          type: string
+        zip_code:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.

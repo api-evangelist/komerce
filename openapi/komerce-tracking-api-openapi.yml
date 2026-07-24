@@ -1,0 +1,204 @@
+openapi: 3.0.3
+info:
+  title: Komerce Payment Service Cost Tracking API
+  version: v1
+  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+
+    create a payment transaction, check payment status, cancel a Virtual Account payment,
+
+    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+
+    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+
+    '
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+servers:
+- url: https://api.collaborator.komerce.id/user
+  description: Production environment
+- url: https://api-sandbox.collaborator.komerce.id/user
+  description: Sandbox environment
+security:
+- ApiKeyAuth: []
+tags:
+- name: Tracking
+  description: Airway bill tracking
+paths:
+  /track/waybill:
+    post:
+      operationId: trackWaybill
+      tags:
+      - Tracking
+      summary: Track an airway bill
+      description: Retrieve real-time shipment status and manifest history for an AWB number from a supported courier.
+      parameters:
+      - name: awb
+        in: query
+        required: true
+        description: Airway bill (tracking) number.
+        schema:
+          type: string
+      - name: courier
+        in: query
+        required: true
+        description: Courier code.
+        schema:
+          type: string
+      - name: last_phone_number
+        in: query
+        required: false
+        description: Last 5 digits of the recipient phone number — required for additional validation by certain couriers including JNE.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Waybill summary, details, delivery status and manifest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaybillResponse'
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/history-airway-bill:
+    get:
+      operationId: getAirwayBillHistory
+      tags:
+      - Tracking
+      summary: Get airway bill history
+      parameters:
+      - name: shipping
+        in: query
+        required: true
+        description: Courier code.
+        schema:
+          type: string
+      - name: airway_bill
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Airway bill tracking history
+        '401':
+          description: Missing or invalid API key
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+    WaybillResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            delivered:
+              type: boolean
+            summary:
+              type: object
+              properties:
+                courier_code:
+                  type: string
+                courier_name:
+                  type: string
+                waybill_number:
+                  type: string
+                service_code:
+                  type: string
+                waybill_date:
+                  type: string
+                shipper_name:
+                  type: string
+                receiver_name:
+                  type: string
+                origin:
+                  type: string
+                destination:
+                  type: string
+                status:
+                  type: string
+            details:
+              type: object
+              properties:
+                waybill_number:
+                  type: string
+                waybill_date:
+                  type: string
+                waybill_time:
+                  type: string
+                weight:
+                  type: string
+                origin:
+                  type: string
+                destination:
+                  type: string
+                shipper_name:
+                  type: string
+                shipper_address1:
+                  type: string
+                shipper_address2:
+                  type: string
+                shipper_address3:
+                  type: string
+                shipper_city:
+                  type: string
+                receiver_name:
+                  type: string
+                receiver_address1:
+                  type: string
+                receiver_address2:
+                  type: string
+                receiver_address3:
+                  type: string
+                receiver_city:
+                  type: string
+            delivery_status:
+              type: object
+              properties:
+                status:
+                  type: string
+                pod_receiver:
+                  type: string
+                pod_date:
+                  type: string
+                pod_time:
+                  type: string
+            manifest:
+              type: array
+              items:
+                type: object
+                properties:
+                  manifest_code:
+                    type: string
+                  manifest_description:
+                    type: string
+                  manifest_date:
+                    type: string
+                  manifest_time:
+                    type: string
+                  city_name:
+                    type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.

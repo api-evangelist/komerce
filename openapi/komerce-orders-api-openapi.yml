@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: Komerce Payment Service Cost Orders API
+  version: v1
+  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+
+    create a payment transaction, check payment status, cancel a Virtual Account payment,
+
+    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+
+    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+
+    '
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+servers:
+- url: https://api.collaborator.komerce.id/user
+  description: Production environment
+- url: https://api-sandbox.collaborator.komerce.id/user
+  description: Sandbox environment
+security:
+- ApiKeyAuth: []
+tags:
+- name: Orders
+paths:
+  /order/api/v1/orders/store:
+    post:
+      operationId: storeOrder
+      tags:
+      - Orders
+      summary: Create an order
+      description: Create a delivery order. The shipping fee is deducted from the dashboard balance when the payment method is BANK TRANSFER; insufficient balance rejects the order.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreOrderRequest'
+      responses:
+        '200':
+          description: Order created
+        '400':
+          description: Validation error — malformed phone number, bad field format, or insufficient balance
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/cancel:
+    put:
+      operationId: cancelOrder
+      tags:
+      - Orders
+      summary: Cancel an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_no:
+                  type: string
+      responses:
+        '200':
+          description: Order cancelled
+        '400':
+          description: Order cannot be cancelled
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/detail:
+    get:
+      operationId: getOrderDetail
+      tags:
+      - Orders
+      summary: Get order detail
+      parameters:
+      - name: order_no
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order detail
+        '401':
+          description: Missing or invalid API key
+        '404':
+          description: Order not found
+  /order/api/v1/orders/print-label:
+    post:
+      operationId: printOrderLabel
+      tags:
+      - Orders
+      summary: Print order label
+      parameters:
+      - name: order_no
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: true
+        description: Label page layout.
+        schema:
+          type: string
+          example: page_5
+      responses:
+        '200':
+          description: Label document
+        '401':
+          description: Missing or invalid API key
+components:
+  schemas:
+    StoreOrderRequest:
+      type: object
+      required:
+      - order_date
+      - brand_name
+      - shipper_name
+      - shipper_phone
+      - shipper_destination_id
+      - shipper_address
+      - shipper_email
+      - receiver_name
+      - receiver_phone
+      - receiver_destination_id
+      - receiver_address
+      - shipping
+      - shipping_type
+      - payment_method
+      - shipping_cost
+      - order_details
+      properties:
+        order_date:
+          type: string
+          description: Date/time the order was created.
+        brand_name:
+          type: string
+          description: Brand name printed on the shipping label.
+        shipper_name:
+          type: string
+        shipper_phone:
+          type: string
+          description: Must start with 0 or 62
+          not +62.: null
+        shipper_destination_id:
+          type: integer
+        shipper_address:
+          type: string
+        shipper_email:
+          type: string
+        origin_pin_point:
+          type: string
+        receiver_name:
+          type: string
+        receiver_phone:
+          type: string
+          description: Must start with 0 or 62
+          not +62.: null
+        receiver_destination_id:
+          type: integer
+        receiver_address:
+          type: string
+        destination_pin_point:
+          type: string
+        shipping:
+          type: string
+          description: Courier name.
+        shipping_type:
+          type: string
+          description: Courier service type.
+        payment_method:
+          type: string
+          enum:
+          - COD
+          - BANK TRANSFER
+        shipping_cost:
+          type: integer
+        shipping_cashback:
+          type: integer
+        service_fee:
+          type: integer
+        additional_cost:
+          type: integer
+        grand_total:
+          type: integer
+        cod_value:
+          type: integer
+        insurance_value:
+          type: number
+        notes:
+          type: string
+        order_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderDetailItem'
+    OrderDetailItem:
+      type: object
+      properties:
+        product_name:
+          type: string
+        product_variant_name:
+          type: string
+        product_price:
+          type: integer
+        product_weight:
+          type: integer
+        product_width:
+          type: integer
+        product_height:
+          type: integer
+        product_length:
+          type: integer
+        qty:
+          type: integer
+        subtotal:
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.

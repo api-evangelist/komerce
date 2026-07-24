@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Komerce Payment Service Cost Pickup API
+  version: v1
+  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+
+    create a payment transaction, check payment status, cancel a Virtual Account payment,
+
+    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+
+    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+
+    '
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+servers:
+- url: https://api.collaborator.komerce.id/user
+  description: Production environment
+- url: https://api-sandbox.collaborator.komerce.id/user
+  description: Sandbox environment
+security:
+- ApiKeyAuth: []
+tags:
+- name: Pickup
+paths:
+  /order/api/v1/pickup/request:
+    post:
+      operationId: requestPickup
+      tags:
+      - Pickup
+      summary: Request order pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_no:
+                  type: string
+                pickup_date:
+                  type: string
+                pickup_time:
+                  type: string
+      responses:
+        '200':
+          description: Pickup requested
+        '400':
+          description: Invalid pickup request
+        '401':
+          description: Missing or invalid API key
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.

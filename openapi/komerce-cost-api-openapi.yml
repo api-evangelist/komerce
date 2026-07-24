@@ -1,0 +1,310 @@
+openapi: 3.0.3
+info:
+  title: Komerce Payment Service Cost API
+  version: v1
+  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+
+    create a payment transaction, check payment status, cancel a Virtual Account payment,
+
+    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+
+    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+
+    '
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+servers:
+- url: https://api.collaborator.komerce.id/user
+  description: Production environment
+- url: https://api-sandbox.collaborator.komerce.id/user
+  description: Sandbox environment
+security:
+- ApiKeyAuth: []
+tags:
+- name: Cost
+  description: Shipping cost calculation
+paths:
+  /calculate/domestic-cost:
+    post:
+      operationId: calculateDomesticCost
+      tags:
+      - Cost
+      summary: Calculate domestic shipping cost
+      description: Estimate shipping cost between two Indonesian destination ids for one or more couriers.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - origin
+              - destination
+              - weight
+              - courier
+              properties:
+                origin:
+                  type: integer
+                  description: Destination id of the origin, from searchDomesticDestination.
+                destination:
+                  type: integer
+                  description: Destination id of the destination, from searchDomesticDestination.
+                weight:
+                  type: integer
+                  description: Package weight in grams.
+                courier:
+                  type: string
+                  description: Courier code, or colon-separated list of courier codes.
+                  example: jne
+                price:
+                  type: string
+                  description: Sort/selection of shipping cost — lowest or highest.
+                  enum:
+                  - lowest
+                  - highest
+      responses:
+        '200':
+          description: Available courier services with cost and ETD
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomesticCostList'
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /calculate/international-cost:
+    post:
+      operationId: calculateInternationalCost
+      tags:
+      - Cost
+      summary: Calculate international shipping cost
+      description: Estimate international shipping cost between an Indonesian origin and a worldwide destination.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - origin
+              - destination
+              - weight
+              - courier
+              properties:
+                origin:
+                  type: integer
+                destination:
+                  type: integer
+                weight:
+                  type: integer
+                  description: Package weight in grams.
+                courier:
+                  type: string
+                price:
+                  type: string
+                  enum:
+                  - lowest
+                  - highest
+      responses:
+        '200':
+          description: Available international courier services with cost, currency and ETD
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternationalCostList'
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /calculate/district/domestic-cost:
+    post:
+      operationId: calculateDistrictDomesticCost
+      tags:
+      - Cost
+      summary: Calculate domestic cost from district/subdistrict ids
+      description: Form-based cost calculation using district or subdistrict ids obtained from the cascading province/city/district/subdistrict endpoints.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - origin
+              - destination
+              - weight
+              - courier
+              properties:
+                origin:
+                  type: integer
+                destination:
+                  type: integer
+                weight:
+                  type: integer
+                courier:
+                  type: string
+                price:
+                  type: string
+                  enum:
+                  - lowest
+                  - highest
+      responses:
+        '200':
+          description: Available courier services with cost and ETD
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /tariff/api/v1/calculate:
+    get:
+      operationId: calculateDeliveryPrice
+      tags:
+      - Cost
+      summary: Calculate delivery price
+      description: Retrieve shipping cost estimates grouped by regular, cargo and instant service across the integrated 3PL couriers.
+      parameters:
+      - name: shipper_destination_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: receiver_destination_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: origin_pin_point
+        in: query
+        required: true
+        description: Origin geolocation as "latitude,longitude" — required for instant courier estimation.
+        schema:
+          type: string
+      - name: destination_pin_point
+        in: query
+        required: true
+        description: Destination geolocation as "latitude,longitude".
+        schema:
+          type: string
+      - name: weight
+        in: query
+        required: true
+        description: Weight in kilograms; use a dot for decimal values.
+        schema:
+          type: number
+          format: float
+      - name: item_value
+        in: query
+        required: true
+        description: Item price.
+        schema:
+          type: integer
+      - name: cod
+        in: query
+        required: false
+        description: yes/no — when yes the response reports COD coverage for the route.
+        schema:
+          type: string
+          enum:
+          - true
+          - false
+      responses:
+        '200':
+          description: Cost options grouped by service type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculateResponse'
+        '401':
+          description: Missing or invalid API key
+components:
+  schemas:
+    DomesticCostList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourierCost'
+    CourierCost:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        service:
+          type: string
+        description:
+          type: string
+        cost:
+          type: integer
+        etd:
+          type: string
+    InternationalCostList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternationalCourierCost'
+    CalculateResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            calculate_reguler:
+              type: array
+              description: Couriers available for regular delivery.
+              items:
+                type: object
+            calculate_cargo:
+              type: array
+              description: Couriers available for cargo delivery.
+              items:
+                type: object
+            calculate_instant:
+              type: array
+              description: Couriers available for instant or same-day delivery.
+              items:
+                type: object
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+    InternationalCourierCost:
+      allOf:
+      - $ref: '#/components/schemas/CourierCost'
+      - type: object
+        properties:
+          currency:
+            type: string
+          currency_updated_at:
+            type: string
+          currency_value:
+            type: number
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
