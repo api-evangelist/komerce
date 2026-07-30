@@ -1,0 +1,282 @@
+{
+  "info": {
+    "_postman_id": "9b214524-827b-4456-a895-b98bf34561e0",
+    "name": "Komerce Payment Service Cost Pickup API",
+    "description": "Komerce Payment Service API \u2014 list payment methods (bank Virtual Account and QRIS),\ncreate a payment transaction, check payment status, cancel a Virtual Account payment,\nand receive HMAC-SHA256 signed callbacks. Authentication is a header API key\n(`x-api-key`) \u2014 the same key used for Komerce Shipping (RajaOngkir). Hosted payment\npages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).\n\n\nContact Support:\n Name: RajaOngkir Support\n Email: support@rajaongkir.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:47.000Z",
+    "updatedAt": "2026-07-28T02:00:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-9b214524-827b-4456-a895-b98bf34561e0"
+  },
+  "item": [
+    {
+      "name": "order",
+      "item": [
+        {
+          "name": "api",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "pickup",
+                  "item": [
+                    {
+                      "name": "request",
+                      "item": [
+                        {
+                          "name": "Request order pickup",
+                          "id": "2a0bf962-18e6-4f55-9d57-5051c164118c",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"order_no\": \"<string>\",\n  \"pickup_date\": \"<string>\",\n  \"pickup_time\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/order/api/v1/pickup/request",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "order",
+                                "api",
+                                "v1",
+                                "pickup",
+                                "request"
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "e80009ec-bb88-432f-9ce4-9025b4263bee",
+                              "name": "Pickup requested",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"order_no\": \"<string>\",\n  \"pickup_date\": \"<string>\",\n  \"pickup_time\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/order/api/v1/pickup/request",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "order",
+                                    "api",
+                                    "v1",
+                                    "pickup",
+                                    "request"
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:48.000Z",
+                              "updatedAt": "2026-07-28T02:00:48.000Z",
+                              "uid": "35240-e80009ec-bb88-432f-9ce4-9025b4263bee"
+                            },
+                            {
+                              "id": "259a0f5f-31d5-4a46-b892-6c8bdd0177a0",
+                              "name": "Invalid pickup request",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"order_no\": \"<string>\",\n  \"pickup_date\": \"<string>\",\n  \"pickup_time\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/order/api/v1/pickup/request",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "order",
+                                    "api",
+                                    "v1",
+                                    "pickup",
+                                    "request"
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:48.000Z",
+                              "updatedAt": "2026-07-28T02:00:48.000Z",
+                              "uid": "35240-259a0f5f-31d5-4a46-b892-6c8bdd0177a0"
+                            },
+                            {
+                              "id": "870cbf9a-375e-47da-96b0-3cda5150cef5",
+                              "name": "Missing or invalid API key",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"order_no\": \"<string>\",\n  \"pickup_date\": \"<string>\",\n  \"pickup_time\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/order/api/v1/pickup/request",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "order",
+                                    "api",
+                                    "v1",
+                                    "pickup",
+                                    "request"
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:48.000Z",
+                              "updatedAt": "2026-07-28T02:00:48.000Z",
+                              "uid": "35240-870cbf9a-375e-47da-96b0-3cda5150cef5"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:00:48.000Z",
+                          "updatedAt": "2026-07-28T02:00:48.000Z",
+                          "uid": "35240-2a0bf962-18e6-4f55-9d57-5051c164118c"
+                        }
+                      ],
+                      "id": "44898f29-72a6-4b2e-be33-e4a28aaf32f5",
+                      "createdAt": "2026-07-28T02:00:48.000Z",
+                      "updatedAt": "2026-07-28T02:00:48.000Z",
+                      "uid": "35240-44898f29-72a6-4b2e-be33-e4a28aaf32f5"
+                    }
+                  ],
+                  "id": "9f26dccc-d34d-4f27-a6d3-952703ef718b",
+                  "createdAt": "2026-07-28T02:00:48.000Z",
+                  "updatedAt": "2026-07-28T02:00:48.000Z",
+                  "uid": "35240-9f26dccc-d34d-4f27-a6d3-952703ef718b"
+                }
+              ],
+              "id": "d1e4495e-a290-4078-8866-2899152b0853",
+              "createdAt": "2026-07-28T02:00:48.000Z",
+              "updatedAt": "2026-07-28T02:00:48.000Z",
+              "uid": "35240-d1e4495e-a290-4078-8866-2899152b0853"
+            }
+          ],
+          "id": "096e2242-0b98-4941-a476-4a3e5158baa2",
+          "createdAt": "2026-07-28T02:00:48.000Z",
+          "updatedAt": "2026-07-28T02:00:48.000Z",
+          "uid": "35240-096e2242-0b98-4941-a476-4a3e5158baa2"
+        }
+      ],
+      "id": "bd87278e-fb47-49c5-8c85-b52e02a9faed",
+      "createdAt": "2026-07-28T02:00:48.000Z",
+      "updatedAt": "2026-07-28T02:00:48.000Z",
+      "uid": "35240-bd87278e-fb47-49c5-8c85-b52e02a9faed"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.collaborator.komerce.id/user"
+    }
+  ]
+}

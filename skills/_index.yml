@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: generated
+source: >-
+  Generated from the harvested Komerce OpenAPI descriptions and the documented conventions,
+  error and webhook artifacts. Komerce publishes no AGENTS.md or provider skill files.
+skills:
+  - file: komerce-quote-domestic-shipping.md
+    name: Quote domestic shipping with RajaOngkir
+    description: Resolve Indonesian origin and destination to RajaOngkir destination ids, then quote shipping cost across couriers.
+    api: openapi/komerce-shipping-cost-openapi.yml
+    operations: [searchDomesticDestination, calculateDomesticCost]
+  - file: komerce-create-and-ship-order.md
+    name: Create a Komship delivery order and ship it
+    description: Resolve destinations, price the delivery, create the order, request pickup, print the label, and track the airway bill.
+    api: openapi/komerce-shipping-delivery-openapi.yml
+    operations: [searchDeliveryDestination, calculateDeliveryPrice, storeOrder, requestPickup, printOrderLabel, getOrderDetail, getAirwayBillHistory, cancelOrder]
+  - file: komerce-collect-payment.md
+    name: Collect a payment with the Komerce Payment Service
+    description: List channels, create a Virtual Account or QRIS transaction, verify the HMAC-SHA256 callback, and reconcile status.
+    api: openapi/komerce-payment-openapi.yml
+    operations: [getPaymentMethods, createPayment, getPaymentStatus, cancelPayment]
+  - file: komerce-generate-dynamic-qris.md
+    name: Generate a dynamic QRIS with QRISLY
+    description: Upload a static QRIS once, generate per-transaction dynamic QRIS with unique amounts, and confirm payment.
+    api: openapi/komerce-qrisly-openapi.yml
+    operations: [uploadQris, generateQris, getQrisPaymentStatus]

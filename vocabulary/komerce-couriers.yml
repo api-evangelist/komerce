@@ -1,0 +1,89 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/shipping-cost/getting_started/courier_availability,
+  https://rajaongkir.com/docs/delivery-order-api/getting_started/3pl
+name: Komerce / RajaOngkir courier vocabulary
+description: >-
+  The controlled vocabulary of courier codes accepted by the RajaOngkir Shipping Cost API
+  `courier` parameter, with the capability matrix Komerce publishes for each courier, plus the
+  3PL service-class matrix published for the Komship Shipping Delivery API.
+terms:
+  - term: jne
+    label: JNE
+    domestic_cost: true
+    international_cost: true
+    check_awb: true
+  - term: sicepat
+    label: SiCepat
+    domestic_cost: true
+    international_cost: false
+    check_awb: false
+  - term: ide
+    label: IDExpress
+    domestic_cost: true
+    international_cost: false
+    check_awb: false
+  - term: sap
+    label: SAP Express
+    domestic_cost: true
+    international_cost: false
+    check_awb: true
+  - term: ninja
+    label: Ninja
+    domestic_cost: true
+    international_cost: false
+    check_awb: true
+  - term: jnt
+    label: J&T Express
+    domestic_cost: true
+    international_cost: false
+    check_awb: true
+  - term: tiki
+    label: TIKI
+    domestic_cost: true
+    international_cost: true
+    check_awb: true
+  - term: wahana
+    label: Wahana Express
+    domestic_cost: true
+    international_cost: false
+    check_awb: true
+  - term: pos
+    label: POS Indonesia
+    domestic_cost: true
+    international_cost: true
+    check_awb: true
+  - term: sentral
+    label: Sentral Cargo
+    domestic_cost: true
+    international_cost: false
+    check_awb: false
+  - term: lion
+    label: Lion Parcel
+    domestic_cost: true
+    international_cost: false
+    check_awb: true
+  - term: rex
+    label: Royal Express Asia
+    domestic_cost: true
+    international_cost: false
+    check_awb: false
+service_classes:
+  description: >-
+    Service classes published for the Komship Shipping Delivery 3PL integrations. The calculate
+    response groups results as calculate_reguler, calculate_cargo and calculate_instant.
+  couriers:
+    - {name: JNE, regular: true, cargo: true, flat: true, small: false, international: false, instant: false}
+    - {name: SAP, regular: true, cargo: true, flat: false, small: false, international: false, instant: false}
+    - {name: IDExpress, regular: true, cargo: true, flat: true, small: true, international: false, instant: false}
+    - {name: SiCepat, regular: true, cargo: true, flat: false, small: false, international: false, instant: false}
+    - {name: J&T, regular: true, cargo: false, flat: false, small: false, international: false, instant: false}
+    - {name: Ninja, regular: true, cargo: false, flat: false, small: false, international: false, instant: false}
+    - {name: Lion, regular: true, cargo: true, flat: false, small: false, international: false, instant: false}
+    - {name: GoSend, regular: false, cargo: false, flat: false, small: false, international: false, instant: true}
+payment_methods:
+  description: Payment methods available on Komship delivery orders.
+  terms:
+    - {term: COD, label: Cash on Delivery, description: Buyer pays the courier when the package arrives.}
+    - {term: BANK TRANSFER, label: Bank Transfer, description: Shipping cost is deducted from the Collaborator dashboard balance at order creation.}

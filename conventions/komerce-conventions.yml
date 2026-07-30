@@ -1,0 +1,115 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/shipping-cost/getting_started/apikey,
+  https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key,
+  https://rajaongkir.com/docs/qrisly/getting-started/authentication,
+  https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  plus derivation from openapi/
+authentication:
+  style: api-key-header
+  note: >-
+    Every Komerce surface authenticates with a header API key, but the header name differs per
+    product and the keys are NOT interchangeable — the docs explicitly warn against using a key
+    issued for one service against another.
+  headers:
+    - {api: Shipping Cost (RajaOngkir), header: key, dashboard_label: Shipping Cost}
+    - {api: Shipping Delivery (Komship), header: x-api-key, dashboard_label: Shipping Delivery}
+    - {api: Payment Service, header: x-api-key, dashboard_label: Payment API, note: same key as Komerce Shipping (RajaOngkir)}
+    - {api: QRISLY, header: X-API-Key, dashboard_label: QRISLY}
+  rotation: >-
+    Keys can be regenerated from the same API Key section of the Collaborator dashboard;
+    the QRISLY docs recommend rotating every 90 days.
+  transport: HTTPS required — the docs list "use HTTPS instead of HTTP" as a 401 troubleshooting step.
+  see_also: authentication/komerce-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    Komerce documents no idempotency key header or parameter on any surface. The closest
+    published mechanisms are QRISLY's unique_amount flag (appends a unique decimal identifier
+    to the amount so two otherwise-identical payments can be told apart by the listener app)
+    and the caller-supplied order_id on Payment Service createPayment. Neither is a replay-safe
+    idempotency contract, so no Idempotency pointer is wired into apis.yml.
+  related:
+    - {mechanism: unique_amount, api: QRISLY, operation: generateQris, purpose: distinguish identical amounts}
+    - {mechanism: order_id, api: Payment Service, operation: createPayment, purpose: caller-side transaction correlation}
+pagination:
+  style: limit-offset
+  applies_to:
+    - openapi/komerce-shipping-cost-openapi.yml#searchDomesticDestination
+    - openapi/komerce-shipping-cost-openapi.yml#searchInternationalDestination
+  params:
+    - {name: limit, in: query, type: integer, description: Maximum number of rows returned by the query.}
+    - {name: offset, in: query, type: integer, description: Row offset, used with limit to page results.}
+  response_fields: none — the response returns a flat data[] array with no total or next-page cursor
+  note: The delivery, payment and QRISLY surfaces expose no pagination parameters.
+response_envelope:
+  primary:
+    shape: '{ meta: { message, code, status }, data: ... }'
+    used_by: [Shipping Cost, Shipping Delivery, Payment Service]
+    fields:
+      - {name: meta.message, description: Human-readable result message}
+      - {name: meta.code, description: Numeric response code, mirrors the HTTP status}
+      - {name: meta.status, description: success or error}
+      - {name: data, description: Result payload — array or object depending on the operation}
+  secondary:
+    shape: '{ success, message, data }'
+    used_by: [QRISLY]
+    note: >-
+      QRISLY uses a success/message/data envelope on the happy path and a
+      message/code/status or success/message/error_code/details envelope on errors. The docs
+      advise always checking the success field.
+  inconsistency: >-
+    The two envelopes are not unified across products; a client integrating more than one
+    Komerce API must handle both shapes.
+error_semantics:
+  format: proprietary — not RFC 9457 application/problem+json
+  http_statuses_documented: [200, 201, 400, 401, 403, 404, 429, 500, 503]
+  named_error_codes: true
+  see_also:
+    - errors/komerce-problem-types.yml
+    - errors/komerce-error-codes.yml
+rate_limiting:
+  signalled: true
+  headers:
+    - {name: X-RateLimit-Limit, description: Total requests allowed in the time window}
+    - {name: X-RateLimit-Remaining, description: Number of requests remaining}
+    - {name: X-RateLimit-Reset, description: Timestamp when the limit will reset}
+    - {name: Retry-After, description: Wait time returned with 429 Too Many Requests}
+  guidance: >-
+    Implement exponential backoff on 429, read Retry-After, batch requests, or upgrade tier.
+  documented_on: QRISLY; the plan-level daily quotas apply to the Cek Ongkir (Shipping Cost) API.
+  see_also: rate-limits/komerce-rate-limits.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  docs_generation: 'Docs V2 — the current documentation set covers the v1 API paths that superseded the legacy rajaongkir.com v1 surface'
+  note: >-
+    All four products expose /api/v1/ paths. The legacy rajaongkir.com API is listed on the
+    status page as "RajaOngkir Old (will be deprecated)".
+  see_also: lifecycle/komerce-lifecycle.yml
+environments:
+  separation: separate hosts and separate keys
+  see_also: sandbox/komerce-sandbox.yml
+request_tracing:
+  request_id_header: not documented
+metadata:
+  supported: false
+  note: No generic metadata bag is documented on any resource.
+field_expansion:
+  supported: false
+webhooks:
+  see_also: asyncapi/komerce-webhooks.yml
+  signature: HMAC-SHA256 over the raw JSON body via X-Callback-Api-Key (Payment Service only)
+caching:
+  guidance: >-
+    The docs recommend caching static data such as province lists and courier names locally,
+    and debouncing destination-search input to avoid flooding the API.
+data_conventions:
+  phone_numbers: >-
+    Must start with 0 or 62 (e.g. 081234567890, 6281234567890) — a leading +62 is rejected.
+  weight_units:
+    - {api: Shipping Cost, unit: grams, type: integer}
+    - {api: Shipping Delivery, unit: kilograms, type: float, separator: dot}
+  geolocation: pin point strings formatted "latitude,longitude"
+  currency: IDR

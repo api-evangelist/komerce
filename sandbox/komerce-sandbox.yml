@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url,
+  https://rajaongkir.com/docs/payment-api/getting-started/authentication,
+  https://rajaongkir.com/docs/qrisly/getting-started/authentication
+summary: >-
+  Komerce runs a full sandbox on separate hosts for the Shipping Delivery, Payment Service and
+  QRISLY products. Sandbox behaves identically to production but is isolated — no real shipments
+  are created and payments are simulated rather than processed by banks. Sandbox and production
+  require separate API keys. The Shipping Cost (RajaOngkir) API has no sandbox host: it is
+  documented with a single live environment.
+environments:
+  - name: production
+    key_prefix: live
+    hosts:
+      - {api: Shipping Delivery, url: 'https://api.collaborator.komerce.id/'}
+      - {api: Payment Service, url: 'https://api.collaborator.komerce.id/user'}
+      - {api: QRISLY, url: 'https://api.collaborator.komerce.id/user'}
+      - {api: Shipping Cost, url: 'https://rajaongkir.komerce.id/api/v1/'}
+    hosted_payment_page: 'https://pay.komerce.id/{token}'
+  - name: sandbox
+    key_prefix: sandbox
+    hosts:
+      - {api: Shipping Delivery, url: 'https://api-sandbox.collaborator.komerce.id/'}
+      - {api: Payment Service, url: 'https://api-sandbox.collaborator.komerce.id/user'}
+      - {api: QRISLY, url: 'https://api-sandbox.collaborator.komerce.id/user'}
+    hosted_payment_page: 'https://pay-sandbox.komerce.id/{token}'
+    behaviour:
+      - No real shipments are created.
+      - Payments are simulated and not processed by banks; payment status updates can be simulated.
+      - There are no charges for API activation, integration, or sandbox testing.
+      - Behaves identically to production but in an isolated environment.
+credentials:
+  issuance: Collaborator dashboard -> Developer -> Settings -> Api Key
+  separation: >-
+    Sandbox keys do not work in production without approval from a Komerce administrator, and
+    production keys must not be used against sandbox. Keys are also per-product — a Shipping
+    Delivery key will not authenticate a Shipping Cost or QRISLY request.
+  registration: https://collaborator.komerce.id/registration
+test_values:
+  published: false
+  note: >-
+    Komerce publishes no magic test card numbers, test bank accounts, test AWB numbers or
+    fixture triggers. Sandbox testing uses live-shaped data against the isolated sandbox hosts.
+    Sample destination ids appear in the docs as illustrative examples only
+    (e.g. shipper_destination_id 31597, receiver_destination_id 46116, keyword 53131) and are
+    not guaranteed test fixtures.
+uat:
+  documented: true
+  url: https://rajaongkir.com/docs/introduction/rajaongkir-plugin
+  note: >-
+    The Reference page publishes a step-by-step User Acceptance Testing tutorial for validating
+    an integration before moving to production.
+postman:
+  shipping_cost: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  shipping_delivery: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  environment_variables: [base_url, x-api-key]

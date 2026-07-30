@@ -1,0 +1,29 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Komerce Shipping Delivery API (Komship)
+  version: 1.0.0
+extends: openapi/komerce-shipping-delivery-openapi.yml
+x-apievangelist-generated: '2026-07-19'
+x-apievangelist-method: generated
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: komerce
+      x-apievangelist-api: shipping-delivery
+      x-apievangelist-provider: Komerce
+      x-apievangelist-region: Indonesia
+      x-apievangelist-conventions: conventions/komerce-conventions.yml
+      x-apievangelist-errors: errors/komerce-problem-types.yml
+      x-apievangelist-lifecycle: lifecycle/komerce-lifecycle.yml
+      x-apievangelist-authentication: authentication/komerce-authentication.yml
+      x-apievangelist-rate-limits: rate-limits/komerce-rate-limits.yml
+      x-apievangelist-sandbox: sandbox/komerce-sandbox.yml
+      x-apievangelist-data-model: data-model/komerce-data-model.yml
+      x-apievangelist-webhooks: asyncapi/komerce-webhooks.yml
+  - target: $
+    update:
+      x-apievangelist-source-note: >-
+        Komerce publishes no machine-readable API description. This OpenAPI was generated
+        faithfully from the published RajaOngkir documentation at https://rajaongkir.com/docs
+        by the API Evangelist enrichment pipeline; every path, parameter and response field is
+        grounded in that reference.

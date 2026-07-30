@@ -1,0 +1,49 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/komerce-shipping-cost-openapi.yml, openapi/komerce-shipping-delivery-openapi.yml,
+  openapi/komerce-payment-openapi.yml, openapi/komerce-qrisly-openapi.yml, enriched from
+  https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+format: proprietary
+note: >-
+  Komerce does not use RFC 9457 application/problem+json. Errors are returned in the same
+  meta{message,code,status} envelope as success responses (Shipping Cost / Delivery / Payment),
+  or in a success/message/error_code/details envelope (QRISLY). The list below is the documented
+  HTTP status surface; named error codes are catalogued separately in komerce-error-codes.yml.
+envelope:
+  meta_style: '{ meta: { message, code, status } }'
+  qrisly_style: '{ success: false, message, error_code, details }'
+problems:
+  - status: 400
+    title: Bad Request
+    detail: Invalid parameters or malformed JSON — includes missing required fields, amount outside the allowed range, unsupported file type, and file size over 5MB.
+    source_operation: openapi/komerce-qrisly-openapi.yml#uploadQris
+  - status: 400
+    title: Validation error on order creation
+    detail: Phone number not starting with 0 or 62, incorrect field format, or insufficient dashboard balance for the shipping charge when paying by BANK TRANSFER.
+    source_operation: openapi/komerce-shipping-delivery-openapi.yml#storeOrder
+  - status: 401
+    title: Unauthorized
+    detail: Invalid or missing API key. Check the key is present in the correct header for the product, is still active in the dashboard, has no stray whitespace, and that the request uses HTTPS.
+    source_operation: openapi/komerce-shipping-cost-openapi.yml#searchDomesticDestination
+  - status: 403
+    title: Forbidden
+    detail: Insufficient permissions for the requested resource.
+    source_operation: openapi/komerce-qrisly-openapi.yml#generateQris
+  - status: 404
+    title: Not Found
+    detail: Resource not found — unknown order number, payment id, QRIS id or history id.
+    source_operation: openapi/komerce-qrisly-openapi.yml#getQrisPaymentStatus
+  - status: 429
+    title: Too Many Requests
+    detail: Rate limit exceeded. Read the Retry-After header and implement exponential backoff, or upgrade the plan tier.
+    source_operation: openapi/komerce-qrisly-openapi.yml#generateQris
+  - status: 500
+    title: Internal Server Error
+    detail: Unexpected server error.
+  - status: 503
+    title: Service Unavailable
+    detail: Service temporarily unavailable.
+success_statuses:
+  - {status: 200, title: OK, detail: Request successful}
+  - {status: 201, title: Created, detail: Resource created successfully}

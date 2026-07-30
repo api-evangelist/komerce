@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/delivery-order-api/webhook,
+  https://rajaongkir.com/docs/payment-api/getting-started/callback-handling,
+  https://rajaongkir.com/docs/qrisly/getting-started/webhook
+spec_type: none
+note: >-
+  Komerce publishes no AsyncAPI document. It does document three distinct outbound webhook
+  surfaces — Komship delivery order status, Payment Service callbacks, and QRISLY payment
+  events — captured here as a webhook catalogue. Wired into apis.yml as type Webhooks.
+surfaces:
+  - name: Shipping Delivery order webhook
+    docs: https://rajaongkir.com/docs/delivery-order-api/webhook
+    api: openapi/komerce-shipping-delivery-openapi.yml
+    registration: >-
+      Send a PUT request to /webhook with your handler URL in the request body; Komerce
+      stores it as the destination for all future order events.
+    transport: https
+    method: PUT
+    expected_response: HTTP 200 OK; failure to return 200 may lead to retries or webhook deactivation
+    signature: not documented — the docs suggest implementing your own validation
+    payload_fields:
+      - {name: order_no, type: string, description: Order number the notification relates to}
+      - {name: cnote, type: string, description: Airway bill number}
+      - {name: status, type: string, description: Current delivery status}
+    events:
+      - {name: Diajukan, description: Order submitted}
+      - {name: Dijemput, description: Package picked up}
+      - {name: Dikirim, description: Package in transit}
+      - {name: Dibatalkan, description: Order cancelled}
+      - {name: Selesai, description: Order completed}
+  - name: Payment Service callback
+    docs: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+    api: openapi/komerce-payment-openapi.yml
+    registration: >-
+      Set callback_url (and callback_api_key) on the createPayment request body.
+    transport: https
+    method: POST
+    signature:
+      algorithm: HMAC-SHA256
+      header: X-Callback-Api-Key
+      secret: the callback_api_key supplied on createPayment
+      verification: >-
+        HMAC-SHA256 the exact raw JSON body with the callback API key and compare against the
+        X-Callback-Api-Key header. Do not parse, reformat or strip whitespace before hashing.
+      on_match: return HTTP 200 OK
+      on_mismatch: discard the request and return HTTP 401 or 403
+  - name: QRISLY payment webhook
+    docs: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+    api: openapi/komerce-qrisly-openapi.yml
+    registration: >-
+      RajaOngkir dashboard -> Webhook -> QRISLY -> Outbound Webhook -> enter your endpoint URL.
+    transport: https
+    method: POST
+    expected_response: 'HTTP 200 OK with JSON {"success": true, "message": "Webhook received and processed"}'
+    retries:
+      count: 3
+      backoff: exponential
+      schedule: [1 minute, 5 minutes, 15 minutes]
+    events:
+      - name: payment.success
+        description: Sent when payment is successfully received.
+        payload_fields:
+          - {name: event, type: string}
+          - {name: timestamp, type: string, format: date-time}
+          - {name: data.qris_history_id, type: string}
+          - {name: data.qris_id, type: string}
+          - {name: data.amount, type: integer}
+          - {name: data.original_amount, type: integer}
+          - {name: data.status, type: string}
+          - {name: data.paid_at, type: string, format: date-time}
+          - {name: data.payment_method, type: string}
+          - {name: data.payment_provider, type: string}
+          - {name: data.created_at, type: string, format: date-time}
+      - name: payment.expired
+        description: Sent when the QRIS expires without payment.
+        payload_fields:
+          - {name: event, type: string}
+          - {name: timestamp, type: string, format: date-time}
+          - {name: data.qris_history_id, type: string}
+          - {name: data.qris_id, type: string}
+          - {name: data.amount, type: integer}
+          - {name: data.status, type: string}
+          - {name: data.created_at, type: string, format: date-time}
+          - {name: data.expired_at, type: string, format: date-time}

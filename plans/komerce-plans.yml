@@ -1,0 +1,78 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/pricing, https://rajaongkir.com/docs/payment-api/getting-started/pricing,
+  https://rajaongkir.com/docs/qrisly/getting-started/pricing
+currency: IDR
+note: >-
+  RajaOngkir sells a three-tier subscription that gates the daily Cek Ongkir (Shipping Cost) API
+  quota and access to the Shipping Delivery, Payment and QRISLY products. Payment and QRISLY are
+  additionally metered per transaction. Pro and Enterprise prices include 11% Indonesian VAT (PPN).
+plans:
+  - name: Starter
+    price: 0
+    currency: IDR
+    period: month
+    url: https://rajaongkir.com/pricing
+    limits:
+      - {metric: cek_ongkir_api_hits, limit: 100, period: day}
+    features:
+      - API Cek Ongkir Realtime
+      - API Payment Service
+      - API QRISLY
+      - Cek Ongkir across 17 domestic couriers
+      - Cek Ongkir across 6 international couriers
+      - API Shipping Delivery
+  - name: Pro
+    price: 149000
+    list_price: 200000
+    currency: IDR
+    period: month
+    url: https://rajaongkir.com/pricing
+    limits:
+      - {metric: cek_ongkir_api_hits, limit: 25000, period: day}
+    features:
+      - Everything in Starter
+      - Faster response time
+      - API Shipping Delivery
+    notes: Price includes 11% VAT (PPN).
+  - name: Enterprise
+    price: 249000
+    list_price: 400000
+    currency: IDR
+    period: month
+    url: https://rajaongkir.com/pricing
+    limits:
+      - {metric: cek_ongkir_api_hits, limit: 50000, period: day}
+    features:
+      - Everything in Pro
+      - API Shipping Delivery — create AWB, pickup, tracking, print label
+      - API Payment Service — VA, e-wallet, QRIS, automatic notifications
+      - API QRISLY — generate static to dynamic QRIS
+      - Priority support via WhatsApp group
+    notes: Price includes 11% VAT (PPN).
+usage_pricing:
+  - product: Payment Service
+    channel: Virtual Account / bank transfer
+    fee: 4440
+    fee_type: flat
+    currency: IDR
+    unit: transaction
+    settlement: T+1
+    vat_included: true
+  - product: Payment Service
+    channel: QRIS
+    fee: 0.99
+    fee_type: percentage
+    unit: transaction
+    settlement: T+1
+    vat_included: true
+  - product: QRISLY
+    channel: QRIS generation
+    fee: 100
+    fee_type: flat
+    currency: IDR
+    unit: generated QRIS
+    notes: >-
+      API access, failed transactions, webhook notifications and QRIS management are free;
+      generation fees are deducted from the balance wallet per use. No setup fee or subscription.

@@ -1,0 +1,403 @@
+openapi: 3.0.3
+info:
+  title: RajaOngkir Shipping Cost API
+  version: v1
+  description: |
+    RajaOngkir (by Komerce) Shipping Cost API — domestic and international shipping
+    destination lookup, shipping cost calculation across Indonesian couriers, and
+    airway-bill (AWB) tracking. Authentication is a header API key (`key`) issued
+    from the Collaborator dashboard under Developer -> Settings -> Api Key
+    (the "Shipping Cost" key).
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+servers:
+  - url: https://rajaongkir.komerce.id/api/v1
+    description: Live environment
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Destinations
+    description: Destination and administrative-region lookup
+  - name: Cost
+    description: Shipping cost calculation
+  - name: Tracking
+    description: Airway bill tracking
+paths:
+  /destination/domestic-destination:
+    get:
+      operationId: searchDomesticDestination
+      tags: [Destinations]
+      summary: Search domestic destination
+      description: Search Indonesian destinations by city, district, subdistrict or zip code. Returns the destination id used by the cost endpoints.
+      parameters:
+        - name: search
+          in: query
+          required: true
+          description: Search keyword — city, district, subdistrict name, or postal code.
+          schema: { type: string }
+          example: jakarta
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of rows returned by the query.
+          schema: { type: integer }
+          example: 5
+        - name: offset
+          in: query
+          required: false
+          description: Row offset, used with limit to page results.
+          schema: { type: integer }
+          example: 0
+      responses:
+        '200':
+          description: Matching domestic destinations
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DomesticDestinationList' }
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Meta' }
+  /destination/international-destination:
+    get:
+      operationId: searchInternationalDestination
+      tags: [Destinations]
+      summary: Search international destination
+      description: Search worldwide destinations and return the destination id used by the international cost endpoint.
+      parameters:
+        - name: search
+          in: query
+          required: true
+          schema: { type: string }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer }
+        - name: offset
+          in: query
+          required: false
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Matching international destinations
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/InternationalDestinationList' }
+        '401':
+          description: Missing or invalid API key
+  /calculate/domestic-cost:
+    post:
+      operationId: calculateDomesticCost
+      tags: [Cost]
+      summary: Calculate domestic shipping cost
+      description: Estimate shipping cost between two Indonesian destination ids for one or more couriers.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [origin, destination, weight, courier]
+              properties:
+                origin:
+                  type: integer
+                  description: Destination id of the origin, from searchDomesticDestination.
+                destination:
+                  type: integer
+                  description: Destination id of the destination, from searchDomesticDestination.
+                weight:
+                  type: integer
+                  description: Package weight in grams.
+                courier:
+                  type: string
+                  description: Courier code, or colon-separated list of courier codes.
+                  example: jne
+                price:
+                  type: string
+                  description: Sort/selection of shipping cost — lowest or highest.
+                  enum: [lowest, highest]
+      responses:
+        '200':
+          description: Available courier services with cost and ETD
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DomesticCostList' }
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /calculate/international-cost:
+    post:
+      operationId: calculateInternationalCost
+      tags: [Cost]
+      summary: Calculate international shipping cost
+      description: Estimate international shipping cost between an Indonesian origin and a worldwide destination.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [origin, destination, weight, courier]
+              properties:
+                origin: { type: integer }
+                destination: { type: integer }
+                weight: { type: integer, description: Package weight in grams. }
+                courier: { type: string }
+                price: { type: string, enum: [lowest, highest] }
+      responses:
+        '200':
+          description: Available international courier services with cost, currency and ETD
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/InternationalCostList' }
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /track/waybill:
+    post:
+      operationId: trackWaybill
+      tags: [Tracking]
+      summary: Track an airway bill
+      description: Retrieve real-time shipment status and manifest history for an AWB number from a supported courier.
+      parameters:
+        - name: awb
+          in: query
+          required: true
+          description: Airway bill (tracking) number.
+          schema: { type: string }
+        - name: courier
+          in: query
+          required: true
+          description: Courier code.
+          schema: { type: string }
+        - name: last_phone_number
+          in: query
+          required: false
+          description: Last 5 digits of the recipient phone number — required for additional validation by certain couriers including JNE.
+          schema: { type: string }
+      responses:
+        '200':
+          description: Waybill summary, details, delivery status and manifest
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/WaybillResponse' }
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+  /destination/province:
+    get:
+      operationId: listProvinces
+      tags: [Destinations]
+      summary: List provinces
+      description: Retrieve the list of Indonesian provinces for form-based (cascading) destination selection.
+      responses:
+        '200':
+          description: Province list
+        '401':
+          description: Missing or invalid API key
+  /destination/city/{province_id}:
+    get:
+      operationId: listCities
+      tags: [Destinations]
+      summary: List cities in a province
+      parameters:
+        - name: province_id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: City list
+        '401':
+          description: Missing or invalid API key
+  /destination/district/{city_id}:
+    get:
+      operationId: listDistricts
+      tags: [Destinations]
+      summary: List districts in a city
+      parameters:
+        - name: city_id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: District list
+        '401':
+          description: Missing or invalid API key
+  /destination/sub-district/{district_id}:
+    get:
+      operationId: listSubdistricts
+      tags: [Destinations]
+      summary: List subdistricts in a district
+      parameters:
+        - name: district_id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Subdistrict list
+        '401':
+          description: Missing or invalid API key
+  /calculate/district/domestic-cost:
+    post:
+      operationId: calculateDistrictDomesticCost
+      tags: [Cost]
+      summary: Calculate domestic cost from district/subdistrict ids
+      description: Form-based cost calculation using district or subdistrict ids obtained from the cascading province/city/district/subdistrict endpoints.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [origin, destination, weight, courier]
+              properties:
+                origin: { type: integer }
+                destination: { type: integer }
+                weight: { type: integer }
+                courier: { type: string }
+                price: { type: string, enum: [lowest, highest] }
+      responses:
+        '200':
+          description: Available courier services with cost and ETD
+        '400':
+          description: Invalid or missing parameters
+        '401':
+          description: Missing or invalid API key
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: key
+      description: Shipping Cost API key from the Collaborator dashboard (Developer -> Settings -> Api Key).
+  schemas:
+    Meta:
+      type: object
+      properties:
+        message: { type: string }
+        code: { type: integer }
+        status: { type: string }
+    DomesticDestination:
+      type: object
+      properties:
+        id: { type: integer, description: Destination id used as origin/destination in cost calculation. }
+        label: { type: string, description: Full formatted delivery location. }
+        province_name: { type: string }
+        city_name: { type: string }
+        district_name: { type: string }
+        subdistrict_name: { type: string }
+        zip_code: { type: string }
+    DomesticDestinationList:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/DomesticDestination' }
+    InternationalDestinationList:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: array
+          items: { type: object }
+    CourierCost:
+      type: object
+      properties:
+        name: { type: string }
+        code: { type: string }
+        service: { type: string }
+        description: { type: string }
+        cost: { type: integer }
+        etd: { type: string }
+    InternationalCourierCost:
+      allOf:
+        - $ref: '#/components/schemas/CourierCost'
+        - type: object
+          properties:
+            currency: { type: string }
+            currency_updated_at: { type: string }
+            currency_value: { type: number }
+    DomesticCostList:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/CourierCost' }
+    InternationalCostList:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/InternationalCourierCost' }
+    WaybillResponse:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: object
+          properties:
+            delivered: { type: boolean }
+            summary:
+              type: object
+              properties:
+                courier_code: { type: string }
+                courier_name: { type: string }
+                waybill_number: { type: string }
+                service_code: { type: string }
+                waybill_date: { type: string }
+                shipper_name: { type: string }
+                receiver_name: { type: string }
+                origin: { type: string }
+                destination: { type: string }
+                status: { type: string }
+            details:
+              type: object
+              properties:
+                waybill_number: { type: string }
+                waybill_date: { type: string }
+                waybill_time: { type: string }
+                weight: { type: string }
+                origin: { type: string }
+                destination: { type: string }
+                shipper_name: { type: string }
+                shipper_address1: { type: string }
+                shipper_address2: { type: string }
+                shipper_address3: { type: string }
+                shipper_city: { type: string }
+                receiver_name: { type: string }
+                receiver_address1: { type: string }
+                receiver_address2: { type: string }
+                receiver_address3: { type: string }
+                receiver_city: { type: string }
+            delivery_status:
+              type: object
+              properties:
+                status: { type: string }
+                pod_receiver: { type: string }
+                pod_date: { type: string }
+                pod_time: { type: string }
+            manifest:
+              type: array
+              items:
+                type: object
+                properties:
+                  manifest_code: { type: string }
+                  manifest_description: { type: string }
+                  manifest_date: { type: string }
+                  manifest_time: { type: string }
+                  city_name: { type: string }

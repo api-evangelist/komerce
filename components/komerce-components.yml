@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/introduction/rajaongkir-plugin,
+  https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints,
+  https://rajaongkir.com/docs/qrisly/getting-started/mobile-application
+note: >-
+  Komerce ships no JavaScript element library or embeddable web components. It does ship three
+  prebuilt client-side surfaces that a developer drops into an existing product rather than
+  building: an official WooCommerce storefront plugin, a hosted payment page, and a mobile
+  listener application for QRISLY reconciliation.
+families:
+  - name: Storefront plugin
+    components:
+      - name: RajaOngkir WooCommerce Plugin
+        platform: WordPress / WooCommerce
+        docs: https://rajaongkir.com/docs/introduction/rajaongkir-plugin
+        official: true
+        install: Plugins -> Add New -> Upload Plugin -> Install Now -> Activate
+        configuration: WooCommerce -> Settings -> Shipping -> RajaOngkir, paste your API key
+        capabilities:
+          - Display real-time shipping costs at checkout
+          - Enable multiple courier options for customers
+          - Automatically calculate shipping fees by destination and weight
+          - Domestic and international shipping support
+  - name: Hosted payment surface
+    components:
+      - name: Komerce hosted payment page
+        docs: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+        official: true
+        url_pattern: 'https://pay.komerce.id/{token}'
+        sandbox_url_pattern: 'https://pay-sandbox.komerce.id/{token}'
+        description: >-
+          Prebuilt checkout page addressed by the token returned when a payment transaction is
+          created; renders the Virtual Account and QRIS payment options for the buyer.
+  - name: Reconciliation client
+    components:
+      - name: QRISLY Mobile App Listener
+        docs: https://rajaongkir.com/docs/qrisly/getting-started/mobile-application
+        official: true
+        description: >-
+          Mobile listener application that reads incoming payment amounts from the merchant's
+          mobile banking app and matches them to generated QRIS transactions using the
+          unique-amount decimal identifier, confirming payments back to QRISLY.

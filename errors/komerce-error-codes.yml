@@ -1,0 +1,40 @@
+generated: '2026-07-19'
+method: searched
+source: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+note: >-
+  Named error-code registry published by Komerce. The codes below are documented for the QRISLY
+  API, which is the only Komerce surface that publishes a named error-code table; the Shipping
+  Cost, Shipping Delivery and Payment Service surfaces return the meta{message,code,status}
+  envelope with a human-readable message and no stable machine code.
+envelope_field: error_code
+api: openapi/komerce-qrisly-openapi.yml
+error_codes:
+  - code: INVALID_API_KEY
+    description: API key is invalid or expired.
+    remediation: Verify the API key in the Collaborator dashboard.
+    http_status: 401
+  - code: RATE_LIMIT_EXCEEDED
+    description: Too many requests.
+    remediation: Wait for the window to reset (see Retry-After) or upgrade your plan.
+    http_status: 429
+  - code: INVALID_QRIS_FORMAT
+    description: QRIS data format is invalid.
+    remediation: Upload a new QRIS or check the format.
+    http_status: 400
+  - code: QRIS_NOT_FOUND
+    description: QRIS ID does not exist.
+    remediation: Verify the QRIS ID or create a new QRIS.
+    http_status: 404
+  - code: PAYMENT_EXPIRED
+    description: Payment window has expired.
+    remediation: Generate a new QRIS for the payment.
+    http_status: 400
+  - code: VALIDATION_ERROR
+    description: Invalid request parameters.
+    remediation: Check the request body for errors.
+    http_status: 400
+documented_messages:
+  - {message: 'Please upload a file with one of these types: image/png,image/jpeg,image/jpg', code: 400, operation: uploadQris}
+  - {message: file size must be less than 5MB, code: 400, operation: uploadQris}
+  - {message: amount must be between 1000 and 100000000, code: 400, operation: generateQris}
+  - {message: QRIS not found, code: 404, operation: generateQris}

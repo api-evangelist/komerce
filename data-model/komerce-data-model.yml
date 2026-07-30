@@ -1,0 +1,136 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/komerce-shipping-cost-openapi.yml, openapi/komerce-shipping-delivery-openapi.yml,
+  openapi/komerce-payment-openapi.yml, openapi/komerce-qrisly-openapi.yml
+note: >-
+  Entity graph derived from the harvested specs' schemas and id-reference fields. Komerce uses
+  bare integer or UUID identifiers with no id prefixes, and the four products are only loosely
+  joined — Destination is the shared entity that binds the shipping-cost and delivery domains.
+domains:
+  - name: shipping-cost
+    api: openapi/komerce-shipping-cost-openapi.yml
+  - name: shipping-delivery
+    api: openapi/komerce-shipping-delivery-openapi.yml
+  - name: payment
+    api: openapi/komerce-payment-openapi.yml
+  - name: qris
+    api: openapi/komerce-qrisly-openapi.yml
+entities:
+  - name: Destination
+    domain: shipping-cost
+    id_field: id
+    id_type: integer
+    description: A resolvable shipping location — province, city, district, subdistrict and zip code.
+    fields: [id, label, province_name, city_name, district_name, subdistrict_name, zip_code]
+    relationships: []
+  - name: Province
+    domain: shipping-cost
+    id_field: province_id
+    id_type: integer
+    relationships:
+      - {type: has_many, target: City, via: province_id}
+  - name: City
+    domain: shipping-cost
+    id_field: city_id
+    id_type: integer
+    relationships:
+      - {type: belongs_to, target: Province, via: province_id}
+      - {type: has_many, target: District, via: city_id}
+  - name: District
+    domain: shipping-cost
+    id_field: district_id
+    id_type: integer
+    relationships:
+      - {type: belongs_to, target: City, via: city_id}
+      - {type: has_many, target: Subdistrict, via: district_id}
+  - name: Subdistrict
+    domain: shipping-cost
+    id_field: id
+    id_type: integer
+    relationships:
+      - {type: belongs_to, target: District, via: district_id}
+  - name: CourierCost
+    domain: shipping-cost
+    description: A quoted courier service with cost and ETD for an origin/destination/weight triple.
+    fields: [name, code, service, description, cost, etd, currency, currency_value, currency_updated_at]
+    relationships:
+      - {type: belongs_to, target: Destination, via: origin}
+      - {type: belongs_to, target: Destination, via: destination}
+  - name: Waybill
+    domain: shipping-cost
+    id_field: waybill_number
+    id_type: string
+    description: A tracked shipment with summary, details, delivery status and manifest history.
+    relationships:
+      - {type: has_many, target: ManifestEvent, via: manifest}
+  - name: ManifestEvent
+    domain: shipping-cost
+    fields: [manifest_code, manifest_description, manifest_date, manifest_time, city_name]
+    relationships:
+      - {type: belongs_to, target: Waybill, via: waybill_number}
+  - name: Order
+    domain: shipping-delivery
+    id_field: order_no
+    id_type: string
+    description: A delivery order created against a courier service, priced and paid by COD or bank transfer.
+    fields: [order_date, brand_name, shipping, shipping_type, payment_method, shipping_cost, shipping_cashback, service_fee, additional_cost, grand_total, cod_value, insurance_value, notes]
+    relationships:
+      - {type: has_many, target: OrderDetailItem, via: order_details}
+      - {type: belongs_to, target: Destination, via: shipper_destination_id}
+      - {type: belongs_to, target: Destination, via: receiver_destination_id}
+      - {type: has_one, target: AirwayBill, via: airway_bill}
+      - {type: has_one, target: PickupRequest, via: order_no}
+  - name: OrderDetailItem
+    domain: shipping-delivery
+    fields: [product_name, product_variant_name, product_price, product_weight, product_width, product_height, product_length, qty, subtotal]
+    relationships:
+      - {type: belongs_to, target: Order, via: order_no}
+  - name: AirwayBill
+    domain: shipping-delivery
+    id_field: airway_bill
+    id_type: string
+    relationships:
+      - {type: belongs_to, target: Order, via: order_no}
+  - name: PickupRequest
+    domain: shipping-delivery
+    fields: [order_no, pickup_date, pickup_time]
+    relationships:
+      - {type: belongs_to, target: Order, via: order_no}
+  - name: PaymentMethod
+    domain: payment
+    id_field: bank_code
+    id_type: string
+    fields: [payment_type, display_name, bank_code, logo_url, min_amount, max_amount, currency]
+  - name: Payment
+    domain: payment
+    id_field: payment_id
+    id_type: string
+    fields: [order_id, payment_type, channel_code, amount, expiry_duration, callback_url]
+    relationships:
+      - {type: belongs_to, target: PaymentMethod, via: channel_code}
+      - {type: has_one, target: PaymentCustomer, via: customer}
+      - {type: has_many, target: PaymentItem, via: items}
+  - name: PaymentCustomer
+    domain: payment
+    fields: [name, email, phone]
+  - name: PaymentItem
+    domain: payment
+    fields: [name, quantity, price]
+  - name: Qris
+    domain: qris
+    id_field: qris_id
+    id_type: string
+    description: An uploaded static QRIS, validated and reused as the template for dynamic generation.
+    fields: [qris_id, provider, name, merchant_name, created_at]
+    relationships:
+      - {type: has_many, target: QrisHistory, via: qris_id}
+  - name: QrisHistory
+    domain: qris
+    id_field: history_id
+    id_type: integer
+    description: One generated dynamic QRIS with its own amount, unique amount and payment status.
+    fields: [history_id, qris_string, original_amount, final_amount, payment_status, expiry_time]
+    relationships:
+      - {type: belongs_to, target: Qris, via: qris_id}
+render: null

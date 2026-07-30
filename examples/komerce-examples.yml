@@ -1,0 +1,229 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/shipping-cost/endpoint-rajaongkir-for-search-base/search-destination-rajaongkir,
+  https://rajaongkir.com/docs/delivery-order-api/search-destination,
+  https://rajaongkir.com/docs/delivery-order-api/Store_order/store_order,
+  https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints,
+  https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+note: >-
+  Request and response examples published verbatim in the Komerce documentation. Values shown
+  are the provider's own illustrative samples, not test fixtures.
+examples:
+  - name: Search domestic destination
+    api: openapi/komerce-shipping-cost-openapi.yml
+    operation: searchDomesticDestination
+    request:
+      method: GET
+      url: https://rajaongkir.komerce.id/api/v1/destination/domestic-destination?search=jakarta&limit=5&offset=0
+      headers:
+        key: inputapikey
+    response:
+      status: 200
+      body:
+        meta:
+          message: Success Get Domestic Destinations
+          code: 200
+          status: success
+        data: []
+      note: The docs render data[] entries as templated placeholders (id, label, province_name, city_name, district_name, subdistrict_name, zip_code).
+  - name: Calculate domestic cost
+    api: openapi/komerce-shipping-cost-openapi.yml
+    operation: calculateDomesticCost
+    request:
+      method: POST
+      url: https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost
+      headers:
+        key: inputapikey
+        Content-Type: application/x-www-form-urlencoded
+      form:
+        origin: '{{ origin.id }}'
+        destination: '{{ destination.id }}'
+        weight: '{{ weight.grams }}'
+        courier: '{{ courier.code }}'
+        price: '{{ lowest/highest }}'
+    response:
+      status: 200
+      body:
+        meta:
+          message: Success Calculate Domestic Shipping cost
+          code: 200
+          status: success
+      note: data[] entries carry name, code, service, description, cost and etd.
+  - name: Search delivery destination
+    api: openapi/komerce-shipping-delivery-openapi.yml
+    operation: searchDeliveryDestination
+    request:
+      method: GET
+      url: https://api-sandbox.collaborator.komerce.id/tariff/api/v1/destination/search?keyword=53131
+      headers:
+        x-api-key: yourapikey
+    response:
+      status: 200
+      body:
+        meta:
+          message: Sucessfully Get Destination Data
+          code: 200
+          status: success
+        data:
+          - id: 34167
+            label: PURWOKERTO, NGADILUWIH, KEDIRI, 64171
+            subdistrict_name: PURWOKERTO
+            district_name: NGADILUWIH
+            city_name: KEDIRI
+            zip_code: '64171'
+          - id: 67150
+            label: PURWOKERTO, KAYEN, PATI, 59171
+            subdistrict_name: PURWOKERTO
+            district_name: KAYEN
+            city_name: PATI
+            zip_code: '59171'
+  - name: Calculate delivery price
+    api: openapi/komerce-shipping-delivery-openapi.yml
+    operation: calculateDeliveryPrice
+    request:
+      method: GET
+      url: https://api-sandbox.collaborator.komerce.id/tariff/api/v1/calculate?shipper_destination_id=31597&receiver_destination_id=46116&weight=1&item_value=300000&cod=yes&origin_pin_point=-7.279849431298132,109.35114360314475&destination_pin_point=-7.30585,109.36814
+      headers:
+        x-api-key: inputapikey
+    response:
+      status: 200
+      note: data carries calculate_reguler, calculate_cargo and calculate_instant arrays.
+  - name: Create a delivery order
+    api: openapi/komerce-shipping-delivery-openapi.yml
+    operation: storeOrder
+    request:
+      method: POST
+      url: https://api-sandbox.collaborator.komerce.id/order/api/v1/orders/store
+      headers:
+        x-api-key: inputapikey
+        Content-Type: application/json
+      body:
+        order_date: '2025-05-21'
+        brand_name: Xiaomi Official
+        shipper_name: XIAOMI
+        shipper_phone: '0853123413241'
+        shipper_destination_id: 5969
+        shipper_address: Alamat pengirim
+        origin_pin_point: '-7.274631, 109.207174'
+        receiver_name: Buyer Bandung
+        receiver_phone: '08123458282'
+        receiver_destination_id: 4956
+        receiver_address: Alamat penerima
+        shipper_email: admin@admin.com
+        destination_pin_point: '-7.274631, 109.207174'
+        shipping: JNE
+        shipping_type: REG23
+        payment_method: BANK TRANSFER
+        shipping_cost: 16000
+        shipping_cashback: 4000
+        service_fee: 0
+        additional_cost: 0
+        grand_total: 516000
+        cod_value: 0
+        insurance_value: 5631.11
+        notes: Contoh note
+        order_details:
+          - product_name: Xiaomi Redmi Note 99
+            product_variant_name: Blue 8/256
+            product_price: 315555
+            product_weight: 1000
+            product_width: 10
+            product_height: 8
+            product_length: 50
+            qty: 1
+            subtotal: 315555
+  - name: Get payment methods
+    api: openapi/komerce-payment-openapi.yml
+    operation: getPaymentMethods
+    request:
+      method: GET
+      url: https://api-sandbox.collaborator.komerce.id/user/api/v1/user/methods
+      headers:
+        x-api-key: YOUR_API_KEY
+    response:
+      status: 200
+      body:
+        meta:
+          message: success get payment methods
+          code: 200
+          status: success
+        data:
+          - payment_type: va
+            display_name: Bank Central Asia
+            bank_code: BCA
+            logo_url: https://storage.googleapis.com/komerce/assets/logo/bca.png
+            min_amount: 10000
+            max_amount: 999999999999
+            currency: IDR
+  - name: Upload a QRIS image
+    api: openapi/komerce-qrisly-openapi.yml
+    operation: uploadQris
+    request:
+      method: POST
+      url: https://api-sandbox.collaborator.komerce.id/user/api/v1/qrisly/upload-qris
+      headers:
+        X-API-Key: your_api_key_here
+      form:
+        name: ABC Online Store
+        qris_image: '@/path/to/qris.png'
+    response:
+      status: 200
+      body:
+        success: true
+        message: QRIS successfully uploaded and validated
+        data:
+          qris_id: 9d6c9f9e-8c33-4f42-8b1f-0e6a3e2e7d10
+          provider: DANA
+          name: ABC Store
+          merchant_name: ABC Store
+          created_at: '2026-03-03 14:00:54'
+  - name: Generate a dynamic QRIS
+    api: openapi/komerce-qrisly-openapi.yml
+    operation: generateQris
+    request:
+      method: POST
+      url: https://api-sandbox.collaborator.komerce.id/user/api/v1/qrisly/generate-qris
+      headers:
+        X-API-Key: your_api_key_here
+        Content-Type: application/json
+      body:
+        qris_id: 123
+        amount: 100000
+        output_type: string
+        unique_amount: true
+    response:
+      status: 200
+      body:
+        success: true
+        message: QRIS successfully generated
+        data:
+          history_id: 1778
+          original_amount: 1000
+          final_amount: 1003
+          payment_status: unpaid
+          expiry_time: '2026-03-03 14:52:52'
+      note: The documented response also carries a long qris_string EMVCo QR payload, omitted here.
+  - name: QRISLY payment.success webhook
+    api: asyncapi/komerce-webhooks.yml
+    operation: webhook payment.success
+    request:
+      method: POST
+      body:
+        event: payment.success
+        timestamp: '2025-01-14T10:35:22Z'
+        data:
+          qris_history_id: 8c5b8e8d-7b22-3e31-7a0e-0d5a2d1d6c09
+          qris_id: 9d6c9f9e-8c33-4f42-8b1f-0e6a3e2e7d10
+          amount: 100001
+          original_amount: 100000
+          status: paid
+          paid_at: '2025-01-14T10:35:22Z'
+          payment_method: Bank Transfer
+          payment_provider: Bank BCA
+          created_at: '2025-01-14T10:30:00Z'
+    response:
+      status: 200
+      body:
+        success: true
+        message: Webhook received and processed

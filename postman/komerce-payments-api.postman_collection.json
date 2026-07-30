@@ -1,0 +1,798 @@
+{
+  "info": {
+    "_postman_id": "26ad7a6c-6b76-4654-80bf-2aaf92ca09c5",
+    "name": "Komerce Payment Service Cost Payments API",
+    "description": "Komerce Payment Service API \u2014 list payment methods (bank Virtual Account and QRIS),\ncreate a payment transaction, check payment status, cancel a Virtual Account payment,\nand receive HMAC-SHA256 signed callbacks. Authentication is a header API key\n(`x-api-key`) \u2014 the same key used for Komerce Shipping (RajaOngkir). Hosted payment\npages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).\n\n\nContact Support:\n Name: RajaOngkir Support\n Email: support@rajaongkir.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:46.000Z",
+    "updatedAt": "2026-07-28T02:00:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-26ad7a6c-6b76-4654-80bf-2aaf92ca09c5"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "user",
+              "item": [
+                {
+                  "name": "methods",
+                  "item": [
+                    {
+                      "name": "Get payment methods",
+                      "id": "eff9b227-71db-4b30-946d-6bcd7d75db0e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/user/methods",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "user",
+                            "methods"
+                          ]
+                        },
+                        "description": "Retrieve available payment methods including Virtual Account banks and QRIS, with bank codes and min/max amounts."
+                      },
+                      "response": [
+                        {
+                          "id": "c795d1fc-b171-4638-84e5-e4399eaa1daf",
+                          "name": "Available payment methods",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/user/methods",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "methods"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"meta\": {\n    \"message\": \"<string>\",\n    \"code\": \"<integer>\",\n    \"status\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"payment_type\": \"va\",\n      \"display_name\": \"<string>\",\n      \"bank_code\": \"<string>\",\n      \"logo_url\": \"<string>\",\n      \"min_amount\": \"<integer>\",\n      \"max_amount\": \"<integer>\",\n      \"currency\": \"<string>\"\n    },\n    {\n      \"payment_type\": \"qris\",\n      \"display_name\": \"<string>\",\n      \"bank_code\": \"<string>\",\n      \"logo_url\": \"<string>\",\n      \"min_amount\": \"<integer>\",\n      \"max_amount\": \"<integer>\",\n      \"currency\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T02:00:47.000Z",
+                          "updatedAt": "2026-07-28T02:00:47.000Z",
+                          "uid": "35240-c795d1fc-b171-4638-84e5-e4399eaa1daf"
+                        },
+                        {
+                          "id": "75e2f018-b39d-499e-9a97-6e5787eddb20",
+                          "name": "Invalid or missing API key",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/user/methods",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "methods"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:00:47.000Z",
+                          "updatedAt": "2026-07-28T02:00:47.000Z",
+                          "uid": "35240-75e2f018-b39d-499e-9a97-6e5787eddb20"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:00:47.000Z",
+                      "updatedAt": "2026-07-28T02:00:47.000Z",
+                      "uid": "35240-eff9b227-71db-4b30-946d-6bcd7d75db0e"
+                    }
+                  ],
+                  "id": "c602e576-94c7-4f88-9bd2-6a8a3ea5a71b",
+                  "createdAt": "2026-07-28T02:00:47.000Z",
+                  "updatedAt": "2026-07-28T02:00:47.000Z",
+                  "uid": "35240-c602e576-94c7-4f88-9bd2-6a8a3ea5a71b"
+                },
+                {
+                  "name": "payment",
+                  "item": [
+                    {
+                      "name": "create",
+                      "item": [
+                        {
+                          "name": "Create a payment transaction",
+                          "id": "24904a9b-ae21-4c25-82c6-6d74adb071f9",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"order_id\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"channel_code\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": \"<string>\"\n  },\n  \"items\": [\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    }\n  ],\n  \"expiry_duration\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"callback_api_key\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/user/payment/create",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "payment",
+                                "create"
+                              ]
+                            },
+                            "description": "Create a new payment transaction for a Virtual Account bank or QRIS channel."
+                          },
+                          "response": [
+                            {
+                              "id": "515aeb52-68b3-4b50-9ad8-fa7a0402dc3f",
+                              "name": "Payment created",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"order_id\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"channel_code\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": \"<string>\"\n  },\n  \"items\": [\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    }\n  ],\n  \"expiry_duration\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"callback_api_key\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/create",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "create"
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-515aeb52-68b3-4b50-9ad8-fa7a0402dc3f"
+                            },
+                            {
+                              "id": "30369fe2-ed75-409d-b69d-292840405589",
+                              "name": "Invalid parameters \u2014 amount below minimum, invalid bank code, or invalid email",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"order_id\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"channel_code\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": \"<string>\"\n  },\n  \"items\": [\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    }\n  ],\n  \"expiry_duration\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"callback_api_key\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/create",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "create"
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-30369fe2-ed75-409d-b69d-292840405589"
+                            },
+                            {
+                              "id": "2de56c8c-4e44-42fd-9081-97d4952edc4a",
+                              "name": "Invalid or missing API key",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"order_id\": \"<string>\",\n  \"payment_type\": \"<string>\",\n  \"channel_code\": \"<string>\",\n  \"amount\": \"<integer>\",\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": \"<string>\"\n  },\n  \"items\": [\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<integer>\"\n    }\n  ],\n  \"expiry_duration\": \"<integer>\",\n  \"callback_url\": \"<string>\",\n  \"callback_api_key\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/create",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "create"
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-2de56c8c-4e44-42fd-9081-97d4952edc4a"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:00:47.000Z",
+                          "updatedAt": "2026-07-28T02:00:47.000Z",
+                          "uid": "35240-24904a9b-ae21-4c25-82c6-6d74adb071f9"
+                        }
+                      ],
+                      "id": "7e9c76a5-9c0c-4a2f-8a04-d0ca9c9b4e4b",
+                      "createdAt": "2026-07-28T02:00:47.000Z",
+                      "updatedAt": "2026-07-28T02:00:47.000Z",
+                      "uid": "35240-7e9c76a5-9c0c-4a2f-8a04-d0ca9c9b4e4b"
+                    },
+                    {
+                      "name": "status",
+                      "item": [
+                        {
+                          "name": "{payment_id}",
+                          "item": [
+                            {
+                              "name": "Get payment status",
+                              "id": "0247da73-36c5-4acb-bdb4-6c7aea1694a1",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/status/:payment_id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "status",
+                                    ":payment_id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "6872024f-97d5-4cbe-be2e-485d9d1f2cda",
+                                      "key": "payment_id",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": [
+                                {
+                                  "id": "601f3f01-060a-439c-9ba0-15df528115d1",
+                                  "name": "Payment status",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: apikey",
+                                        "key": "x-api-key",
+                                        "value": "<API Key>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v1/user/payment/status/:payment_id",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v1",
+                                        "user",
+                                        "payment",
+                                        "status",
+                                        ":payment_id"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "payment_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-07-28T02:00:47.000Z",
+                                  "updatedAt": "2026-07-28T02:00:47.000Z",
+                                  "uid": "35240-601f3f01-060a-439c-9ba0-15df528115d1"
+                                },
+                                {
+                                  "id": "b717ada3-097a-44cb-a7b6-cdc205d147bb",
+                                  "name": "Invalid or missing API key",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: apikey",
+                                        "key": "x-api-key",
+                                        "value": "<API Key>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v1/user/payment/status/:payment_id",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v1",
+                                        "user",
+                                        "payment",
+                                        "status",
+                                        ":payment_id"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "payment_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-07-28T02:00:47.000Z",
+                                  "updatedAt": "2026-07-28T02:00:47.000Z",
+                                  "uid": "35240-b717ada3-097a-44cb-a7b6-cdc205d147bb"
+                                },
+                                {
+                                  "id": "14bd560a-1a84-4289-aa79-3655b5234fb9",
+                                  "name": "Payment not found",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: apikey",
+                                        "key": "x-api-key",
+                                        "value": "<API Key>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v1/user/payment/status/:payment_id",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v1",
+                                        "user",
+                                        "payment",
+                                        "status",
+                                        ":payment_id"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "payment_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-07-28T02:00:47.000Z",
+                                  "updatedAt": "2026-07-28T02:00:47.000Z",
+                                  "uid": "35240-14bd560a-1a84-4289-aa79-3655b5234fb9"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-0247da73-36c5-4acb-bdb4-6c7aea1694a1"
+                            }
+                          ],
+                          "id": "73cec275-de55-4607-8801-5709ff15cb89",
+                          "createdAt": "2026-07-28T02:00:47.000Z",
+                          "updatedAt": "2026-07-28T02:00:47.000Z",
+                          "uid": "35240-73cec275-de55-4607-8801-5709ff15cb89"
+                        }
+                      ],
+                      "id": "b085f4d1-73a9-454a-869b-e784f1448bb6",
+                      "createdAt": "2026-07-28T02:00:47.000Z",
+                      "updatedAt": "2026-07-28T02:00:47.000Z",
+                      "uid": "35240-b085f4d1-73a9-454a-869b-e784f1448bb6"
+                    },
+                    {
+                      "name": "cancel",
+                      "item": [
+                        {
+                          "name": "Cancel a Virtual Account payment",
+                          "id": "100727d3-8373-4767-8bed-403012afd109",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"payment_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/user/payment/cancel",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "user",
+                                "payment",
+                                "cancel"
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "070627ab-fa69-4f8d-b0c9-f157c1a4bea7",
+                              "name": "Payment cancelled",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"payment_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "cancel"
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-070627ab-fa69-4f8d-b0c9-f157c1a4bea7"
+                            },
+                            {
+                              "id": "97368c07-a019-49aa-b190-fa95c6972480",
+                              "name": "Payment cannot be cancelled",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"payment_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "cancel"
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-97368c07-a019-49aa-b190-fa95c6972480"
+                            },
+                            {
+                              "id": "e9caa616-bb31-4014-92aa-439fdfdafa3e",
+                              "name": "Invalid or missing API key",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"payment_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/user/payment/cancel",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "user",
+                                    "payment",
+                                    "cancel"
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:47.000Z",
+                              "updatedAt": "2026-07-28T02:00:47.000Z",
+                              "uid": "35240-e9caa616-bb31-4014-92aa-439fdfdafa3e"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:00:47.000Z",
+                          "updatedAt": "2026-07-28T02:00:47.000Z",
+                          "uid": "35240-100727d3-8373-4767-8bed-403012afd109"
+                        }
+                      ],
+                      "id": "6664013f-b5d1-4243-ace7-5461f7b20623",
+                      "createdAt": "2026-07-28T02:00:47.000Z",
+                      "updatedAt": "2026-07-28T02:00:47.000Z",
+                      "uid": "35240-6664013f-b5d1-4243-ace7-5461f7b20623"
+                    }
+                  ],
+                  "id": "5eb6f3a5-311d-4ceb-9cc2-8266d9bf5252",
+                  "createdAt": "2026-07-28T02:00:47.000Z",
+                  "updatedAt": "2026-07-28T02:00:47.000Z",
+                  "uid": "35240-5eb6f3a5-311d-4ceb-9cc2-8266d9bf5252"
+                }
+              ],
+              "id": "ad8a8b27-360d-4a64-a0d1-fac8cc8a7cc3",
+              "createdAt": "2026-07-28T02:00:47.000Z",
+              "updatedAt": "2026-07-28T02:00:47.000Z",
+              "uid": "35240-ad8a8b27-360d-4a64-a0d1-fac8cc8a7cc3"
+            }
+          ],
+          "id": "069cf256-93dc-48e8-ad65-ada6bb3a4da1",
+          "createdAt": "2026-07-28T02:00:47.000Z",
+          "updatedAt": "2026-07-28T02:00:47.000Z",
+          "uid": "35240-069cf256-93dc-48e8-ad65-ada6bb3a4da1"
+        }
+      ],
+      "id": "0ecac722-1010-4b5d-83e5-41509d04634e",
+      "createdAt": "2026-07-28T02:00:47.000Z",
+      "updatedAt": "2026-07-28T02:00:47.000Z",
+      "uid": "35240-0ecac722-1010-4b5d-83e5-41509d04634e"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.collaborator.komerce.id/user"
+    }
+  ]
+}

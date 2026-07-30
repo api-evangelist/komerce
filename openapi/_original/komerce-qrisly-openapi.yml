@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: Komerce QRISLY API
+  version: v1
+  description: |
+    QRISLY (by RajaOngkir / Komerce) turns a static QRIS code into dynamic, per-transaction
+    QRIS codes. Upload a QRIS image once, then generate a dynamic QRIS with a custom amount
+    per transaction, optionally with a unique-amount identifier so a mobile listener app can
+    distinguish otherwise identical payments. Payment status is available by polling or via
+    webhooks (payment.success, payment.expired). Authentication is a header API key
+    (`X-API-Key`). Rate limits are surfaced on X-RateLimit-Limit / X-RateLimit-Remaining /
+    X-RateLimit-Reset response headers.
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+servers:
+  - url: https://api.collaborator.komerce.id/user
+    description: Production environment
+  - url: https://api-sandbox.collaborator.komerce.id/user
+    description: Sandbox environment
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: QRIS
+paths:
+  /api/v1/qrisly/upload-qris:
+    post:
+      operationId: uploadQris
+      tags: [QRIS]
+      summary: Upload a QRIS image
+      description: Upload a QRIS image with merchant details. The image is validated automatically and the returned qris_id is reused for every generation.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [name, qris_image]
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                  description: QRIS identity name.
+                qris_image:
+                  type: string
+                  format: binary
+                  description: QRIS image file, PNG or JPG, max 5MB.
+      responses:
+        '200':
+          description: QRIS uploaded and validated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UploadQrisResponse' }
+        '400':
+          description: Invalid file format or file larger than 5MB
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+        '401':
+          description: Invalid or missing API key
+        '429':
+          description: Rate limit exceeded
+  /api/v1/qrisly/generate-qris:
+    post:
+      operationId: generateQris
+      tags: [QRIS]
+      summary: Generate a dynamic QRIS
+      description: Generate a dynamic QRIS string or image for a custom amount. Charged IDR 100 per generation. Default expiry is 15 minutes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/GenerateQrisRequest' }
+      responses:
+        '200':
+          description: QRIS generated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/GenerateQrisResponse' }
+        '400':
+          description: Invalid amount or invalid QRIS format
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorEnvelope' }
+        '401':
+          description: Invalid or missing API key
+        '404':
+          description: QRIS not found
+        '429':
+          description: Rate limit exceeded
+  /api/v1/qrisly/payment-status/{history_id}:
+    get:
+      operationId: getQrisPaymentStatus
+      tags: [QRIS]
+      summary: Check QRIS payment status
+      parameters:
+        - name: history_id
+          in: path
+          required: true
+          description: History id returned by generateQris.
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Current payment status for the generated QRIS
+        '401':
+          description: Invalid or missing API key
+        '404':
+          description: QRIS or history id not found
+        '429':
+          description: Rate limit exceeded
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: QRISLY API key generated from the RajaOngkir Collaborator dashboard (Developer -> API Settings -> Generate New API Key).
+  schemas:
+    ErrorEnvelope:
+      type: object
+      properties:
+        success: { type: boolean }
+        message: { type: string }
+        code: { type: integer }
+        status: { type: string }
+        error_code: { type: string }
+        details: { type: object }
+    UploadQrisResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        message: { type: string }
+        data:
+          type: object
+          properties:
+            qris_id: { type: string }
+            provider: { type: string }
+            name: { type: string }
+            merchant_name: { type: string }
+            created_at: { type: string }
+    GenerateQrisRequest:
+      type: object
+      required: [qris_id, amount, output_type, unique_amount]
+      properties:
+        qris_id: { type: integer, description: QRIS id from the upload step. }
+        amount: { type: integer, description: Amount in Rupiah, between 1000 and 100000000. }
+        output_type: { type: string, enum: [string, image] }
+        unique_amount: { type: boolean, description: Add a unique identifier to the amount so identical payments can be distinguished. Default true. }
+    GenerateQrisResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        message: { type: string }
+        data:
+          type: object
+          properties:
+            history_id: { type: integer }
+            qris_string: { type: string }
+            original_amount: { type: integer }
+            final_amount: { type: integer }
+            payment_status: { type: string }
+            expiry_time: { type: string }

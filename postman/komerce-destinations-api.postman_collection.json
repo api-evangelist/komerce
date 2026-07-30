@@ -1,0 +1,1077 @@
+{
+  "info": {
+    "_postman_id": "106b0614-7660-42a7-857e-f622f7e9ae8f",
+    "name": "Komerce Payment Service Cost Destinations API",
+    "description": "Komerce Payment Service API \u2014 list payment methods (bank Virtual Account and QRIS),\ncreate a payment transaction, check payment status, cancel a Virtual Account payment,\nand receive HMAC-SHA256 signed callbacks. Authentication is a header API key\n(`x-api-key`) \u2014 the same key used for Komerce Shipping (RajaOngkir). Hosted payment\npages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).\n\n\nContact Support:\n Name: RajaOngkir Support\n Email: support@rajaongkir.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:44.000Z",
+    "updatedAt": "2026-07-28T02:00:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-106b0614-7660-42a7-857e-f622f7e9ae8f"
+  },
+  "item": [
+    {
+      "name": "destination",
+      "item": [
+        {
+          "name": "domestic-destination",
+          "item": [
+            {
+              "name": "Search domestic destination",
+              "id": "d06edc8d-2cfe-4ae3-be76-bd253349a6ac",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/destination/domestic-destination?search=<string>&limit=<integer>&offset=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "destination",
+                    "domestic-destination"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Search keyword \u2014 city, district, subdistrict name, or postal code.",
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of rows returned by the query.",
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Row offset, used with limit to page results.",
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Search Indonesian destinations by city, district, subdistrict or zip code. Returns the destination id used by the cost endpoints."
+              },
+              "response": [
+                {
+                  "id": "3bc924d3-f092-46cf-a3e1-0c0c941b244c",
+                  "name": "Matching domestic destinations",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/domestic-destination?search=<string>&limit=<integer>&offset=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "domestic-destination"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Search keyword \u2014 city, district, subdistrict name, or postal code.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of rows returned by the query.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Row offset, used with limit to page results.",
+                          "key": "offset",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"message\": \"<string>\",\n    \"code\": \"<integer>\",\n    \"status\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"province_name\": \"<string>\",\n      \"city_name\": \"<string>\",\n      \"district_name\": \"<string>\",\n      \"subdistrict_name\": \"<string>\",\n      \"zip_code\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"province_name\": \"<string>\",\n      \"city_name\": \"<string>\",\n      \"district_name\": \"<string>\",\n      \"subdistrict_name\": \"<string>\",\n      \"zip_code\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-3bc924d3-f092-46cf-a3e1-0c0c941b244c"
+                },
+                {
+                  "id": "cb29f045-c0c9-4509-8e9f-18122ccd6bcc",
+                  "name": "Missing or invalid API key",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/domestic-destination?search=<string>&limit=<integer>&offset=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "domestic-destination"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Search keyword \u2014 city, district, subdistrict name, or postal code.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of rows returned by the query.",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Row offset, used with limit to page results.",
+                          "key": "offset",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-cb29f045-c0c9-4509-8e9f-18122ccd6bcc"
+                }
+              ],
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-d06edc8d-2cfe-4ae3-be76-bd253349a6ac"
+            }
+          ],
+          "id": "faf634f6-c7dc-49a1-833c-427ed6c6c774",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-faf634f6-c7dc-49a1-833c-427ed6c6c774"
+        },
+        {
+          "name": "international-destination",
+          "item": [
+            {
+              "name": "Search international destination",
+              "id": "67e7378c-2cdc-439d-9e1e-0bc761ac31cf",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/destination/international-destination?search=<string>&limit=<integer>&offset=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "destination",
+                    "international-destination"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Search worldwide destinations and return the destination id used by the international cost endpoint."
+              },
+              "response": [
+                {
+                  "id": "ccdafd6a-7daa-42f7-b4ef-f3b817aa0597",
+                  "name": "Matching international destinations",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/international-destination?search=<string>&limit=<integer>&offset=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "international-destination"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "key": "offset",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"message\": \"<string>\",\n    \"code\": \"<integer>\",\n    \"status\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-ccdafd6a-7daa-42f7-b4ef-f3b817aa0597"
+                },
+                {
+                  "id": "8689f079-c554-417f-b4e9-8b6bb6fed06f",
+                  "name": "Missing or invalid API key",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/international-destination?search=<string>&limit=<integer>&offset=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "international-destination"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "key": "offset",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-8689f079-c554-417f-b4e9-8b6bb6fed06f"
+                }
+              ],
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-67e7378c-2cdc-439d-9e1e-0bc761ac31cf"
+            }
+          ],
+          "id": "624ba8a6-2e3c-4023-a1cc-0606a4bcdda7",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-624ba8a6-2e3c-4023-a1cc-0606a4bcdda7"
+        },
+        {
+          "name": "province",
+          "item": [
+            {
+              "name": "List provinces",
+              "id": "0629b16c-5395-4459-856b-e4ce31ad4ca2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/destination/province",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "destination",
+                    "province"
+                  ]
+                },
+                "description": "Retrieve the list of Indonesian provinces for form-based (cascading) destination selection."
+              },
+              "response": [
+                {
+                  "id": "9b6f6b84-c691-4c9b-9d69-06b0597b30c2",
+                  "name": "Province list",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/province",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "province"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-9b6f6b84-c691-4c9b-9d69-06b0597b30c2"
+                },
+                {
+                  "id": "956e5073-3e01-41f0-8c2c-e0355547b3cd",
+                  "name": "Missing or invalid API key",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "x-api-key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/province",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "province"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-956e5073-3e01-41f0-8c2c-e0355547b3cd"
+                }
+              ],
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-0629b16c-5395-4459-856b-e4ce31ad4ca2"
+            }
+          ],
+          "id": "6dc8d01d-ded9-4736-a98a-ca592c445b59",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-6dc8d01d-ded9-4736-a98a-ca592c445b59"
+        },
+        {
+          "name": "city",
+          "item": [
+            {
+              "name": "{province_id}",
+              "item": [
+                {
+                  "name": "List cities in a province",
+                  "id": "9f3b2d1b-7bba-48bc-be30-1eb4061dd853",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/city/:province_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "city",
+                        ":province_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "021f03a8-52e5-4cc6-b4ab-3e785cf7c5d4",
+                          "key": "province_id",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "221920db-ed5d-4367-9f7d-a4396d532eb2",
+                      "name": "City list",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/destination/city/:province_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "destination",
+                            "city",
+                            ":province_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "province_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-221920db-ed5d-4367-9f7d-a4396d532eb2"
+                    },
+                    {
+                      "id": "1a537df4-7528-4635-a296-601da9badfd5",
+                      "name": "Missing or invalid API key",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/destination/city/:province_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "destination",
+                            "city",
+                            ":province_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "province_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-1a537df4-7528-4635-a296-601da9badfd5"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-9f3b2d1b-7bba-48bc-be30-1eb4061dd853"
+                }
+              ],
+              "id": "6fee58c5-7836-44ca-aa4e-58063064d7f7",
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-6fee58c5-7836-44ca-aa4e-58063064d7f7"
+            }
+          ],
+          "id": "330fa77b-58d1-46ff-95aa-9690fd993c07",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-330fa77b-58d1-46ff-95aa-9690fd993c07"
+        },
+        {
+          "name": "district",
+          "item": [
+            {
+              "name": "{city_id}",
+              "item": [
+                {
+                  "name": "List districts in a city",
+                  "id": "0ed5d36d-32e4-44b3-9d4b-4759c991b862",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/district/:city_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "district",
+                        ":city_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1de7e35d-394b-4624-a7d5-077efdd1b9b7",
+                          "key": "city_id",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "e79d8366-f4ac-430e-834a-2ae0abbf328a",
+                      "name": "District list",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/destination/district/:city_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "destination",
+                            "district",
+                            ":city_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "city_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-e79d8366-f4ac-430e-834a-2ae0abbf328a"
+                    },
+                    {
+                      "id": "020a7bfe-ec50-4835-8ac9-e7c3178856a9",
+                      "name": "Missing or invalid API key",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/destination/district/:city_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "destination",
+                            "district",
+                            ":city_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "city_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-020a7bfe-ec50-4835-8ac9-e7c3178856a9"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-0ed5d36d-32e4-44b3-9d4b-4759c991b862"
+                }
+              ],
+              "id": "e790fc8f-db52-4af1-9533-a3cf9dd87cc0",
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-e790fc8f-db52-4af1-9533-a3cf9dd87cc0"
+            }
+          ],
+          "id": "08da9ebf-fc17-4087-9130-7e582cf6151f",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-08da9ebf-fc17-4087-9130-7e582cf6151f"
+        },
+        {
+          "name": "sub-district",
+          "item": [
+            {
+              "name": "{district_id}",
+              "item": [
+                {
+                  "name": "List subdistricts in a district",
+                  "id": "20716afe-28ce-4788-8977-e34a8689743a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/destination/sub-district/:district_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "destination",
+                        "sub-district",
+                        ":district_id"
+                      ],
+                      "variable": [
+                        {
+                          "id": "c1ed1843-aa4f-4c8c-9fbb-d6523e365590",
+                          "key": "district_id",
+                          "value": "<integer>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "ff3a674e-fdae-469c-8109-03ed88199269",
+                      "name": "Subdistrict list",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/destination/sub-district/:district_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "destination",
+                            "sub-district",
+                            ":district_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "district_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-ff3a674e-fdae-469c-8109-03ed88199269"
+                    },
+                    {
+                      "id": "a782d04c-f0b4-4fc2-9eaa-353baeae844a",
+                      "name": "Missing or invalid API key",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "x-api-key",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/destination/sub-district/:district_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "destination",
+                            "sub-district",
+                            ":district_id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "district_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-a782d04c-f0b4-4fc2-9eaa-353baeae844a"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-20716afe-28ce-4788-8977-e34a8689743a"
+                }
+              ],
+              "id": "60eb88d9-e667-40fe-9f6b-37eb3b33fa92",
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-60eb88d9-e667-40fe-9f6b-37eb3b33fa92"
+            }
+          ],
+          "id": "49636da0-773d-4c18-98ee-0ba890bf5f01",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-49636da0-773d-4c18-98ee-0ba890bf5f01"
+        }
+      ],
+      "id": "c18e399b-b280-40e9-a662-aa32c34ddef2",
+      "createdAt": "2026-07-28T02:00:44.000Z",
+      "updatedAt": "2026-07-28T02:00:44.000Z",
+      "uid": "35240-c18e399b-b280-40e9-a662-aa32c34ddef2"
+    },
+    {
+      "name": "tariff",
+      "item": [
+        {
+          "name": "api",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "destination",
+                  "item": [
+                    {
+                      "name": "search",
+                      "item": [
+                        {
+                          "name": "Search destination",
+                          "id": "70c9430b-1172-457d-8329-546c57997fd7",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/tariff/api/v1/destination/search?keyword=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "tariff",
+                                "api",
+                                "v1",
+                                "destination",
+                                "search"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Subdistrict name or zip code to search for.",
+                                  "key": "keyword",
+                                  "value": "<string>"
+                                }
+                              ]
+                            },
+                            "description": "Search cities, districts, subdistricts and postal codes and return the region id used as shipper_destination_id / receiver_destination_id."
+                          },
+                          "response": [
+                            {
+                              "id": "af82e973-6876-4326-9285-3d1fae8693fd",
+                              "name": "Matching destinations",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/tariff/api/v1/destination/search?keyword=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "tariff",
+                                    "api",
+                                    "v1",
+                                    "destination",
+                                    "search"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Subdistrict name or zip code to search for.",
+                                      "key": "keyword",
+                                      "value": "<string>"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"meta\": {\n    \"message\": \"<string>\",\n    \"code\": \"<integer>\",\n    \"status\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"subdistrict_name\": \"<string>\",\n      \"district_name\": \"<string>\",\n      \"city_name\": \"<string>\",\n      \"zip_code\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"label\": \"<string>\",\n      \"subdistrict_name\": \"<string>\",\n      \"district_name\": \"<string>\",\n      \"city_name\": \"<string>\",\n      \"zip_code\": \"<string>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:00:44.000Z",
+                              "updatedAt": "2026-07-28T02:00:44.000Z",
+                              "uid": "35240-af82e973-6876-4326-9285-3d1fae8693fd"
+                            },
+                            {
+                              "id": "17daae7f-ee2b-40fd-8582-692fb76434db",
+                              "name": "Missing or invalid API key",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/tariff/api/v1/destination/search?keyword=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "tariff",
+                                    "api",
+                                    "v1",
+                                    "destination",
+                                    "search"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Subdistrict name or zip code to search for.",
+                                      "key": "keyword",
+                                      "value": "<string>"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:44.000Z",
+                              "updatedAt": "2026-07-28T02:00:44.000Z",
+                              "uid": "35240-17daae7f-ee2b-40fd-8582-692fb76434db"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:00:44.000Z",
+                          "updatedAt": "2026-07-28T02:00:44.000Z",
+                          "uid": "35240-70c9430b-1172-457d-8329-546c57997fd7"
+                        }
+                      ],
+                      "id": "807a6f62-8fca-45e5-b1e8-e4ebbf25abb0",
+                      "createdAt": "2026-07-28T02:00:44.000Z",
+                      "updatedAt": "2026-07-28T02:00:44.000Z",
+                      "uid": "35240-807a6f62-8fca-45e5-b1e8-e4ebbf25abb0"
+                    }
+                  ],
+                  "id": "34cbdb1e-d5d8-445e-b6f9-68fd7eecf29a",
+                  "createdAt": "2026-07-28T02:00:44.000Z",
+                  "updatedAt": "2026-07-28T02:00:44.000Z",
+                  "uid": "35240-34cbdb1e-d5d8-445e-b6f9-68fd7eecf29a"
+                }
+              ],
+              "id": "a47bbfd8-ca1b-4e11-92d7-9bbd717a6038",
+              "createdAt": "2026-07-28T02:00:44.000Z",
+              "updatedAt": "2026-07-28T02:00:44.000Z",
+              "uid": "35240-a47bbfd8-ca1b-4e11-92d7-9bbd717a6038"
+            }
+          ],
+          "id": "0c9080b5-237a-4772-9008-ca241b94ca57",
+          "createdAt": "2026-07-28T02:00:44.000Z",
+          "updatedAt": "2026-07-28T02:00:44.000Z",
+          "uid": "35240-0c9080b5-237a-4772-9008-ca241b94ca57"
+        }
+      ],
+      "id": "06a1f51d-72a8-4c52-be2d-008f161d6bb1",
+      "createdAt": "2026-07-28T02:00:44.000Z",
+      "updatedAt": "2026-07-28T02:00:44.000Z",
+      "uid": "35240-06a1f51d-72a8-4c52-be2d-008f161d6bb1"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.collaborator.komerce.id/user"
+    }
+  ]
+}

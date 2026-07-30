@@ -1,0 +1,326 @@
+openapi: 3.0.3
+info:
+  title: Komerce Shipping Delivery API (Komship)
+  version: v1
+  description: |
+    Komerce Shipping Delivery API (Komship / Delivery Order API) — search destinations,
+    calculate delivery price across regular, cargo and instant 3PL services, create and
+    cancel orders, request pickup, print labels, and track airway bills. Authentication is
+    a header API key (`x-api-key`) issued from the Collaborator dashboard under
+    Developer -> Settings -> Api Key (the "Shipping Delivery" key). A sandbox environment
+    mirrors production on a separate host.
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+servers:
+  - url: https://api.collaborator.komerce.id
+    description: Production environment
+  - url: https://api-sandbox.collaborator.komerce.id
+    description: Sandbox environment
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Destinations
+  - name: Cost
+  - name: Orders
+  - name: Pickup
+  - name: Tracking
+paths:
+  /tariff/api/v1/destination/search:
+    get:
+      operationId: searchDeliveryDestination
+      tags: [Destinations]
+      summary: Search destination
+      description: Search cities, districts, subdistricts and postal codes and return the region id used as shipper_destination_id / receiver_destination_id.
+      parameters:
+        - name: keyword
+          in: query
+          required: true
+          description: Subdistrict name or zip code to search for.
+          schema: { type: string }
+          example: '53131'
+      responses:
+        '200':
+          description: Matching destinations
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DestinationList' }
+        '401':
+          description: Missing or invalid API key
+  /tariff/api/v1/calculate:
+    get:
+      operationId: calculateDeliveryPrice
+      tags: [Cost]
+      summary: Calculate delivery price
+      description: Retrieve shipping cost estimates grouped by regular, cargo and instant service across the integrated 3PL couriers.
+      parameters:
+        - name: shipper_destination_id
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: receiver_destination_id
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: origin_pin_point
+          in: query
+          required: true
+          description: Origin geolocation as "latitude,longitude" — required for instant courier estimation.
+          schema: { type: string }
+        - name: destination_pin_point
+          in: query
+          required: true
+          description: Destination geolocation as "latitude,longitude".
+          schema: { type: string }
+        - name: weight
+          in: query
+          required: true
+          description: Weight in kilograms; use a dot for decimal values.
+          schema: { type: number, format: float }
+        - name: item_value
+          in: query
+          required: true
+          description: Item price.
+          schema: { type: integer }
+        - name: cod
+          in: query
+          required: false
+          description: yes/no — when yes the response reports COD coverage for the route.
+          schema: { type: string, enum: [yes, no] }
+      responses:
+        '200':
+          description: Cost options grouped by service type
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CalculateResponse' }
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/store:
+    post:
+      operationId: storeOrder
+      tags: [Orders]
+      summary: Create an order
+      description: Create a delivery order. The shipping fee is deducted from the dashboard balance when the payment method is BANK TRANSFER; insufficient balance rejects the order.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/StoreOrderRequest' }
+      responses:
+        '200':
+          description: Order created
+        '400':
+          description: Validation error — malformed phone number, bad field format, or insufficient balance
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/cancel:
+    put:
+      operationId: cancelOrder
+      tags: [Orders]
+      summary: Cancel an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_no: { type: string }
+      responses:
+        '200':
+          description: Order cancelled
+        '400':
+          description: Order cannot be cancelled
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/detail:
+    get:
+      operationId: getOrderDetail
+      tags: [Orders]
+      summary: Get order detail
+      parameters:
+        - name: order_no
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Order detail
+        '401':
+          description: Missing or invalid API key
+        '404':
+          description: Order not found
+  /order/api/v1/orders/history-airway-bill:
+    get:
+      operationId: getAirwayBillHistory
+      tags: [Tracking]
+      summary: Get airway bill history
+      parameters:
+        - name: shipping
+          in: query
+          required: true
+          description: Courier code.
+          schema: { type: string }
+        - name: airway_bill
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Airway bill tracking history
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/orders/print-label:
+    post:
+      operationId: printOrderLabel
+      tags: [Orders]
+      summary: Print order label
+      parameters:
+        - name: order_no
+          in: query
+          required: true
+          schema: { type: string }
+        - name: page
+          in: query
+          required: true
+          description: Label page layout.
+          schema: { type: string, example: page_5 }
+      responses:
+        '200':
+          description: Label document
+        '401':
+          description: Missing or invalid API key
+  /order/api/v1/pickup/request:
+    post:
+      operationId: requestPickup
+      tags: [Pickup]
+      summary: Request order pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_no: { type: string }
+                pickup_date: { type: string }
+                pickup_time: { type: string }
+      responses:
+        '200':
+          description: Pickup requested
+        '400':
+          description: Invalid pickup request
+        '401':
+          description: Missing or invalid API key
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Shipping Delivery API key from the Collaborator dashboard. Sandbox and production use separate keys.
+  schemas:
+    Meta:
+      type: object
+      properties:
+        message: { type: string }
+        code: { type: integer }
+        status: { type: string }
+    Destination:
+      type: object
+      properties:
+        id: { type: integer }
+        label: { type: string }
+        subdistrict_name: { type: string }
+        district_name: { type: string }
+        city_name: { type: string }
+        zip_code: { type: string }
+    DestinationList:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/Destination' }
+    CalculateResponse:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: object
+          properties:
+            calculate_reguler:
+              type: array
+              description: Couriers available for regular delivery.
+              items: { type: object }
+            calculate_cargo:
+              type: array
+              description: Couriers available for cargo delivery.
+              items: { type: object }
+            calculate_instant:
+              type: array
+              description: Couriers available for instant or same-day delivery.
+              items: { type: object }
+    OrderDetailItem:
+      type: object
+      properties:
+        product_name: { type: string }
+        product_variant_name: { type: string }
+        product_price: { type: integer }
+        product_weight: { type: integer }
+        product_width: { type: integer }
+        product_height: { type: integer }
+        product_length: { type: integer }
+        qty: { type: integer }
+        subtotal: { type: integer }
+    StoreOrderRequest:
+      type: object
+      required:
+        - order_date
+        - brand_name
+        - shipper_name
+        - shipper_phone
+        - shipper_destination_id
+        - shipper_address
+        - shipper_email
+        - receiver_name
+        - receiver_phone
+        - receiver_destination_id
+        - receiver_address
+        - shipping
+        - shipping_type
+        - payment_method
+        - shipping_cost
+        - order_details
+      properties:
+        order_date: { type: string, description: Date/time the order was created. }
+        brand_name: { type: string, description: Brand name printed on the shipping label. }
+        shipper_name: { type: string }
+        shipper_phone: { type: string, description: Must start with 0 or 62, not +62. }
+        shipper_destination_id: { type: integer }
+        shipper_address: { type: string }
+        shipper_email: { type: string }
+        origin_pin_point: { type: string }
+        receiver_name: { type: string }
+        receiver_phone: { type: string, description: Must start with 0 or 62, not +62. }
+        receiver_destination_id: { type: integer }
+        receiver_address: { type: string }
+        destination_pin_point: { type: string }
+        shipping: { type: string, description: Courier name. }
+        shipping_type: { type: string, description: Courier service type. }
+        payment_method: { type: string, enum: ['COD', 'BANK TRANSFER'] }
+        shipping_cost: { type: integer }
+        shipping_cashback: { type: integer }
+        service_fee: { type: integer }
+        additional_cost: { type: integer }
+        grand_total: { type: integer }
+        cod_value: { type: integer }
+        insurance_value: { type: number }
+        notes: { type: string }
+        order_details:
+          type: array
+          items: { $ref: '#/components/schemas/OrderDetailItem' }

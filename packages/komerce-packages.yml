@@ -1,0 +1,64 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/docs/introduction/rajaongkir-plugin plus registry searches of
+  npm, PyPI, Packagist and the WordPress plugin directory
+note: >-
+  Komerce / RajaOngkir does not publish a first-party client SDK on any package registry.
+  The only first-party distributable is the official RajaOngkir WooCommerce plugin, which is
+  a storefront integration rather than a client library, so no `SDKs` pointer is wired into
+  apis.yml. Every RajaOngkir library on npm, PyPI and Packagist is community-maintained;
+  the most-installed of those are recorded below with official: false, and several target
+  the legacy rajaongkir.com v1 API rather than the current
+  https://rajaongkir.komerce.id/api/v1 surface.
+packages:
+  - language: php
+    registry: wordpress-plugin
+    name: RajaOngkir WooCommerce Plugin
+    url: https://rajaongkir.com/docs/introduction/rajaongkir-plugin
+    install: Upload the plugin .zip via WordPress Plugins -> Add New -> Upload Plugin, then activate and paste your API key under WooCommerce -> Settings -> Shipping -> RajaOngkir
+    official: true
+    description: >-
+      Official WooCommerce shipping plugin built and maintained by the RajaOngkir team —
+      real-time shipping costs at checkout, multiple courier options, automatic fee
+      calculation by destination and weight, domestic and international support.
+  - language: php
+    registry: packagist
+    name: kavist/rajaongkir
+    url: https://packagist.org/packages/kavist/rajaongkir
+    install: composer require kavist/rajaongkir
+    official: false
+    source_code: https://github.com/kavist/rajaongkir
+  - language: php
+    registry: packagist
+    name: steevenz/rajaongkir
+    url: https://packagist.org/packages/steevenz/rajaongkir
+    install: composer require steevenz/rajaongkir
+    official: false
+    source_code: https://github.com/steevenz/rajaongkir
+  - language: php
+    registry: packagist
+    name: rizalafani/rajaongkirlaravel
+    url: https://packagist.org/packages/rizalafani/rajaongkirlaravel
+    install: composer require rizalafani/rajaongkirlaravel
+    official: false
+    source_code: https://github.com/rizalafani/rajaongkirlaravel
+  - language: javascript
+    registry: npm
+    name: rajaongkir
+    url: https://www.npmjs.com/package/rajaongkir
+    install: npm install rajaongkir
+    official: false
+  - language: javascript
+    registry: npm
+    name: rajaongkir-v2
+    url: https://www.npmjs.com/package/rajaongkir-v2
+    install: npm install rajaongkir-v2
+    official: false
+  - language: python
+    registry: pypi
+    name: rajaongkir
+    url: https://pypi.org/project/rajaongkir/
+    install: pip install rajaongkir
+    official: false
+    source_code: https://github.com/slaveofcode/rajaongkir

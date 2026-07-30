@@ -1,0 +1,45 @@
+generated: '2026-07-19'
+method: probed
+source: live probe of /.well-known/ paths on every Komerce / RajaOngkir host in apis.yml
+note: >-
+  No /.well-known/ discovery documents are published on any Komerce or RajaOngkir host.
+  komerce.id (Nuxt) and collaborator.komerce.id (Angular) return HTTP 200 with the SPA
+  shell for any path — these are soft 404s, not real documents, so nothing was saved and
+  no WellKnown / SecurityTxt pointer is wired into apis.yml.
+hosts:
+  - host: https://komerce.id
+    documents:
+      - {path: /.well-known/security.txt, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/openid-configuration, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/oauth-authorization-server, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/api-catalog, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/ai-plugin.json, status: 200, soft_404: true, content_type: text/html}
+  - host: https://rajaongkir.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://rajaongkir.komerce.id
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://api.collaborator.komerce.id
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://collaborator.komerce.id
+    documents:
+      - {path: /.well-known/security.txt, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/openid-configuration, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/oauth-authorization-server, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/api-catalog, status: 200, soft_404: true, content_type: text/html}
+      - {path: /.well-known/ai-plugin.json, status: 200, soft_404: true, content_type: text/html}
+documents: []

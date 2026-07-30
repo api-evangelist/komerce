@@ -1,0 +1,66 @@
+# Komerce
+
+> Komerce is an Indonesian end-to-end e-commerce enabler. Its developer surface is published under the RajaOngkir brand and covers four APIs: Shipping Cost (Cek Ongkir) for domestic and international rate lookup and AWB tracking across 17 Indonesian couriers, Shipping Delivery (Komship) for creating orders, requesting pickup, printing labels and tracking, Payment Service for Virtual Account and QRIS transactions, and QRISLY for turning a static QRIS into dynamic per-transaction QRIS codes. All four authenticate with a per-product header API key issued from the Collaborator dashboard.
+
+## APIs
+
+- [RajaOngkir Shipping Cost API](https://rajaongkir.com/docs/shipping-cost/getting_started/about): Destination search, domestic and international shipping cost calculation, and airway bill tracking. Base URL https://rajaongkir.komerce.id/api/v1/ — header API key `key`.
+- [Komerce Shipping Delivery API (Komship)](https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started): Destination search, delivery price calculation across regular/cargo/instant 3PL services, order creation and cancellation, pickup request, label printing, AWB history. Base URL https://api.collaborator.komerce.id/ — header API key `x-api-key`.
+- [Komerce Payment Service API](https://rajaongkir.com/docs/payment-api/getting-started/getting-started): Payment methods, transaction creation, status, cancellation, and HMAC-SHA256 signed callbacks. Base URL https://api.collaborator.komerce.id/user — header API key `x-api-key`.
+- [Komerce QRISLY API](https://rajaongkir.com/docs/qrisly/getting-started/getting-started): Upload a static QRIS, generate dynamic per-transaction QRIS, check payment status, receive payment webhooks. Base URL https://api.collaborator.komerce.id/user — header API key `X-API-Key`.
+
+## Specs
+
+- [Shipping Cost OpenAPI](openapi/komerce-shipping-cost-openapi.yml)
+- [Shipping Delivery OpenAPI](openapi/komerce-shipping-delivery-openapi.yml)
+- [Payment Service OpenAPI](openapi/komerce-payment-openapi.yml)
+- [QRISLY OpenAPI](openapi/komerce-qrisly-openapi.yml)
+
+## Docs
+
+- [Documentation home](https://rajaongkir.com/docs)
+- [Register for an API key](https://rajaongkir.com/docs/introduction/register)
+- [Shipping Cost authorization](https://rajaongkir.com/docs/shipping-cost/getting_started/apikey)
+- [Shipping Cost endpoints](https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint)
+- [Courier availability matrix](https://rajaongkir.com/docs/shipping-cost/getting_started/courier_availability)
+- [AWB tracking](https://rajaongkir.com/docs/shipping-cost/tracking)
+- [Delivery base URLs and environments](https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url)
+- [Delivery API key](https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key)
+- [3PL availability](https://rajaongkir.com/docs/delivery-order-api/getting_started/3pl)
+- [Create order](https://rajaongkir.com/docs/delivery-order-api/Store_order/store_order)
+- [Order webhook](https://rajaongkir.com/docs/delivery-order-api/webhook)
+- [Payment authentication](https://rajaongkir.com/docs/payment-api/getting-started/authentication)
+- [Payment endpoints](https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints)
+- [Payment callback signature verification](https://rajaongkir.com/docs/payment-api/getting-started/callback-handling)
+- [QRISLY endpoints](https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints)
+- [QRISLY webhooks](https://rajaongkir.com/docs/qrisly/getting-started/webhook)
+- [QRISLY error handling](https://rajaongkir.com/docs/qrisly/getting-started/error-handling)
+- [WooCommerce plugin](https://rajaongkir.com/docs/introduction/rajaongkir-plugin)
+- [Pricing](https://rajaongkir.com/pricing)
+- [Status page](https://status.rajaongkir.com)
+
+## Artifacts
+
+- [Authentication profile](authentication/komerce-authentication.yml)
+- [API conventions](conventions/komerce-conventions.yml)
+- [Error catalog](errors/komerce-problem-types.yml)
+- [Named error codes](errors/komerce-error-codes.yml)
+- [Lifecycle and status](lifecycle/komerce-lifecycle.yml)
+- [Sandbox and environments](sandbox/komerce-sandbox.yml)
+- [Rate limits](rate-limits/komerce-rate-limits.yml)
+- [Plans and pricing](plans/komerce-plans.yml)
+- [Webhook catalog](asyncapi/komerce-webhooks.yml)
+- [Courier vocabulary](vocabulary/komerce-couriers.yml)
+- [Data model](data-model/komerce-data-model.yml)
+- [Packages and plugins](packages/komerce-packages.yml)
+- [Embedded components](components/komerce-components.yml)
+- [Conformance](conformance/komerce-conformance.yml)
+- [Agent skills](skills/_index.yml)
+
+## Notes
+
+- The four API keys are not interchangeable — a key issued for one product will not authenticate another.
+- Phone numbers on delivery orders must start with 0 or 62, never +62.
+- Shipping Cost weights are in grams; Shipping Delivery weights are in kilograms with a dot decimal separator.
+- No idempotency key is supported on any operation.
+- Errors are not RFC 9457; responses use a meta{message,code,status} envelope (QRISLY uses success/message/error_code).

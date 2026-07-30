@@ -1,0 +1,56 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://status.rajaongkir.com, https://rajaongkir.com/docs/introduction/system-update-log,
+  https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+versioning:
+  scheme: uri-path
+  current: v1
+  docs_generation: Docs V2
+  docs: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  note: >-
+    All four products are served under /api/v1/ paths. The documentation set is branded
+    "Docs V2" and covers the current rajaongkir.komerce.id / collaborator.komerce.id surface
+    that superseded the legacy rajaongkir.com v1 API.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: not documented
+  evidence:
+    - source: https://status.rajaongkir.com
+      detail: >-
+        The public status page carries a monitor group explicitly named "RajaOngkir Old (will
+        be deprecated)" covering the legacy RajaOngkir v1 Cek Ongkir endpoints, alongside
+        current groups for "Komship OpenAPI" and "RajaOngkir New".
+  note: >-
+    Komerce signals that the legacy API is on a deprecation path via the status page but
+    publishes no deprecation policy, sunset dates, or Sunset/Deprecation header support, so no
+    Deprecation pointer is wired into apis.yml.
+status_page:
+  url: https://status.rajaongkir.com
+  platform: Uptime Kuma
+  title: OpenAPI & RajaOngkir Komerce
+  monitor_groups:
+    - name: Komship OpenAPI
+      monitors: [OpenAPI Calculate, OpenAPI Search Destination, OpenAPI History AWB]
+    - name: RajaOngkir New
+      monitors:
+        - RajaOngkir Get Domestic Destination
+        - RajaOngkir Get International Destination
+        - RajaOngkir Calculate Domestic Destination
+        - RajaOngkir Calculate International Destination
+        - RajaOngkir Check Waybill
+    - name: RajaOngkir Old (will be deprecated)
+      monitors: [RajaOngkir v1 Cek Ongkir]
+change_log:
+  url: https://rajaongkir.com/docs/introduction/system-update-log
+  published: false
+  note: >-
+    A System Update Log page exists in the documentation but currently reads
+    "No system update logs available." — no dated entries are published, so no ChangeLog
+    pointer or changelog/ artifact was created.
+sla:
+  url: null
+  uptime_target: null
+  note: No published SLA or uptime commitment was found.
+deprecated_operations: []

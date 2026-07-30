@@ -1,0 +1,921 @@
+{
+  "info": {
+    "_postman_id": "ce0a3dad-d08d-490e-b575-b83521e387b6",
+    "name": "Komerce Payment Service Cost QRIS API",
+    "description": "Komerce Payment Service API \u2014 list payment methods (bank Virtual Account and QRIS),\ncreate a payment transaction, check payment status, cancel a Virtual Account payment,\nand receive HMAC-SHA256 signed callbacks. Authentication is a header API key\n(`x-api-key`) \u2014 the same key used for Komerce Shipping (RajaOngkir). Hosted payment\npages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).\n\n\nContact Support:\n Name: RajaOngkir Support\n Email: support@rajaongkir.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:49.000Z",
+    "updatedAt": "2026-07-28T02:00:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ce0a3dad-d08d-490e-b575-b83521e387b6"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "qrisly",
+              "item": [
+                {
+                  "name": "upload-qris",
+                  "item": [
+                    {
+                      "name": "Upload a QRIS image",
+                      "id": "3bce103e-4fbf-4b5e-8350-63059eaf995f",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) QRIS identity name.",
+                              "key": "name",
+                              "value": "<string>",
+                              "type": "text"
+                            },
+                            {
+                              "description": "(Required) QRIS image file, PNG or JPG, max 5MB.",
+                              "key": "qris_image",
+                              "type": "file",
+                              "value": null
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/qrisly/upload-qris",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "qrisly",
+                            "upload-qris"
+                          ]
+                        },
+                        "description": "Upload a QRIS image with merchant details. The image is validated automatically and the returned qris_id is reused for every generation."
+                      },
+                      "response": [
+                        {
+                          "id": "a61df37f-e77e-4738-9c15-8c2d102bef8a",
+                          "name": "QRIS uploaded and validated",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) QRIS identity name.",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "type": "text"
+                                },
+                                {
+                                  "description": "(Required) QRIS image file, PNG or JPG, max 5MB.",
+                                  "key": "qris_image",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/upload-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "upload-qris"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"success\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"qris_id\": \"<string>\",\n    \"provider\": \"<string>\",\n    \"name\": \"<string>\",\n    \"merchant_name\": \"<string>\",\n    \"created_at\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-a61df37f-e77e-4738-9c15-8c2d102bef8a"
+                        },
+                        {
+                          "id": "1375c224-9a82-46b2-a238-7f1e4e44f5e8",
+                          "name": "Invalid file format or file larger than 5MB",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) QRIS identity name.",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "type": "text"
+                                },
+                                {
+                                  "description": "(Required) QRIS image file, PNG or JPG, max 5MB.",
+                                  "key": "qris_image",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/upload-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "upload-qris"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"success\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"error_code\": \"<string>\",\n  \"details\": {}\n}",
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-1375c224-9a82-46b2-a238-7f1e4e44f5e8"
+                        },
+                        {
+                          "id": "e3b4a4ff-99c3-4466-9d2f-2f8111b735cb",
+                          "name": "Invalid or missing API key",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) QRIS identity name.",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "type": "text"
+                                },
+                                {
+                                  "description": "(Required) QRIS image file, PNG or JPG, max 5MB.",
+                                  "key": "qris_image",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/upload-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "upload-qris"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-e3b4a4ff-99c3-4466-9d2f-2f8111b735cb"
+                        },
+                        {
+                          "id": "85210bce-34ad-42f1-bedd-f9196b394f92",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "formdata",
+                              "formdata": [
+                                {
+                                  "description": "(Required) QRIS identity name.",
+                                  "key": "name",
+                                  "value": "<string>",
+                                  "type": "text"
+                                },
+                                {
+                                  "description": "(Required) QRIS image file, PNG or JPG, max 5MB.",
+                                  "key": "qris_image",
+                                  "type": "file"
+                                }
+                              ]
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/upload-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "upload-qris"
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-85210bce-34ad-42f1-bedd-f9196b394f92"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:00:49.000Z",
+                      "updatedAt": "2026-07-28T02:00:49.000Z",
+                      "uid": "35240-3bce103e-4fbf-4b5e-8350-63059eaf995f"
+                    }
+                  ],
+                  "id": "f9303b6d-f1be-419a-b799-0e428d663a73",
+                  "createdAt": "2026-07-28T02:00:49.000Z",
+                  "updatedAt": "2026-07-28T02:00:49.000Z",
+                  "uid": "35240-f9303b6d-f1be-419a-b799-0e428d663a73"
+                },
+                {
+                  "name": "generate-qris",
+                  "item": [
+                    {
+                      "name": "Generate a dynamic QRIS",
+                      "id": "8c60eaa3-3404-4515-a552-b70f292a8af5",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"qris_id\": \"<integer>\",\n  \"amount\": \"<integer>\",\n  \"output_type\": \"image\",\n  \"unique_amount\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/qrisly/generate-qris",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "qrisly",
+                            "generate-qris"
+                          ]
+                        },
+                        "description": "Generate a dynamic QRIS string or image for a custom amount. Charged IDR 100 per generation. Default expiry is 15 minutes."
+                      },
+                      "response": [
+                        {
+                          "id": "9f4b116c-e0e6-445d-9693-d8b789bb1fc3",
+                          "name": "QRIS generated",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"qris_id\": \"<integer>\",\n  \"amount\": \"<integer>\",\n  \"output_type\": \"image\",\n  \"unique_amount\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/generate-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "generate-qris"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"success\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"history_id\": \"<integer>\",\n    \"qris_string\": \"<string>\",\n    \"original_amount\": \"<integer>\",\n    \"final_amount\": \"<integer>\",\n    \"payment_status\": \"<string>\",\n    \"expiry_time\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-9f4b116c-e0e6-445d-9693-d8b789bb1fc3"
+                        },
+                        {
+                          "id": "af00b861-21b3-438c-be1b-c7f54f5248d8",
+                          "name": "Invalid amount or invalid QRIS format",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"qris_id\": \"<integer>\",\n  \"amount\": \"<integer>\",\n  \"output_type\": \"image\",\n  \"unique_amount\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/generate-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "generate-qris"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"success\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"code\": \"<integer>\",\n  \"status\": \"<string>\",\n  \"error_code\": \"<string>\",\n  \"details\": {}\n}",
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-af00b861-21b3-438c-be1b-c7f54f5248d8"
+                        },
+                        {
+                          "id": "883fe425-b04c-4160-b881-5ae9b4f5064f",
+                          "name": "Invalid or missing API key",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"qris_id\": \"<integer>\",\n  \"amount\": \"<integer>\",\n  \"output_type\": \"image\",\n  \"unique_amount\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/generate-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "generate-qris"
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-883fe425-b04c-4160-b881-5ae9b4f5064f"
+                        },
+                        {
+                          "id": "6dd0b85b-cc8c-4dde-b6d3-5186c26d4cd1",
+                          "name": "QRIS not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"qris_id\": \"<integer>\",\n  \"amount\": \"<integer>\",\n  \"output_type\": \"image\",\n  \"unique_amount\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/generate-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "generate-qris"
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-6dd0b85b-cc8c-4dde-b6d3-5186c26d4cd1"
+                        },
+                        {
+                          "id": "e6cefc83-4c05-49dd-9998-23b73fa2075e",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "x-api-key",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"qris_id\": \"<integer>\",\n  \"amount\": \"<integer>\",\n  \"output_type\": \"image\",\n  \"unique_amount\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/generate-qris",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "generate-qris"
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-e6cefc83-4c05-49dd-9998-23b73fa2075e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:00:49.000Z",
+                      "updatedAt": "2026-07-28T02:00:49.000Z",
+                      "uid": "35240-8c60eaa3-3404-4515-a552-b70f292a8af5"
+                    }
+                  ],
+                  "id": "30161517-c935-4f22-a3e1-63ec60454592",
+                  "createdAt": "2026-07-28T02:00:49.000Z",
+                  "updatedAt": "2026-07-28T02:00:49.000Z",
+                  "uid": "35240-30161517-c935-4f22-a3e1-63ec60454592"
+                },
+                {
+                  "name": "payment-status",
+                  "item": [
+                    {
+                      "name": "{history_id}",
+                      "item": [
+                        {
+                          "name": "Check QRIS payment status",
+                          "id": "61454887-6272-4933-bdfe-b2c513a8ef53",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/qrisly/payment-status/:history_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "qrisly",
+                                "payment-status",
+                                ":history_id"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "f3741d15-c3b7-4111-958e-a6ed7a018173",
+                                  "key": "history_id",
+                                  "value": "<integer>",
+                                  "description": "(Required) History id returned by generateQris."
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "1b2eca4b-a3ab-4e98-9a95-1f508c9046c0",
+                              "name": "Current payment status for the generated QRIS",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/qrisly/payment-status/:history_id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "qrisly",
+                                    "payment-status",
+                                    ":history_id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "history_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:49.000Z",
+                              "updatedAt": "2026-07-28T02:00:49.000Z",
+                              "uid": "35240-1b2eca4b-a3ab-4e98-9a95-1f508c9046c0"
+                            },
+                            {
+                              "id": "8aa9c1f9-7322-4b0e-aac5-82d8040d384c",
+                              "name": "Invalid or missing API key",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/qrisly/payment-status/:history_id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "qrisly",
+                                    "payment-status",
+                                    ":history_id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "history_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:49.000Z",
+                              "updatedAt": "2026-07-28T02:00:49.000Z",
+                              "uid": "35240-8aa9c1f9-7322-4b0e-aac5-82d8040d384c"
+                            },
+                            {
+                              "id": "3e7fb650-a53e-4a59-95d4-286588bfdd4a",
+                              "name": "QRIS or history id not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/qrisly/payment-status/:history_id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "qrisly",
+                                    "payment-status",
+                                    ":history_id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "history_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:49.000Z",
+                              "updatedAt": "2026-07-28T02:00:49.000Z",
+                              "uid": "35240-3e7fb650-a53e-4a59-95d4-286588bfdd4a"
+                            },
+                            {
+                              "id": "4609de1b-a691-4f3e-a0d3-ad966b41ab2d",
+                              "name": "Rate limit exceeded",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: apikey",
+                                    "key": "x-api-key",
+                                    "value": "<API Key>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v1/qrisly/payment-status/:history_id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v1",
+                                    "qrisly",
+                                    "payment-status",
+                                    ":history_id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "history_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T02:00:49.000Z",
+                              "updatedAt": "2026-07-28T02:00:49.000Z",
+                              "uid": "35240-4609de1b-a691-4f3e-a0d3-ad966b41ab2d"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:00:49.000Z",
+                          "updatedAt": "2026-07-28T02:00:49.000Z",
+                          "uid": "35240-61454887-6272-4933-bdfe-b2c513a8ef53"
+                        }
+                      ],
+                      "id": "22a21ce4-7a28-4515-a97b-f53b4769a126",
+                      "createdAt": "2026-07-28T02:00:49.000Z",
+                      "updatedAt": "2026-07-28T02:00:49.000Z",
+                      "uid": "35240-22a21ce4-7a28-4515-a97b-f53b4769a126"
+                    }
+                  ],
+                  "id": "020f4642-c0e2-4414-80d7-85fcb7eea0a2",
+                  "createdAt": "2026-07-28T02:00:49.000Z",
+                  "updatedAt": "2026-07-28T02:00:49.000Z",
+                  "uid": "35240-020f4642-c0e2-4414-80d7-85fcb7eea0a2"
+                }
+              ],
+              "id": "e5ca9eee-d7eb-41c9-8be6-86baa06963e2",
+              "createdAt": "2026-07-28T02:00:49.000Z",
+              "updatedAt": "2026-07-28T02:00:49.000Z",
+              "uid": "35240-e5ca9eee-d7eb-41c9-8be6-86baa06963e2"
+            }
+          ],
+          "id": "e1e38726-8f1d-41b9-bce0-2cfb3b3ed9f5",
+          "createdAt": "2026-07-28T02:00:49.000Z",
+          "updatedAt": "2026-07-28T02:00:49.000Z",
+          "uid": "35240-e1e38726-8f1d-41b9-bce0-2cfb3b3ed9f5"
+        }
+      ],
+      "id": "97143017-a5ea-4b5a-901d-6ab6a134e086",
+      "createdAt": "2026-07-28T02:00:49.000Z",
+      "updatedAt": "2026-07-28T02:00:49.000Z",
+      "uid": "35240-97143017-a5ea-4b5a-901d-6ab6a134e086"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.collaborator.komerce.id/user"
+    }
+  ]
+}

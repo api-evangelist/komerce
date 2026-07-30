@@ -1,0 +1,169 @@
+openapi: 3.0.3
+info:
+  title: Komerce Payment Service API
+  version: v1
+  description: |
+    Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+    create a payment transaction, check payment status, cancel a Virtual Account payment,
+    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+  contact:
+    name: RajaOngkir Support
+    email: support@rajaongkir.com
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: generated
+  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+servers:
+  - url: https://api.collaborator.komerce.id/user
+    description: Production environment
+  - url: https://api-sandbox.collaborator.komerce.id/user
+    description: Sandbox environment
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Payments
+paths:
+  /api/v1/user/methods:
+    get:
+      operationId: getPaymentMethods
+      tags: [Payments]
+      summary: Get payment methods
+      description: Retrieve available payment methods including Virtual Account banks and QRIS, with bank codes and min/max amounts.
+      responses:
+        '200':
+          description: Available payment methods
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentMethodList' }
+              example:
+                meta:
+                  message: success get payment methods
+                  code: 200
+                  status: success
+                data:
+                  - payment_type: va
+                    display_name: Bank Central Asia
+                    bank_code: BCA
+                    logo_url: https://storage.googleapis.com/komerce/assets/logo/bca.png
+                    min_amount: 10000
+                    max_amount: 999999999999
+                    currency: IDR
+        '401':
+          description: Invalid or missing API key
+  /api/v1/user/payment/create:
+    post:
+      operationId: createPayment
+      tags: [Payments]
+      summary: Create a payment transaction
+      description: Create a new payment transaction for a Virtual Account bank or QRIS channel.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreatePaymentRequest' }
+      responses:
+        '200':
+          description: Payment created
+        '400':
+          description: Invalid parameters — amount below minimum, invalid bank code, or invalid email
+        '401':
+          description: Invalid or missing API key
+  /api/v1/user/payment/status/{payment_id}:
+    get:
+      operationId: getPaymentStatus
+      tags: [Payments]
+      summary: Get payment status
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Payment status
+        '401':
+          description: Invalid or missing API key
+        '404':
+          description: Payment not found
+  /api/v1/user/payment/cancel:
+    post:
+      operationId: cancelPayment
+      tags: [Payments]
+      summary: Cancel a Virtual Account payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_id: { type: string }
+      responses:
+        '200':
+          description: Payment cancelled
+        '400':
+          description: Payment cannot be cancelled
+        '401':
+          description: Invalid or missing API key
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
+  schemas:
+    Meta:
+      type: object
+      properties:
+        message: { type: string }
+        code: { type: integer }
+        status: { type: string }
+    PaymentMethod:
+      type: object
+      properties:
+        payment_type: { type: string, enum: [va, qris] }
+        display_name: { type: string }
+        bank_code: { type: string }
+        logo_url: { type: string }
+        min_amount: { type: integer }
+        max_amount: { type: integer }
+        currency: { type: string }
+    PaymentMethodList:
+      type: object
+      properties:
+        meta: { $ref: '#/components/schemas/Meta' }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/PaymentMethod' }
+    PaymentCustomer:
+      type: object
+      required: [name, email, phone]
+      properties:
+        name: { type: string }
+        email: { type: string, format: email }
+        phone: { type: string }
+    PaymentItem:
+      type: object
+      required: [name, quantity, price]
+      properties:
+        name: { type: string }
+        quantity: { type: integer }
+        price: { type: integer }
+    CreatePaymentRequest:
+      type: object
+      required: [order_id, payment_type, channel_code, amount, customer, items]
+      properties:
+        order_id: { type: string }
+        payment_type: { type: string, example: bank_transfer }
+        channel_code: { type: string, description: Valid bank code from getPaymentMethods. }
+        amount: { type: integer, description: Minimum 10000 IDR. }
+        customer: { $ref: '#/components/schemas/PaymentCustomer' }
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/PaymentItem' }
+        expiry_duration: { type: integer, description: Optional, minimum 3600 seconds. }
+        callback_url: { type: string, description: Optional valid URL to receive payment notifications. }
+        callback_api_key: { type: string, description: Required when callback_url is set; used as the HMAC-SHA256 secret for callback signature verification. }

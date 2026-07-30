@@ -1,0 +1,42 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://rajaongkir.com/pricing,
+  https://rajaongkir.com/docs/qrisly/getting-started/authentication,
+  https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+signalling:
+  headers:
+    - {name: X-RateLimit-Limit, description: Total requests allowed in the time window}
+    - {name: X-RateLimit-Remaining, description: Number of requests remaining}
+    - {name: X-RateLimit-Reset, description: Timestamp when the limit will reset}
+    - {name: Retry-After, description: Returned with 429 to indicate how long to wait}
+  exceeded_status: 429
+  exceeded_error_code: RATE_LIMIT_EXCEEDED
+  guidance:
+    - Implement exponential backoff in retry logic.
+    - Read the Retry-After header for wait time.
+    - Batch requests where possible to reduce API calls.
+    - Cache static data such as province lists and courier names.
+    - Debounce destination-search input in live-search UIs.
+    - Upgrade to a higher tier for increased limits.
+rate_limits:
+  - plan: Starter
+    metric: API hits
+    api: Shipping Cost (Cek Ongkir)
+    limit_count: 100
+    period: day
+  - plan: Pro
+    metric: API hits
+    api: Shipping Cost (Cek Ongkir)
+    limit_count: 25000
+    period: day
+  - plan: Enterprise
+    metric: API hits
+    api: Shipping Cost (Cek Ongkir)
+    limit_count: 50000
+    period: day
+notes: >-
+  Published daily quotas are scoped to the Cek Ongkir (Shipping Cost) API and vary by
+  subscription tier. QRISLY documents per-tier limiting through the X-RateLimit-* headers but
+  does not publish the numeric ceilings. The Shipping Delivery and Payment Service surfaces
+  publish no numeric rate limits.
