@@ -1,25 +1,479 @@
 aid: komerce
 name: Komerce
-description: Komerce is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Komerce is an Indonesian end-to-end e-commerce enabler serving more than 50,000 online
+  sellers and SMEs with an integrated suite covering fulfilment, logistics, marketplace
+  operations, CRM, advertising and payments — Komship, Kompack, Komplace, Komchat, Komcards,
+  Komtim, Komads and Komclass. Its developer surface is published under the RajaOngkir brand
+  and exposes four APIs: Shipping Cost (Cek Ongkir) for domestic and international rate
+  lookup and airway-bill tracking across 17 Indonesian couriers, Shipping Delivery (Komship)
+  for creating orders, requesting pickup, printing labels and tracking shipments, Payment
+  Service for Virtual Account and QRIS transactions with signed callbacks, and QRISLY for
+  turning a static QRIS into dynamic per-transaction QRIS codes. All four authenticate with a
+  per-product header API key issued from the Collaborator dashboard, and the delivery,
+  payment and QRIS products run a full isolated sandbox.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://komerce.id/img/komerce.png
 url: https://raw.githubusercontent.com/api-evangelist/komerce/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - 500-global
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Shipping
+- Logistics
+- E-Commerce
+- Payments
+- QRIS
+- Indonesia
+- Couriers
+- Tracking
+- Fulfillment
+apis:
+- aid: komerce:komerce-cost-api
+  name: Komerce Cost API
+  description: Shipping cost calculation
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - Cost
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-cost-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
+- aid: komerce:komerce-destinations-api
+  name: Komerce Destinations API
+  description: Destination and administrative-region lookup
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - Destinations
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-destinations-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
+- aid: komerce:komerce-orders-api
+  name: Komerce Orders API
+  description: The Orders API from Komerce — 4 operation(s) for orders.
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-orders-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
+- aid: komerce:komerce-payments-api
+  name: Komerce Payments API
+  description: The Payments API from Komerce — 4 operation(s) for payments.
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-payments-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
+- aid: komerce:komerce-pickup-api
+  name: Komerce Pickup API
+  description: The Pickup API from Komerce — 1 operation(s) for pickup.
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - Pickup
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-pickup-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
+- aid: komerce:komerce-qris-api
+  name: Komerce QRIS API
+  description: The QRIS API from Komerce — 3 operation(s) for qris.
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - QRIS
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-qris-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
+- aid: komerce:komerce-tracking-api
+  name: Komerce Tracking API
+  description: Airway bill tracking
+  humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  baseURL: https://rajaongkir.komerce.id/api/v1
+  tags:
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/komerce-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/about
+  - type: APIReference
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+  - type: Authentication
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/apikey
+  - type: Postman
+    url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
+  - type: Authentication
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/api-key
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/delivery-order-api/webhook
+  - type: Postman
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/postman_collection
+  - type: Documentation
+    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/payment-api/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/payment-api/getting-started/callback-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/payment-api/getting-started/pricing
+  - type: Documentation
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
+  - type: APIReference
+    url: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
+  - type: Authentication
+    url: https://rajaongkir.com/docs/qrisly/getting-started/authentication
+  - type: Webhooks
+    url: https://rajaongkir.com/docs/qrisly/getting-started/webhook
+  - type: ErrorCodes
+    url: https://rajaongkir.com/docs/qrisly/getting-started/error-handling
+  - type: Pricing
+    url: https://rajaongkir.com/docs/qrisly/getting-started/pricing
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/komerce/overview
+- type: AgenticAccess
+  url: agentic-access/komerce-agentic-access.yml
+- type: DomainSecurity
+  url: security/komerce-domain-security.yml
 - type: Website
   url: https://komerce.id
+- type: DeveloperPortal
+  url: https://rajaongkir.com
+- type: Documentation
+  url: https://rajaongkir.com/docs
+- type: APIReference
+  url: https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint
+- type: GettingStarted
+  url: https://rajaongkir.com/docs/introduction/register
+- type: SignUp
+  url: https://collaborator.komerce.id/registration
+- type: Login
+  url: https://collaborator.komerce.id/login
+- type: Pricing
+  url: https://rajaongkir.com/pricing
+- type: Support
+  url: mailto:support@rajaongkir.com
+- type: Blog
+  url: https://komerce.id/blog
+- type: TermsOfService
+  url: https://komerce.id/syarat-ketentuan
+- type: PrivacyPolicy
+  url: https://komerce.id/kebijakan-privasi
+- type: StatusPage
+  url: https://status.rajaongkir.com
+- type: Postman
+  url: https://rajaongkir.com/docs/shipping-cost/getting_started/postman_collection
+- type: Authentication
+  url: authentication/komerce-authentication.yml
+- type: Conventions
+  url: conventions/komerce-conventions.yml
+- type: ErrorCatalog
+  url: errors/komerce-problem-types.yml
+- type: ErrorCodes
+  url: errors/komerce-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/komerce-lifecycle.yml
+- type: Sandbox
+  url: sandbox/komerce-sandbox.yml
+- type: RateLimits
+  url: rate-limits/komerce-rate-limits.yml
+- type: Plans
+  url: plans/komerce-plans.yml
+- type: Webhooks
+  url: asyncapi/komerce-webhooks.yml
+- type: Packages
+  url: packages/komerce-packages.yml
+- type: Components
+  url: components/komerce-components.yml
+- type: Vocabulary
+  url: vocabulary/komerce-couriers.yml
+- type: DataModel
+  url: data-model/komerce-data-model.yml
+- type: Conformance
+  url: conformance/komerce-conformance.yml
+- type: Examples
+  url: examples/komerce-examples.yml
+- type: MCPServer
+  url: mcp/komerce-mcp.yml
+- type: LLMsTxt
+  url: llms/komerce-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
