@@ -402,6 +402,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/komerce-payment-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/komerce/overview
 - type: AgenticAccess
