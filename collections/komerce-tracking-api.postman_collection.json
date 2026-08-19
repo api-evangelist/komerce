@@ -1,0 +1,414 @@
+{
+  "item": [
+    {
+      "id": "d897f0d1-f475-492b-9ba9-0dac4e04c5af",
+      "name": "Tracking",
+      "description": {
+        "content": "Airway bill tracking",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cb6d5fc3-4a52-4f8b-beab-f91d6ccc4c5b",
+          "name": "Track an airway bill",
+          "request": {
+            "name": "Track an airway bill",
+            "description": {
+              "content": "Retrieve real-time shipment status and manifest history for an AWB number from a supported courier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "track",
+                "waybill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "awb",
+                  "value": "<string>",
+                  "description": "(Required) Airway bill (tracking) number."
+                },
+                {
+                  "disabled": false,
+                  "key": "courier",
+                  "value": "<string>",
+                  "description": "(Required) Courier code."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_phone_number",
+                  "value": "<string>",
+                  "description": "Last 5 digits of the recipient phone number — required for additional validation by certain couriers including JNE."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ace634b-4939-4f22-a08d-a7f593205f0d",
+              "name": "Waybill summary, details, delivery status and manifest",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "waybill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "awb",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_phone_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"message\": \"string\",\n    \"code\": 5759,\n    \"status\": \"string\"\n  },\n  \"data\": {\n    \"delivered\": true,\n    \"summary\": {\n      \"courier_code\": \"string\",\n      \"courier_name\": \"string\",\n      \"waybill_number\": \"string\",\n      \"service_code\": \"string\",\n      \"waybill_date\": \"string\",\n      \"shipper_name\": \"string\",\n      \"receiver_name\": \"string\",\n      \"origin\": \"string\",\n      \"destination\": \"string\",\n      \"status\": \"string\"\n    },\n    \"details\": {\n      \"waybill_number\": \"string\",\n      \"waybill_date\": \"string\",\n      \"waybill_time\": \"string\",\n      \"weight\": \"string\",\n      \"origin\": \"string\",\n      \"destination\": \"string\",\n      \"shipper_name\": \"string\",\n      \"shipper_address1\": \"string\",\n      \"shipper_address2\": \"string\",\n      \"shipper_address3\": \"string\",\n      \"shipper_city\": \"string\",\n      \"receiver_name\": \"string\",\n      \"receiver_address1\": \"string\",\n      \"receiver_address2\": \"string\",\n      \"receiver_address3\": \"string\",\n      \"receiver_city\": \"string\"\n    },\n    \"delivery_status\": {\n      \"status\": \"string\",\n      \"pod_receiver\": \"string\",\n      \"pod_date\": \"string\",\n      \"pod_time\": \"string\"\n    },\n    \"manifest\": [\n      {\n        \"manifest_code\": \"string\",\n        \"manifest_description\": \"string\",\n        \"manifest_date\": \"string\",\n        \"manifest_time\": \"string\",\n        \"city_name\": \"string\"\n      },\n      {\n        \"manifest_code\": \"string\",\n        \"manifest_description\": \"string\",\n        \"manifest_date\": \"string\",\n        \"manifest_time\": \"string\",\n        \"city_name\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6547d7ce-d885-495e-88e8-3a17dc37996b",
+              "name": "Invalid or missing parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "waybill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "awb",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_phone_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dacafd55-1305-4612-9a99-e98c5741d358",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "waybill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "awb",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "courier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_phone_number",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3a3811cc-306e-4837-89c3-ff1c7bab0522",
+          "name": "Get airway bill history",
+          "request": {
+            "name": "Get airway bill history",
+            "description": {},
+            "url": {
+              "path": [
+                "order",
+                "api",
+                "v1",
+                "orders",
+                "history-airway-bill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "shipping",
+                  "value": "<string>",
+                  "description": "(Required) Courier code."
+                },
+                {
+                  "disabled": false,
+                  "key": "airway_bill",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69872a2d-cd04-49ee-8112-3d6a9fd9002b",
+              "name": "Airway bill tracking history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "history-airway-bill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipping",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "airway_bill",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7ba0d244-4eec-48ad-8a2e-3d8d92b6b06d",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "history-airway-bill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shipping",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "airway_bill",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.collaborator.komerce.id/user",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9d924d44-da9e-47fe-81b8-2dc8d3619581",
+    "name": "Komerce Payment Service Cost Tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),\ncreate a payment transaction, check payment status, cancel a Virtual Account payment,\nand receive HMAC-SHA256 signed callbacks. Authentication is a header API key\n(`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment\npages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).\n\n\nContact Support:\n Name: RajaOngkir Support\n Email: support@rajaongkir.com",
+      "type": "text/plain"
+    }
+  }
+}

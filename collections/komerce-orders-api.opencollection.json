@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Komerce Payment Service Cost Orders API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/order/api/v1/orders/store",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a delivery order. The shipping fee is deducted from the dashboard balance when the payment method is BANK TRANSFER; insufficient balance rejects the order."
+        },
+        {
+          "info": {
+            "name": "Cancel an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.collaborator.komerce.id/user/order/api/v1/orders/cancel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel an order"
+        },
+        {
+          "info": {
+            "name": "Get order detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/order/api/v1/orders/detail",
+            "params": [
+              {
+                "name": "order_no",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get order detail"
+        },
+        {
+          "info": {
+            "name": "Print order label",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/order/api/v1/orders/print-label",
+            "params": [
+              {
+                "name": "order_no",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Label page layout."
+              }
+            ]
+          },
+          "docs": "Print order label"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

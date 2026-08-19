@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Komerce Payment Service Cost Destinations API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Destinations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search domestic destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/destination/domestic-destination",
+            "params": [
+              {
+                "name": "search",
+                "value": "jakarta",
+                "type": "query",
+                "description": "Search keyword — city, district, subdistrict name, or postal code."
+              },
+              {
+                "name": "limit",
+                "value": "5",
+                "type": "query",
+                "description": "Maximum number of rows returned by the query."
+              },
+              {
+                "name": "offset",
+                "value": "0",
+                "type": "query",
+                "description": "Row offset, used with limit to page results."
+              }
+            ]
+          },
+          "docs": "Search Indonesian destinations by city, district, subdistrict or zip code. Returns the destination id used by the cost endpoints."
+        },
+        {
+          "info": {
+            "name": "Search international destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/destination/international-destination",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search worldwide destinations and return the destination id used by the international cost endpoint."
+        },
+        {
+          "info": {
+            "name": "List provinces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/destination/province"
+          },
+          "docs": "Retrieve the list of Indonesian provinces for form-based (cascading) destination selection."
+        },
+        {
+          "info": {
+            "name": "List cities in a province",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/destination/city/:province_id",
+            "params": [
+              {
+                "name": "province_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List cities in a province"
+        },
+        {
+          "info": {
+            "name": "List districts in a city",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/destination/district/:city_id",
+            "params": [
+              {
+                "name": "city_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List districts in a city"
+        },
+        {
+          "info": {
+            "name": "List subdistricts in a district",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/destination/sub-district/:district_id",
+            "params": [
+              {
+                "name": "district_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List subdistricts in a district"
+        },
+        {
+          "info": {
+            "name": "Search destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/tariff/api/v1/destination/search",
+            "params": [
+              {
+                "name": "keyword",
+                "value": "53131",
+                "type": "query",
+                "description": "Subdistrict name or zip code to search for."
+              }
+            ]
+          },
+          "docs": "Search cities, districts, subdistricts and postal codes and return the region id used as shipper_destination_id / receiver_destination_id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

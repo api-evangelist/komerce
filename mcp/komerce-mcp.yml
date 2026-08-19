@@ -1,94 +1,103 @@
 generated: '2026-07-19'
 method: derived
 status: candidate
-source: >-
-  openapi/ operations; searched rajaongkir.com docs, the Komerce GitHub organization,
-  the npm registry and public MCP registries for an official server
-note: >-
-  Komerce publishes no official hosted or remote MCP server. A community-published package
-  (@theyahia/rajaongkir-mcp on npm) wraps the RajaOngkir API but is not first-party and is not
-  recorded as an official server here. The tool list below is a candidate surface derived one
-  tool per OpenAPI operationId across the four Komerce APIs.
+source: openapi/ operations; searched rajaongkir.com docs, the Komerce GitHub organization, the npm registry
+  and public MCP registries for an official server
+note: Komerce publishes no official hosted or remote MCP server. A community-published package (@theyahia/rajaongkir-mcp
+  on npm) wraps the RajaOngkir API but is not first-party and is not recorded as an official server here.
+  The tool list below is a candidate surface derived one tool per OpenAPI operationId across the four
+  Komerce APIs.
 server:
   name: komerce
   transport: null
   url: null
   official: false
 related:
-  - {name: '@theyahia/rajaongkir-mcp', url: 'https://www.npmjs.com/package/@theyahia/rajaongkir-mcp', official: false, note: community MCP wrapper for RajaOngkir}
+- name: '@theyahia/rajaongkir-mcp'
+  url: https://www.npmjs.com/package/@theyahia/rajaongkir-mcp
+  official: false
+  note: community MCP wrapper for RajaOngkir
 tools:
-  - name: search_domestic_destination
-    description: Search Indonesian destinations by city, district, subdistrict or postal code and return the destination id.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#searchDomesticDestination
-  - name: search_international_destination
-    description: Search worldwide destinations and return the destination id.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#searchInternationalDestination
-  - name: calculate_domestic_cost
-    description: Estimate domestic shipping cost between two destination ids for one or more couriers.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#calculateDomesticCost
-  - name: calculate_international_cost
-    description: Estimate international shipping cost with currency conversion.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#calculateInternationalCost
-  - name: track_waybill
-    description: Retrieve real-time shipment status and manifest history for an AWB number.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#trackWaybill
-  - name: list_provinces
-    description: List Indonesian provinces for cascading destination selection.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#listProvinces
-  - name: list_cities
-    description: List cities in a province.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#listCities
-  - name: list_districts
-    description: List districts in a city.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#listDistricts
-  - name: list_subdistricts
-    description: List subdistricts in a district.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#listSubdistricts
-  - name: calculate_district_domestic_cost
-    description: Calculate domestic cost from district or subdistrict ids.
-    source_operation: openapi/komerce-shipping-cost-openapi.yml#calculateDistrictDomesticCost
-  - name: search_delivery_destination
-    description: Search delivery destinations and return the region id used on delivery orders.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#searchDeliveryDestination
-  - name: calculate_delivery_price
-    description: Retrieve delivery cost options grouped by regular, cargo and instant service.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#calculateDeliveryPrice
-  - name: store_order
-    description: Create a delivery order. Deducts the shipping fee from the dashboard balance when paying by bank transfer.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#storeOrder
-  - name: cancel_order
-    description: Cancel a delivery order.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#cancelOrder
-  - name: get_order_detail
-    description: Retrieve detail for a submitted delivery order.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#getOrderDetail
-  - name: get_airway_bill_history
-    description: Retrieve tracking history for a delivery order airway bill.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#getAirwayBillHistory
-  - name: print_order_label
-    description: Generate the shipping label document for an order.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#printOrderLabel
-  - name: request_pickup
-    description: Request a courier pickup for an order.
-    source_operation: openapi/komerce-shipping-delivery-openapi.yml#requestPickup
-  - name: get_payment_methods
-    description: List available Virtual Account banks and QRIS payment methods.
-    source_operation: openapi/komerce-payment-openapi.yml#getPaymentMethods
-  - name: create_payment
-    description: Create a payment transaction and receive a hosted payment page token.
-    source_operation: openapi/komerce-payment-openapi.yml#createPayment
-  - name: get_payment_status
-    description: Retrieve the status of a payment transaction.
-    source_operation: openapi/komerce-payment-openapi.yml#getPaymentStatus
-  - name: cancel_payment
-    description: Cancel a Virtual Account payment.
-    source_operation: openapi/komerce-payment-openapi.yml#cancelPayment
-  - name: upload_qris
-    description: Upload and validate a static QRIS image for reuse in dynamic generation.
-    source_operation: openapi/komerce-qrisly-openapi.yml#uploadQris
-  - name: generate_qris
-    description: Generate a dynamic QRIS for a custom amount, optionally with a unique-amount identifier.
-    source_operation: openapi/komerce-qrisly-openapi.yml#generateQris
-  - name: get_qris_payment_status
-    description: Check payment status for a generated QRIS by history id.
-    source_operation: openapi/komerce-qrisly-openapi.yml#getQrisPaymentStatus
+- name: search_domestic_destination
+  description: Search Indonesian destinations by city, district, subdistrict or postal code and return
+    the destination id.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#searchDomesticDestination
+- name: search_international_destination
+  description: Search worldwide destinations and return the destination id.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#searchInternationalDestination
+- name: calculate_domestic_cost
+  description: Estimate domestic shipping cost between two destination ids for one or more couriers.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#calculateDomesticCost
+- name: calculate_international_cost
+  description: Estimate international shipping cost with currency conversion.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#calculateInternationalCost
+- name: track_waybill
+  description: Retrieve real-time shipment status and manifest history for an AWB number.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#trackWaybill
+- name: list_provinces
+  description: List Indonesian provinces for cascading destination selection.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#listProvinces
+- name: list_cities
+  description: List cities in a province.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#listCities
+- name: list_districts
+  description: List districts in a city.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#listDistricts
+- name: list_subdistricts
+  description: List subdistricts in a district.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#listSubdistricts
+- name: calculate_district_domestic_cost
+  description: Calculate domestic cost from district or subdistrict ids.
+  source_operation: openapi/komerce-shipping-cost-openapi.yml#calculateDistrictDomesticCost
+- name: search_delivery_destination
+  description: Search delivery destinations and return the region id used on delivery orders.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#searchDeliveryDestination
+- name: calculate_delivery_price
+  description: Retrieve delivery cost options grouped by regular, cargo and instant service.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#calculateDeliveryPrice
+- name: store_order
+  description: Create a delivery order. Deducts the shipping fee from the dashboard balance when paying
+    by bank transfer.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#storeOrder
+- name: cancel_order
+  description: Cancel a delivery order.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#cancelOrder
+- name: get_order_detail
+  description: Retrieve detail for a submitted delivery order.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#getOrderDetail
+- name: get_airway_bill_history
+  description: Retrieve tracking history for a delivery order airway bill.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#getAirwayBillHistory
+- name: print_order_label
+  description: Generate the shipping label document for an order.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#printOrderLabel
+- name: request_pickup
+  description: Request a courier pickup for an order.
+  source_operation: openapi/komerce-shipping-delivery-openapi.yml#requestPickup
+- name: get_payment_methods
+  description: List available Virtual Account banks and QRIS payment methods.
+  source_operation: openapi/komerce-payment-openapi.yml#getPaymentMethods
+- name: create_payment
+  description: Create a payment transaction and receive a hosted payment page token.
+  source_operation: openapi/komerce-payment-openapi.yml#createPayment
+- name: get_payment_status
+  description: Retrieve the status of a payment transaction.
+  source_operation: openapi/komerce-payment-openapi.yml#getPaymentStatus
+- name: cancel_payment
+  description: Cancel a Virtual Account payment.
+  source_operation: openapi/komerce-payment-openapi.yml#cancelPayment
+- name: upload_qris
+  description: Upload and validate a static QRIS image for reuse in dynamic generation.
+  source_operation: openapi/komerce-qrisly-openapi.yml#uploadQris
+- name: generate_qris
+  description: Generate a dynamic QRIS for a custom amount, optionally with a unique-amount identifier.
+  source_operation: openapi/komerce-qrisly-openapi.yml#generateQris
+- name: get_qris_payment_status
+  description: Check payment status for a generated QRIS by history id.
+  source_operation: openapi/komerce-qrisly-openapi.yml#getQrisPaymentStatus
+deployment:
+  mode: none
+  verified: derived
+  tools: 25
+  checked: '2026-08-12'
+  source: catalog MCP census

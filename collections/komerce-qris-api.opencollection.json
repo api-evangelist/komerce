@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Komerce Payment Service Cost QRIS API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "QRIS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a QRIS image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/api/v1/qrisly/upload-qris",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "name",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "qris_image",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a QRIS image with merchant details. The image is validated automatically and the returned qris_id is reused for every generation."
+        },
+        {
+          "info": {
+            "name": "Generate a dynamic QRIS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/api/v1/qrisly/generate-qris",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate a dynamic QRIS string or image for a custom amount. Charged IDR 100 per generation. Default expiry is 15 minutes."
+        },
+        {
+          "info": {
+            "name": "Check QRIS payment status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/api/v1/qrisly/payment-status/:history_id",
+            "params": [
+              {
+                "name": "history_id",
+                "value": "",
+                "type": "path",
+                "description": "History id returned by generateQris."
+              }
+            ]
+          },
+          "docs": "Check QRIS payment status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

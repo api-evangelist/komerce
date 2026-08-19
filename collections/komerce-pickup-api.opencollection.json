@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Komerce Payment Service Cost Pickup API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pickup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request order pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/order/api/v1/pickup/request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request order pickup"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

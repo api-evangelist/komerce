@@ -1,0 +1,776 @@
+{
+  "item": [
+    {
+      "id": "59e8cb08-c016-4ca0-b979-a84e6b622df3",
+      "name": "Orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b8c17c37-d7f4-4c08-91b9-a33208e8bc44",
+          "name": "Create an order",
+          "request": {
+            "name": "Create an order",
+            "description": {
+              "content": "Create a delivery order. The shipping fee is deducted from the dashboard balance when the payment method is BANK TRANSFER; insufficient balance rejects the order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "order",
+                "api",
+                "v1",
+                "orders",
+                "store"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_date\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"shipper_name\": \"<string>\",\n  \"shipper_phone\": \"<string>\",\n  \"shipper_destination_id\": \"<integer>\",\n  \"shipper_address\": \"<string>\",\n  \"shipper_email\": \"<string>\",\n  \"receiver_name\": \"<string>\",\n  \"receiver_phone\": \"<string>\",\n  \"receiver_destination_id\": \"<integer>\",\n  \"receiver_address\": \"<string>\",\n  \"shipping\": \"<string>\",\n  \"shipping_type\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"shipping_cost\": \"<integer>\",\n  \"order_details\": [\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    }\n  ],\n  \"origin_pin_point\": \"<string>\",\n  \"destination_pin_point\": \"<string>\",\n  \"shipping_cashback\": \"<integer>\",\n  \"service_fee\": \"<integer>\",\n  \"additional_cost\": \"<integer>\",\n  \"grand_total\": \"<integer>\",\n  \"cod_value\": \"<integer>\",\n  \"insurance_value\": \"<number>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd7b0d2b-d811-42b6-8f3b-47604d1f9c47",
+              "name": "Order created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "store"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_date\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"shipper_name\": \"<string>\",\n  \"shipper_phone\": \"<string>\",\n  \"shipper_destination_id\": \"<integer>\",\n  \"shipper_address\": \"<string>\",\n  \"shipper_email\": \"<string>\",\n  \"receiver_name\": \"<string>\",\n  \"receiver_phone\": \"<string>\",\n  \"receiver_destination_id\": \"<integer>\",\n  \"receiver_address\": \"<string>\",\n  \"shipping\": \"<string>\",\n  \"shipping_type\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"shipping_cost\": \"<integer>\",\n  \"order_details\": [\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    }\n  ],\n  \"origin_pin_point\": \"<string>\",\n  \"destination_pin_point\": \"<string>\",\n  \"shipping_cashback\": \"<integer>\",\n  \"service_fee\": \"<integer>\",\n  \"additional_cost\": \"<integer>\",\n  \"grand_total\": \"<integer>\",\n  \"cod_value\": \"<integer>\",\n  \"insurance_value\": \"<number>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "82e2aab1-9714-4f1a-b4bb-430598885630",
+              "name": "Validation error — malformed phone number, bad field format, or insufficient balance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "store"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_date\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"shipper_name\": \"<string>\",\n  \"shipper_phone\": \"<string>\",\n  \"shipper_destination_id\": \"<integer>\",\n  \"shipper_address\": \"<string>\",\n  \"shipper_email\": \"<string>\",\n  \"receiver_name\": \"<string>\",\n  \"receiver_phone\": \"<string>\",\n  \"receiver_destination_id\": \"<integer>\",\n  \"receiver_address\": \"<string>\",\n  \"shipping\": \"<string>\",\n  \"shipping_type\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"shipping_cost\": \"<integer>\",\n  \"order_details\": [\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    }\n  ],\n  \"origin_pin_point\": \"<string>\",\n  \"destination_pin_point\": \"<string>\",\n  \"shipping_cashback\": \"<integer>\",\n  \"service_fee\": \"<integer>\",\n  \"additional_cost\": \"<integer>\",\n  \"grand_total\": \"<integer>\",\n  \"cod_value\": \"<integer>\",\n  \"insurance_value\": \"<number>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2c7bb137-2ede-444b-a9ec-ffba6494886a",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "store"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_date\": \"<string>\",\n  \"brand_name\": \"<string>\",\n  \"shipper_name\": \"<string>\",\n  \"shipper_phone\": \"<string>\",\n  \"shipper_destination_id\": \"<integer>\",\n  \"shipper_address\": \"<string>\",\n  \"shipper_email\": \"<string>\",\n  \"receiver_name\": \"<string>\",\n  \"receiver_phone\": \"<string>\",\n  \"receiver_destination_id\": \"<integer>\",\n  \"receiver_address\": \"<string>\",\n  \"shipping\": \"<string>\",\n  \"shipping_type\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"shipping_cost\": \"<integer>\",\n  \"order_details\": [\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"product_variant_name\": \"<string>\",\n      \"product_price\": \"<integer>\",\n      \"product_weight\": \"<integer>\",\n      \"product_width\": \"<integer>\",\n      \"product_height\": \"<integer>\",\n      \"product_length\": \"<integer>\",\n      \"qty\": \"<integer>\",\n      \"subtotal\": \"<integer>\"\n    }\n  ],\n  \"origin_pin_point\": \"<string>\",\n  \"destination_pin_point\": \"<string>\",\n  \"shipping_cashback\": \"<integer>\",\n  \"service_fee\": \"<integer>\",\n  \"additional_cost\": \"<integer>\",\n  \"grand_total\": \"<integer>\",\n  \"cod_value\": \"<integer>\",\n  \"insurance_value\": \"<number>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf3d5446-c7ab-4e9e-a6b2-31e7fbd35b44",
+          "name": "Cancel an order",
+          "request": {
+            "name": "Cancel an order",
+            "description": {},
+            "url": {
+              "path": [
+                "order",
+                "api",
+                "v1",
+                "orders",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_no\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f18b74a-23e3-4f16-8e07-b70bb3deedce",
+              "name": "Order cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_no\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "db094533-e92f-4272-98a2-5ce608f73472",
+              "name": "Order cannot be cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_no\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ce0869d-e005-4138-9831-16bd752139aa",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_no\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7738800-ffad-49bb-a71c-568454c48429",
+          "name": "Get order detail",
+          "request": {
+            "name": "Get order detail",
+            "description": {},
+            "url": {
+              "path": [
+                "order",
+                "api",
+                "v1",
+                "orders",
+                "detail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "order_no",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3deafd7e-f06b-46bc-8b34-e97d55ec98bc",
+              "name": "Order detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order_no",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9ae2f6c8-615a-47f9-bb8c-ebf0ce92ac65",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order_no",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "73e0bf01-2c1a-4b1d-8c7b-2303bf4bc121",
+              "name": "Order not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order_no",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e06d774-b3bb-40c9-9af4-c8d850fa0147",
+          "name": "Print order label",
+          "request": {
+            "name": "Print order label",
+            "description": {},
+            "url": {
+              "path": [
+                "order",
+                "api",
+                "v1",
+                "orders",
+                "print-label"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "order_no",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "(Required) Label page layout."
+                }
+              ],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "68dba022-6932-4f96-8fd1-cf4adb18b394",
+              "name": "Label document",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "print-label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order_no",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "page_5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d3e7bc54-be77-40fa-a2bc-1b3bc7dd1649",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "order",
+                    "api",
+                    "v1",
+                    "orders",
+                    "print-label"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order_no",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "page_5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.collaborator.komerce.id/user",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ec28672a-5ed5-4eca-85bd-1103d788e5e7",
+    "name": "Komerce Payment Service Cost Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),\ncreate a payment transaction, check payment status, cancel a Virtual Account payment,\nand receive HMAC-SHA256 signed callbacks. Authentication is a header API key\n(`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment\npages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).\n\n\nContact Support:\n Name: RajaOngkir Support\n Email: support@rajaongkir.com",
+      "type": "text/plain"
+    }
+  }
+}

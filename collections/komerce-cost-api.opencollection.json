@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Komerce Payment Service Cost API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cost",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Calculate domestic shipping cost",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/calculate/domestic-cost",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "origin",
+                  "value": ""
+                },
+                {
+                  "name": "destination",
+                  "value": ""
+                },
+                {
+                  "name": "weight",
+                  "value": ""
+                },
+                {
+                  "name": "courier",
+                  "value": ""
+                },
+                {
+                  "name": "price",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Estimate shipping cost between two Indonesian destination ids for one or more couriers."
+        },
+        {
+          "info": {
+            "name": "Calculate international shipping cost",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/calculate/international-cost",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "origin",
+                  "value": ""
+                },
+                {
+                  "name": "destination",
+                  "value": ""
+                },
+                {
+                  "name": "weight",
+                  "value": ""
+                },
+                {
+                  "name": "courier",
+                  "value": ""
+                },
+                {
+                  "name": "price",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Estimate international shipping cost between an Indonesian origin and a worldwide destination."
+        },
+        {
+          "info": {
+            "name": "Calculate domestic cost from district/subdistrict ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.collaborator.komerce.id/user/calculate/district/domestic-cost",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "origin",
+                  "value": ""
+                },
+                {
+                  "name": "destination",
+                  "value": ""
+                },
+                {
+                  "name": "weight",
+                  "value": ""
+                },
+                {
+                  "name": "courier",
+                  "value": ""
+                },
+                {
+                  "name": "price",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Form-based cost calculation using district or subdistrict ids obtained from the cascading province/city/district/subdistrict endpoints."
+        },
+        {
+          "info": {
+            "name": "Calculate delivery price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.collaborator.komerce.id/user/tariff/api/v1/calculate",
+            "params": [
+              {
+                "name": "shipper_destination_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "receiver_destination_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "origin_pin_point",
+                "value": "",
+                "type": "query",
+                "description": "Origin geolocation as \"latitude,longitude\" — required for instant courier estimation."
+              },
+              {
+                "name": "destination_pin_point",
+                "value": "",
+                "type": "query",
+                "description": "Destination geolocation as \"latitude,longitude\"."
+              },
+              {
+                "name": "weight",
+                "value": "",
+                "type": "query",
+                "description": "Weight in kilograms; use a dot for decimal values."
+              },
+              {
+                "name": "item_value",
+                "value": "",
+                "type": "query",
+                "description": "Item price."
+              },
+              {
+                "name": "cod",
+                "value": "",
+                "type": "query",
+                "description": "yes/no — when yes the response reports COD coverage for the route."
+              }
+            ]
+          },
+          "docs": "Retrieve shipping cost estimates grouped by regular, cargo and instant service across the integrated 3PL couriers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
