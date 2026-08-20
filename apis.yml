@@ -152,6 +152,8 @@ apis:
   humanURL: https://rajaongkir.com/docs/shipping-cost/getting_started/about
   baseURL: https://rajaongkir.komerce.id/api/v1
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
