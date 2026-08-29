@@ -1,26 +1,40 @@
 {
   "provider": "komerce",
   "sources": [
-    "komerce-cost-api-openapi.yml",
-    "komerce-destinations-api-openapi.yml",
-    "komerce-orders-api-openapi.yml",
-    "komerce-payments-api-openapi.yml",
-    "komerce-pickup-api-openapi.yml",
-    "komerce-qris-api-openapi.yml",
-    "komerce-tracking-api-openapi.yml"
+    "_original/komerce-payment-openapi.yml",
+    "_original/komerce-qrisly-openapi.yml",
+    "_original/komerce-shipping-cost-openapi.yml",
+    "_original/komerce-shipping-delivery-openapi.yml"
   ],
   "outputs": [
+    "komerce-payments-api-openapi.yml",
+    "komerce-qris-api-openapi.yml",
     "komerce-cost-api-openapi.yml",
     "komerce-destinations-api-openapi.yml",
+    "komerce-tracking-api-openapi.yml",
     "komerce-orders-api-openapi.yml",
-    "komerce-payments-api-openapi.yml",
-    "komerce-pickup-api-openapi.yml",
-    "komerce-qris-api-openapi.yml",
-    "komerce-tracking-api-openapi.yml"
+    "komerce-pickup-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (4 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "komerce-payment-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "komerce-qrisly-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "komerce-shipping-cost-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "komerce-shipping-delivery-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'Cost' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied",
+    "tag 'Destinations' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied",
+    "tag 'Tracking' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied"
+  ],
+  "skipped": [
+    "komerce-cost-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "komerce-destinations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "komerce-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "komerce-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "komerce-pickup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "komerce-qris-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "komerce-tracking-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

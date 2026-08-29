@@ -1,25 +1,29 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Komerce Payment Service Cost QRIS API
+  title: Komerce QRISLY QRIS API
   version: v1
-  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+  description: 'QRISLY (by RajaOngkir / Komerce) turns a static QRIS code into dynamic, per-transaction
 
-    create a payment transaction, check payment status, cancel a Virtual Account payment,
+    QRIS codes. Upload a QRIS image once, then generate a dynamic QRIS with a custom amount
 
-    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+    per transaction, optionally with a unique-amount identifier so a mobile listener app can
 
-    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+    distinguish otherwise identical payments. Payment status is available by polling or via
 
-    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+    webhooks (payment.success, payment.expired). Authentication is a header API key
+
+    (`X-API-Key`). Rate limits are surfaced on X-RateLimit-Limit / X-RateLimit-Remaining /
+
+    X-RateLimit-Reset response headers.
 
     '
   contact:
     name: RajaOngkir Support
     email: support@rajaongkir.com
-    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+    url: https://rajaongkir.com/docs/qrisly/getting-started/getting-started
   x-apievangelist-generated: '2026-07-19'
   x-apievangelist-method: generated
-  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  x-apievangelist-source: https://rajaongkir.com/docs/qrisly/getting-started/available-endpoints
 servers:
 - url: https://api.collaborator.komerce.id/user
   description: Production environment
@@ -128,6 +132,41 @@ paths:
           description: Rate limit exceeded
 components:
   schemas:
+    ErrorEnvelope:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+        error_code:
+          type: string
+        details:
+          type: object
+    UploadQrisResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            qris_id:
+              type: string
+            provider:
+              type: string
+            name:
+              type: string
+            merchant_name:
+              type: string
+            created_at:
+              type: string
     GenerateQrisResponse:
       type: object
       properties:
@@ -150,21 +189,6 @@ components:
               type: string
             expiry_time:
               type: string
-    ErrorEnvelope:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        code:
-          type: integer
-        status:
-          type: string
-        error_code:
-          type: string
-        details:
-          type: object
     GenerateQrisRequest:
       type: object
       required:
@@ -188,29 +212,9 @@ components:
         unique_amount:
           type: boolean
           description: Add a unique identifier to the amount so identical payments can be distinguished. Default true.
-    UploadQrisResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            qris_id:
-              type: string
-            provider:
-              type: string
-            name:
-              type: string
-            merchant_name:
-              type: string
-            created_at:
-              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: x-api-key
-      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
+      name: X-API-Key
+      description: QRISLY API key generated from the RajaOngkir Collaborator dashboard (Developer -> API Settings -> Generate New API Key).

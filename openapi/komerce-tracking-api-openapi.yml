@@ -1,29 +1,18 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Komerce Payment Service Cost Tracking API
+  title: Komerce Tracking API
   version: v1
-  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
-
-    create a payment transaction, check payment status, cancel a Virtual Account payment,
-
-    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
-
-    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
-
-    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
-
-    '
-  contact:
-    name: RajaOngkir Support
-    email: support@rajaongkir.com
-    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
   x-apievangelist-generated: '2026-07-19'
   x-apievangelist-method: generated
-  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  x-refined-note:
+  - x-apievangelist-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Tracking across 2 of this provider''s published API definitions: komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.collaborator.komerce.id/user
+- url: https://rajaongkir.komerce.id/api/v1
+  description: Live environment
+- url: https://api.collaborator.komerce.id
   description: Production environment
-- url: https://api-sandbox.collaborator.komerce.id/user
+- url: https://api-sandbox.collaborator.komerce.id
   description: Sandbox environment
 security:
 - ApiKeyAuth: []
@@ -68,6 +57,9 @@ paths:
           description: Invalid or missing parameters
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /order/api/v1/orders/history-airway-bill:
     get:
       operationId: getAirwayBillHistory
@@ -91,6 +83,11 @@ paths:
           description: Airway bill tracking history
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://api.collaborator.komerce.id
+      description: Production environment
+    - url: https://api-sandbox.collaborator.komerce.id
+      description: Sandbox environment
 components:
   schemas:
     Meta:
@@ -200,5 +197,8 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: x-api-key
-      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
+      name: key
+      description: Shipping Cost API key from the Collaborator dashboard (Developer -> Settings -> Api Key).
+x-refined-from:
+- komerce-shipping-cost-openapi.yml
+- komerce-shipping-delivery-openapi.yml

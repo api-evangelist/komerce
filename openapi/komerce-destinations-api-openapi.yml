@@ -1,29 +1,18 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Komerce Payment Service Cost Destinations API
+  title: Komerce Destinations API
   version: v1
-  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
-
-    create a payment transaction, check payment status, cancel a Virtual Account payment,
-
-    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
-
-    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
-
-    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
-
-    '
-  contact:
-    name: RajaOngkir Support
-    email: support@rajaongkir.com
-    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
   x-apievangelist-generated: '2026-07-19'
   x-apievangelist-method: generated
-  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  x-refined-note:
+  - x-apievangelist-source differs across the merged source definitions and was not carried
+  description: 'Operations tagged Destinations across 2 of this provider''s published API definitions: komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://api.collaborator.komerce.id/user
+- url: https://rajaongkir.komerce.id/api/v1
+  description: Live environment
+- url: https://api.collaborator.komerce.id
   description: Production environment
-- url: https://api-sandbox.collaborator.komerce.id/user
+- url: https://api-sandbox.collaborator.komerce.id
   description: Sandbox environment
 security:
 - ApiKeyAuth: []
@@ -73,6 +62,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Meta'
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /destination/international-destination:
     get:
       operationId: searchInternationalDestination
@@ -105,6 +97,9 @@ paths:
                 $ref: '#/components/schemas/InternationalDestinationList'
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /destination/province:
     get:
       operationId: listProvinces
@@ -117,6 +112,9 @@ paths:
           description: Province list
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /destination/city/{province_id}:
     get:
       operationId: listCities
@@ -134,6 +132,9 @@ paths:
           description: City list
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /destination/district/{city_id}:
     get:
       operationId: listDistricts
@@ -151,6 +152,9 @@ paths:
           description: District list
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /destination/sub-district/{district_id}:
     get:
       operationId: listSubdistricts
@@ -168,6 +172,9 @@ paths:
           description: Subdistrict list
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://rajaongkir.komerce.id/api/v1
+      description: Live environment
   /tariff/api/v1/destination/search:
     get:
       operationId: searchDeliveryDestination
@@ -192,32 +199,13 @@ paths:
                 $ref: '#/components/schemas/DestinationList'
         '401':
           description: Missing or invalid API key
+    servers:
+    - url: https://api.collaborator.komerce.id
+      description: Production environment
+    - url: https://api-sandbox.collaborator.komerce.id
+      description: Sandbox environment
 components:
   schemas:
-    InternationalDestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            type: object
-    Destination:
-      type: object
-      properties:
-        id:
-          type: integer
-        label:
-          type: string
-        subdistrict_name:
-          type: string
-        district_name:
-          type: string
-        city_name:
-          type: string
-        zip_code:
-          type: string
     DomesticDestinationList:
       type: object
       properties:
@@ -227,6 +215,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DomesticDestination'
+    InternationalDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            type: object
     Meta:
       type: object
       properties:
@@ -236,15 +233,6 @@ components:
           type: integer
         status:
           type: string
-    DestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Destination'
     DomesticDestination:
       type: object
       properties:
@@ -264,9 +252,36 @@ components:
           type: string
         zip_code:
           type: string
+    Destination:
+      type: object
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        subdistrict_name:
+          type: string
+        district_name:
+          type: string
+        city_name:
+          type: string
+        zip_code:
+          type: string
+    DestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: x-api-key
-      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
+      name: key
+      description: Shipping Cost API key from the Collaborator dashboard (Developer -> Settings -> Api Key).
+x-refined-from:
+- komerce-shipping-cost-openapi.yml
+- komerce-shipping-delivery-openapi.yml

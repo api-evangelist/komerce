@@ -1,29 +1,31 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Komerce Payment Service Cost Pickup API
+  title: Komerce Shipping Delivery API (Komship) Pickup API
   version: v1
-  description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
+  description: 'Komerce Shipping Delivery API (Komship / Delivery Order API) — search destinations,
 
-    create a payment transaction, check payment status, cancel a Virtual Account payment,
+    calculate delivery price across regular, cargo and instant 3PL services, create and
 
-    and receive HMAC-SHA256 signed callbacks. Authentication is a header API key
+    cancel orders, request pickup, print labels, and track airway bills. Authentication is
 
-    (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
+    a header API key (`x-api-key`) issued from the Collaborator dashboard under
 
-    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
+    Developer -> Settings -> Api Key (the "Shipping Delivery" key). A sandbox environment
+
+    mirrors production on a separate host.
 
     '
   contact:
     name: RajaOngkir Support
     email: support@rajaongkir.com
-    url: https://rajaongkir.com/docs/payment-api/getting-started/getting-started
+    url: https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started
   x-apievangelist-generated: '2026-07-19'
   x-apievangelist-method: generated
-  x-apievangelist-source: https://rajaongkir.com/docs/payment-api/getting-started/available-endpoints
+  x-apievangelist-source: https://rajaongkir.com/docs/delivery-order-api/getting_started/base-url
 servers:
-- url: https://api.collaborator.komerce.id/user
+- url: https://api.collaborator.komerce.id
   description: Production environment
-- url: https://api-sandbox.collaborator.komerce.id/user
+- url: https://api-sandbox.collaborator.komerce.id
   description: Sandbox environment
 security:
 - ApiKeyAuth: []
@@ -62,4 +64,4 @@ components:
       type: apiKey
       in: header
       name: x-api-key
-      description: Payment API key from the Collaborator dashboard — the same key used for Komerce Shipping (RajaOngkir). Sandbox keys use the sandbox prefix, production keys the live prefix.
+      description: Shipping Delivery API key from the Collaborator dashboard. Sandbox and production use separate keys.

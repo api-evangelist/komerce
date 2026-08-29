@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Komerce Payment Service Cost Payments API
+  title: Komerce Payment Service Payments API
   version: v1
   description: 'Komerce Payment Service API — list payment methods (bank Virtual Account and QRIS),
 
@@ -135,29 +135,15 @@ components:
           type: integer
         price:
           type: integer
-    PaymentCustomer:
-      type: object
-      required:
-      - name
-      - email
-      - phone
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-    PaymentMethodList:
+    Meta:
       type: object
       properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentMethod'
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
     CreatePaymentRequest:
       type: object
       required:
@@ -215,14 +201,28 @@ components:
           type: integer
         currency:
           type: string
-    Meta:
+    PaymentMethodList:
       type: object
       properties:
-        message:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+    PaymentCustomer:
+      type: object
+      required:
+      - name
+      - email
+      - phone
+      properties:
+        name:
           type: string
-        code:
-          type: integer
-        status:
+        email:
+          type: string
+          format: email
+        phone:
           type: string
   securitySchemes:
     ApiKeyAuth:
