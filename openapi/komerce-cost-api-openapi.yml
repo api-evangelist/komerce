@@ -229,6 +229,15 @@ paths:
       description: Sandbox environment
 components:
   schemas:
+    InternationalCostList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternationalCourierCost'
     Meta:
       type: object
       properties:
@@ -253,7 +262,7 @@ components:
           type: integer
         etd:
           type: string
-    InternationalCostList:
+    DomesticCostList:
       type: object
       properties:
         meta:
@@ -261,7 +270,7 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/InternationalCourierCost'
+            $ref: '#/components/schemas/CourierCost'
     InternationalCourierCost:
       allOf:
       - $ref: '#/components/schemas/CourierCost'
@@ -273,15 +282,6 @@ components:
             type: string
           currency_value:
             type: number
-    DomesticCostList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CourierCost'
     CalculateResponse:
       type: object
       properties:

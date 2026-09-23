@@ -206,24 +206,6 @@ paths:
       description: Sandbox environment
 components:
   schemas:
-    DomesticDestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomesticDestination'
-    InternationalDestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            type: object
     Meta:
       type: object
       properties:
@@ -233,6 +215,24 @@ components:
           type: integer
         status:
           type: string
+    InternationalDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            type: object
+    DomesticDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomesticDestination'
     DomesticDestination:
       type: object
       properties:
@@ -252,6 +252,15 @@ components:
           type: string
         zip_code:
           type: string
+    DestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Destination'
     Destination:
       type: object
       properties:
@@ -267,15 +276,6 @@ components:
           type: string
         zip_code:
           type: string
-    DestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Destination'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

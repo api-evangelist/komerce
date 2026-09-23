@@ -12,9 +12,7 @@ info:
 
     Developer -> Settings -> Api Key (the "Shipping Delivery" key). A sandbox environment
 
-    mirrors production on a separate host.
-
-    '
+    mirrors production on a separate host.'
   contact:
     name: RajaOngkir Support
     email: support@rajaongkir.com
@@ -119,27 +117,6 @@ paths:
           description: Missing or invalid API key
 components:
   schemas:
-    OrderDetailItem:
-      type: object
-      properties:
-        product_name:
-          type: string
-        product_variant_name:
-          type: string
-        product_price:
-          type: integer
-        product_weight:
-          type: integer
-        product_width:
-          type: integer
-        product_height:
-          type: integer
-        product_length:
-          type: integer
-        qty:
-          type: integer
-        subtotal:
-          type: integer
     StoreOrderRequest:
       type: object
       required:
@@ -223,6 +200,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderDetailItem'
+    OrderDetailItem:
+      type: object
+      properties:
+        product_name:
+          type: string
+        product_variant_name:
+          type: string
+        product_price:
+          type: integer
+        product_weight:
+          type: integer
+        product_width:
+          type: integer
+        product_height:
+          type: integer
+        product_length:
+          type: integer
+        qty:
+          type: integer
+        subtotal:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

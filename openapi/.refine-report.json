@@ -26,7 +26,8 @@
     "komerce-shipping-delivery-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "tag 'Cost' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied",
     "tag 'Destinations' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied",
-    "tag 'Tracking' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied"
+    "tag 'Tracking' spans 2 source specs (komerce-shipping-cost-openapi.yml, komerce-shipping-delivery-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "komerce-cost-api-openapi.yml: previously refined output, superseded by openapi/_original/",

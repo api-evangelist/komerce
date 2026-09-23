@@ -12,9 +12,7 @@ info:
 
     Developer -> Settings -> Api Key (the "Shipping Delivery" key). A sandbox environment
 
-    mirrors production on a separate host.
-
-    '
+    mirrors production on a separate host.'
   contact:
     name: RajaOngkir Support
     email: support@rajaongkir.com

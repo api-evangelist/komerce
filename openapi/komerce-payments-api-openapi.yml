@@ -10,9 +10,7 @@ info:
 
     (`x-api-key`) — the same key used for Komerce Shipping (RajaOngkir). Hosted payment
 
-    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).
-
-    '
+    pages are served at https://pay.komerce.id/{token} (sandbox: https://pay-sandbox.komerce.id/{token}).'
   contact:
     name: RajaOngkir Support
     email: support@rajaongkir.com
@@ -122,6 +120,29 @@ paths:
           description: Invalid or missing API key
 components:
   schemas:
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+    PaymentCustomer:
+      type: object
+      required:
+      - name
+      - email
+      - phone
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
     PaymentItem:
       type: object
       required:
@@ -135,14 +156,34 @@ components:
           type: integer
         price:
           type: integer
-    Meta:
+    PaymentMethodList:
       type: object
       properties:
-        message:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+    PaymentMethod:
+      type: object
+      properties:
+        payment_type:
           type: string
-        code:
+          enum:
+          - va
+          - qris
+        display_name:
+          type: string
+        bank_code:
+          type: string
+        logo_url:
+          type: string
+        min_amount:
           type: integer
-        status:
+        max_amount:
+          type: integer
+        currency:
           type: string
     CreatePaymentRequest:
       type: object
@@ -181,49 +222,6 @@ components:
         callback_api_key:
           type: string
           description: Required when callback_url is set; used as the HMAC-SHA256 secret for callback signature verification.
-    PaymentMethod:
-      type: object
-      properties:
-        payment_type:
-          type: string
-          enum:
-          - va
-          - qris
-        display_name:
-          type: string
-        bank_code:
-          type: string
-        logo_url:
-          type: string
-        min_amount:
-          type: integer
-        max_amount:
-          type: integer
-        currency:
-          type: string
-    PaymentMethodList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentMethod'
-    PaymentCustomer:
-      type: object
-      required:
-      - name
-      - email
-      - phone
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
