@@ -120,51 +120,6 @@ paths:
           description: Invalid or missing API key
 components:
   schemas:
-    Meta:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: integer
-        status:
-          type: string
-    PaymentCustomer:
-      type: object
-      required:
-      - name
-      - email
-      - phone
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-    PaymentItem:
-      type: object
-      required:
-      - name
-      - quantity
-      - price
-      properties:
-        name:
-          type: string
-        quantity:
-          type: integer
-        price:
-          type: integer
-    PaymentMethodList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentMethod'
     PaymentMethod:
       type: object
       properties:
@@ -222,6 +177,51 @@ components:
         callback_api_key:
           type: string
           description: Required when callback_url is set; used as the HMAC-SHA256 secret for callback signature verification.
+    PaymentItem:
+      type: object
+      required:
+      - name
+      - quantity
+      - price
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: integer
+    PaymentMethodList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+    PaymentCustomer:
+      type: object
+      required:
+      - name
+      - email
+      - phone
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

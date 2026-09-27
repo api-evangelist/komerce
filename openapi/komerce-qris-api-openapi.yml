@@ -120,6 +120,21 @@ paths:
           description: Rate limit exceeded
 components:
   schemas:
+    ErrorEnvelope:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+        error_code:
+          type: string
+        details:
+          type: object
     UploadQrisResponse:
       type: object
       properties:
@@ -140,21 +155,28 @@ components:
               type: string
             created_at:
               type: string
-    ErrorEnvelope:
+    GenerateQrisResponse:
       type: object
       properties:
         success:
           type: boolean
         message:
           type: string
-        code:
-          type: integer
-        status:
-          type: string
-        error_code:
-          type: string
-        details:
+        data:
           type: object
+          properties:
+            history_id:
+              type: integer
+            qris_string:
+              type: string
+            original_amount:
+              type: integer
+            final_amount:
+              type: integer
+            payment_status:
+              type: string
+            expiry_time:
+              type: string
     GenerateQrisRequest:
       type: object
       required:
@@ -178,28 +200,6 @@ components:
         unique_amount:
           type: boolean
           description: Add a unique identifier to the amount so identical payments can be distinguished. Default true.
-    GenerateQrisResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            history_id:
-              type: integer
-            qris_string:
-              type: string
-            original_amount:
-              type: integer
-            final_amount:
-              type: integer
-            payment_status:
-              type: string
-            expiry_time:
-              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
