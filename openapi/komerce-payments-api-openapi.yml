@@ -140,6 +140,20 @@ components:
           type: integer
         currency:
           type: string
+    PaymentCustomer:
+      type: object
+      required:
+      - name
+      - email
+      - phone
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
     CreatePaymentRequest:
       type: object
       required:
@@ -177,6 +191,15 @@ components:
         callback_api_key:
           type: string
           description: Required when callback_url is set; used as the HMAC-SHA256 secret for callback signature verification.
+    PaymentMethodList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentMethod'
     PaymentItem:
       type: object
       required:
@@ -190,15 +213,6 @@ components:
           type: integer
         price:
           type: integer
-    PaymentMethodList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentMethod'
     Meta:
       type: object
       properties:
@@ -207,20 +221,6 @@ components:
         code:
           type: integer
         status:
-          type: string
-    PaymentCustomer:
-      type: object
-      required:
-      - name
-      - email
-      - phone
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
           type: string
   securitySchemes:
     ApiKeyAuth:

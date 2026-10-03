@@ -120,63 +120,6 @@ paths:
           description: Rate limit exceeded
 components:
   schemas:
-    ErrorEnvelope:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        code:
-          type: integer
-        status:
-          type: string
-        error_code:
-          type: string
-        details:
-          type: object
-    UploadQrisResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            qris_id:
-              type: string
-            provider:
-              type: string
-            name:
-              type: string
-            merchant_name:
-              type: string
-            created_at:
-              type: string
-    GenerateQrisResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            history_id:
-              type: integer
-            qris_string:
-              type: string
-            original_amount:
-              type: integer
-            final_amount:
-              type: integer
-            payment_status:
-              type: string
-            expiry_time:
-              type: string
     GenerateQrisRequest:
       type: object
       required:
@@ -200,6 +143,63 @@ components:
         unique_amount:
           type: boolean
           description: Add a unique identifier to the amount so identical payments can be distinguished. Default true.
+    UploadQrisResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            qris_id:
+              type: string
+            provider:
+              type: string
+            name:
+              type: string
+            merchant_name:
+              type: string
+            created_at:
+              type: string
+    ErrorEnvelope:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+        error_code:
+          type: string
+        details:
+          type: object
+    GenerateQrisResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            history_id:
+              type: integer
+            qris_string:
+              type: string
+            original_amount:
+              type: integer
+            final_amount:
+              type: integer
+            payment_status:
+              type: string
+            expiry_time:
+              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
