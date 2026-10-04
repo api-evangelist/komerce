@@ -206,33 +206,6 @@ paths:
       description: Sandbox environment
 components:
   schemas:
-    DomesticDestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomesticDestination'
-    Meta:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: integer
-        status:
-          type: string
-    InternationalDestinationList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            type: object
     DomesticDestination:
       type: object
       properties:
@@ -252,6 +225,33 @@ components:
           type: string
         zip_code:
           type: string
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
+    InternationalDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            type: object
+    DomesticDestinationList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomesticDestination'
     Destination:
       type: object
       properties:

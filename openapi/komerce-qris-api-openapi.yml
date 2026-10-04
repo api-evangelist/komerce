@@ -143,26 +143,6 @@ components:
         unique_amount:
           type: boolean
           description: Add a unique identifier to the amount so identical payments can be distinguished. Default true.
-    UploadQrisResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            qris_id:
-              type: string
-            provider:
-              type: string
-            name:
-              type: string
-            merchant_name:
-              type: string
-            created_at:
-              type: string
     ErrorEnvelope:
       type: object
       properties:
@@ -199,6 +179,26 @@ components:
             payment_status:
               type: string
             expiry_time:
+              type: string
+    UploadQrisResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            qris_id:
+              type: string
+            provider:
+              type: string
+            name:
+              type: string
+            merchant_name:
+              type: string
+            created_at:
               type: string
   securitySchemes:
     ApiKeyAuth:

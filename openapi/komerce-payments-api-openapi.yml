@@ -120,40 +120,6 @@ paths:
           description: Invalid or missing API key
 components:
   schemas:
-    PaymentMethod:
-      type: object
-      properties:
-        payment_type:
-          type: string
-          enum:
-          - va
-          - qris
-        display_name:
-          type: string
-        bank_code:
-          type: string
-        logo_url:
-          type: string
-        min_amount:
-          type: integer
-        max_amount:
-          type: integer
-        currency:
-          type: string
-    PaymentCustomer:
-      type: object
-      required:
-      - name
-      - email
-      - phone
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
     CreatePaymentRequest:
       type: object
       required:
@@ -191,6 +157,15 @@ components:
         callback_api_key:
           type: string
           description: Required when callback_url is set; used as the HMAC-SHA256 secret for callback signature verification.
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
     PaymentMethodList:
       type: object
       properties:
@@ -200,6 +175,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PaymentMethod'
+    PaymentMethod:
+      type: object
+      properties:
+        payment_type:
+          type: string
+          enum:
+          - va
+          - qris
+        display_name:
+          type: string
+        bank_code:
+          type: string
+        logo_url:
+          type: string
+        min_amount:
+          type: integer
+        max_amount:
+          type: integer
+        currency:
+          type: string
+    PaymentCustomer:
+      type: object
+      required:
+      - name
+      - email
+      - phone
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
     PaymentItem:
       type: object
       required:
@@ -213,15 +222,6 @@ components:
           type: integer
         price:
           type: integer
-    Meta:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: integer
-        status:
-          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
