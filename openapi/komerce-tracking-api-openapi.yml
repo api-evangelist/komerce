@@ -90,15 +90,6 @@ paths:
       description: Sandbox environment
 components:
   schemas:
-    Meta:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: integer
-        status:
-          type: string
     WaybillResponse:
       type: object
       properties:
@@ -193,6 +184,15 @@ components:
                     type: string
                   city_name:
                     type: string
+    Meta:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        status:
+          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
