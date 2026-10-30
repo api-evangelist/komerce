@@ -64,34 +64,159 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Komerce is an Indonesian end-to-end e-commerce enabler serving more than 50,000 online sellers and SMEs with an integrated suite covering fulfilment, logistics, marketplace operations, CRM, advertising and payments — Komship, Kompack, Komplace, Komchat, Komcards, Komtim, Komads and Komclass.
+Komerce is an Indonesian end-to-end e-commerce enabler serving more than 50,000 online sellers and SMEs with an integrated suite covering fulfilment, logistics, marketplace operations, CRM, advertising and payments — Komship, Kompack, Komplace, Komchat, Komcards, Komtim, Komads and Komclass. Its developer surface is published under the RajaOngkir brand and exposes four APIs: Shipping Cost (Cek Ongkir) for domestic and international rate lookup and airway-bill tracking across 17 Indonesian couriers, Shipping Delivery (Komship) for creating orders, requesting pickup, printing labels and tracking shipments, Payment Service for Virtual Account and QRIS transactions with signed callbacks, and QRISLY for turning a static QRIS into dynamic per-transaction QRIS codes. All four authenticate with a per-product header API key issued from the Collaborator dashboard, and the delivery, payment and QRIS products run a full isolated sandbox.
 
-Its developer surface is published under the **RajaOngkir** brand at [rajaongkir.com](https://rajaongkir.com) and exposes four APIs.
+**Areas:** Company · Shipping · Logistics · E-Commerce · Payments · QRIS · Indonesia · Couriers · Tracking · Fulfillment
 
-## APIs
+## Komerce on APIs.io
 
-| API | What it does | Base URL | Auth header |
-|---|---|---|---|
-| [Shipping Cost (Cek Ongkir)](https://rajaongkir.com/docs/shipping-cost/getting_started/about) | Destination lookup, domestic + international rate calculation across 17 Indonesian and 6 international couriers, AWB tracking | `https://rajaongkir.komerce.id/api/v1` | `key` |
-| [Shipping Delivery (Komship)](https://rajaongkir.com/docs/delivery-order-api/getting_started/Getting-Started) | Create/cancel delivery orders, price regular/cargo/instant 3PL, pickup, labels, AWB history | `https://api.collaborator.komerce.id` | `x-api-key` |
-| [Payment Service](https://rajaongkir.com/docs/payment-api/getting-started/getting-started) | Virtual Account + QRIS transactions, hosted payment page, HMAC-SHA256 signed callbacks | `https://api.collaborator.komerce.id/user` | `x-api-key` |
-| [QRISLY](https://rajaongkir.com/docs/qrisly/getting-started/getting-started) | Static QRIS → dynamic per-transaction QRIS with unique amounts, payment webhooks | `https://api.collaborator.komerce.id/user` | `X-API-Key` |
+Everything profiled for Komerce is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/komerce/](https://apis.io/providers/komerce/)** — or go straight to one of the APIs or properties below.
 
-The four keys are **not interchangeable** — each is issued separately from the Collaborator dashboard (Developer → Settings → Api Key). Sandbox and production also use separate keys.
+### APIs (7)
 
-## Artifacts in this repo
+- [Komerce Cost API](https://apis.io/apis/komerce/komerce-cost-api/) — Shipping cost calculation
+- [Komerce Destinations API](https://apis.io/apis/komerce/komerce-destinations-api/) — Destination and administrative-region lookup
+- [Komerce Orders API](https://apis.io/apis/komerce/komerce-orders-api/) — The Orders API from Komerce — 4 operation(s) for orders.
+- [Komerce Payments API](https://apis.io/apis/komerce/komerce-payments-api/) — The Payments API from Komerce — 4 operation(s) for payments.
+- [Komerce Pickup API](https://apis.io/apis/komerce/komerce-pickup-api/) — The Pickup API from Komerce — 1 operation(s) for pickup.
+- [Komerce QRIS API](https://apis.io/apis/komerce/komerce-qris-api/) — The QRIS API from Komerce — 3 operation(s) for qris.
+- [Komerce Tracking API](https://apis.io/apis/komerce/komerce-tracking-api/) — Airway bill tracking
 
-- `openapi/` — four OpenAPI 3.0.3 descriptions generated faithfully from the published RajaOngkir reference (Komerce publishes no machine-readable spec)
-- `overlays/` — API Evangelist enhancement overlays for each spec
-- `authentication/`, `conventions/`, `errors/`, `lifecycle/`, `sandbox/`, `conformance/`
-- `asyncapi/komerce-webhooks.yml` — the three documented webhook surfaces (order status, payment callback, QRISLY events); no AsyncAPI is published
-- `plans/`, `rate-limits/` — three-tier subscription (100 / 25,000 / 50,000 Cek Ongkir hits per day) plus per-transaction payment fees
-- `vocabulary/komerce-couriers.yml` — courier code vocabulary and capability matrix
-- `data-model/`, `examples/`, `packages/`, `components/`, `mcp/`, `skills/`, `llms/`
-- `security/`, `well-known/`, `agentic-access/`
+### Published properties
 
-## Notable gaps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-No published SDK on any registry (the WooCommerce plugin is the only first-party distributable), no OAuth, no idempotency key on any operation, no RFC 9457 errors, no security.txt or trust centre, and the System Update Log page is empty. The legacy rajaongkir.com API is flagged "will be deprecated" on the [status page](https://status.rajaongkir.com) but no deprecation policy is published.
+#### AsyncAPI (1)
 
-Backed by: 500-global — https://komerce.id
+Event-driven and webhook contracts.
+
+- [Komerce Webhooks](https://apis.io/asyncapis/komerce/komerce-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [komerce](https://apis.io/servers/komerce/komerce/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Komerce Agentic Access](https://apis.io/agentic-access/komerce/komerce-agentic-access/)
+
+#### Collections (14)
+
+Postman and Open Collection request collections.
+
+- [Komerce Payment Service Cost API](https://apis.io/collections/komerce/open-komerce-cost-api/)
+- [Komerce Payment Service Cost Destinations API](https://apis.io/collections/komerce/open-komerce-destinations-api/)
+- [Komerce Payment Service Cost Orders API](https://apis.io/collections/komerce/open-komerce-orders-api/)
+- [Komerce Payment Service Cost Payments API](https://apis.io/collections/komerce/open-komerce-payments-api/)
+- [Komerce Payment Service Cost Pickup API](https://apis.io/collections/komerce/open-komerce-pickup-api/)
+- [Komerce Payment Service Cost QRIS API](https://apis.io/collections/komerce/open-komerce-qris-api/)
+- [Komerce Payment Service Cost Tracking API](https://apis.io/collections/komerce/open-komerce-tracking-api/)
+- [Komerce Payment Service Cost API](https://apis.io/collections/komerce/postman-komerce-cost-api/)
+- [Komerce Payment Service Cost Destinations API](https://apis.io/collections/komerce/postman-komerce-destinations-api/)
+- [Komerce Payment Service Cost Orders API](https://apis.io/collections/komerce/postman-komerce-orders-api/)
+- [Komerce Payment Service Cost Payments API](https://apis.io/collections/komerce/postman-komerce-payments-api/)
+- [Komerce Payment Service Cost Pickup API](https://apis.io/collections/komerce/postman-komerce-pickup-api/)
+- [Komerce Payment Service Cost QRIS API](https://apis.io/collections/komerce/postman-komerce-qris-api/)
+- [Komerce Payment Service Cost Tracking API](https://apis.io/collections/komerce/postman-komerce-tracking-api/)
+
+#### Overlays (4)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Komerce Payment Overlay](https://apis.io/overlays/komerce/komerce-payment-overlay/)
+- [Komerce Qrisly Overlay](https://apis.io/overlays/komerce/komerce-qrisly-overlay/)
+- [Komerce Shipping Cost Overlay](https://apis.io/overlays/komerce/komerce-shipping-cost-overlay/)
+- [Komerce Shipping Delivery Overlay](https://apis.io/overlays/komerce/komerce-shipping-delivery-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Komerce Authentication](https://apis.io/security/komerce/komerce-authentication/)
+- [Komerce Domain Security](https://apis.io/security/komerce/komerce-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Komerce Plans](https://apis.io/plans/komerce/komerce-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Komerce Rate Limits](https://apis.io/rate-limits/komerce/komerce-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://komerce.id)
+- [Documentation](https://rajaongkir.com/docs)
+- [Getting started](https://rajaongkir.com/docs/introduction/register)
+- [API reference](https://rajaongkir.com/docs/shipping-cost/getting_started/endpoint)
+- [Pricing](https://rajaongkir.com/pricing)
+- [Sign up](https://collaborator.komerce.id/registration)
+- [Blog](https://komerce.id/blog/)
+- [Terms of service](https://komerce.id/syarat-ketentuan)
+- [Privacy policy](https://komerce.id/kebijakan-privasi)
+- [Status](https://status.rajaongkir.com)
+
+## API Evangelist rating
+
+**Kin Score 45.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 23.7 |
+| Contract governance | 19.7 |
+| Operational transparency | 55.3 |
+| Developer ergonomics | 70.8 |
+| Access clarity | 48.7 |
+
+**Agent readiness 36.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 15.2** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/komerce/](https://apis.io/providers/komerce/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Komerce: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/komerce/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
